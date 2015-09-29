@@ -17,13 +17,12 @@ static unsigned scr_lines;	/* Height of screen in lines */
 
 void vt_fill(char ch, char attr) {
   
-  /* To complete */
-  
+	/* To complete ... */
 }
 
 void vt_blank() {
 
-  /* To complete ... */
+	vt_fill(' ',0x00)
 
 }
 
