@@ -69,9 +69,21 @@ int vt_print_string(char *str, char attr, int r, int c) {
 }
 
 int vt_print_int(int num, char attr, int r, int c) {
-
-  /* To complete ... */
-
+		int i;
+		char *ptr;
+		char n;
+		n= num + '0';
+		if(r<=scr_lines && c<=scr_width){
+			ptr=video_mem+c+r*scr_lines;
+			*ptr=n;
+			ptr++;
+			*ptr=attr;
+			return 0;
+		}
+		else
+			{
+			return 1;
+			}
 }
 
 
