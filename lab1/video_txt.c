@@ -33,9 +33,19 @@ void vt_blank() {
 }
 
 int vt_print_char(char ch, char attr, int r, int c) {
-  
-  /* To complete ... */
-
+	int i;
+	char *ptr;
+	if(r<=scr_lines && c<=scr_width){
+		ptr=video_mem+c+r*scr_lines;
+		*ptr=ch;
+		ptr++;
+		*ptr=attr;
+		return 0;
+	}
+	else
+		{
+		return 1;
+		}
 }
 
 int vt_print_string(char *str, char attr, int r, int c) {
