@@ -28,7 +28,7 @@ void vt_fill(char ch, char attr) {
 
 void vt_blank() {
 
-	vt_fill(' ',0x00);
+	vt_fill(0x00,0x01);
 
 }
 
@@ -36,7 +36,7 @@ int vt_print_char(char ch, char attr, int r, int c) {
 	int i;
 	char *ptr;
 	if(r<=scr_lines && c<=scr_width){
-		ptr=video_mem+c+r*scr_lines;
+		ptr=video_mem+(c+r*scr_lines)*2;
 		*ptr=ch;
 		ptr++;
 		*ptr=attr;
@@ -50,8 +50,22 @@ int vt_print_char(char ch, char attr, int r, int c) {
 
 int vt_print_string(char *str, char attr, int r, int c) {
 
-  /* To complete ... */
-
+	char *ptr;
+	if(r<=scr_lines && c<=scr_width){
+				ptr=video_mem+(c+r*scr_lines)*2;
+				int i;
+				for(i=0; i<strlen(str);i++,ptr++)
+				{
+					*ptr=str[i];
+					ptr++;
+					*ptr=attr;
+				}
+				return 0;
+			}
+			else
+				{
+				return 1;
+				}
 }
 
 int vt_print_int(int num, char attr, int r, int c) {
