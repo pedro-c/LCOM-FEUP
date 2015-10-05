@@ -89,9 +89,48 @@ int vt_print_int(int num, char attr, int r, int c) {
 
 int vt_draw_frame(int width, int height, char attr, int r, int c) {
 
-  /* To complete ... */
+	int lastLine=r-1+height, lastColumn=c-1+width;
 
+	if(r<=scr_lines && c<=scr_width){
+		return 0;
+	}
+
+		if (width>1 && height>1)
+		{
+			vt_print_char(0xc9, attr, r, c);
+			vt_print_char(0xbb, attr, r, lastColumn);
+			vt_print_char(0xc8, attr, lastLine, c);
+			vt_print_char(0xbc, attr, lastLine, lastColumn);
+		}
+		else if (height==1)
+				vt_print_char(0xcd, attr, r, c);
+		else if (width==1)
+				vt_print_char(0xba, attr, r, c);
+
+		if (width>1)
+		{
+			int i;
+			for (i=1;i<=width-2;i++)
+				{
+					vt_print_char(0xcd, attr, r , c+i);
+					vt_print_char(0xcd, attr, lastLine , c+i);
+				}
+		}
+
+		if(height>1)
+		{
+			int i;
+			for (i=1; i<=height-2;i++)
+			{
+				vt_print_char(0xba, attr, r+i , c);
+				vt_print_char(0xba, attr, r+i , lastColumn);
+			}
+
+		}
+
+		return 0;
 }
+
 
 /*
  * THIS FUNCTION IS FINALIZED, do NOT touch it
