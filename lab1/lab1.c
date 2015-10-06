@@ -19,10 +19,10 @@ int main(int argc, char **argv) {
 
   /* Get video text mode info */
 
-  vt_info_get(&vt_info);
+  //vt_info_get(&vt_info);
 
   /* Display video text mode info */
-  vt_info_display(&vt_info);
+  //vt_info_display(&vt_info);
 
   video_mem = vt_init(&vt_info);
 
