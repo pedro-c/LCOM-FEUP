@@ -4,13 +4,13 @@ COMPILER_TYPE= gnu
 
 CC=gcc
 
-PROG=	lab1
-SRCS=	lab1.c video_txt.c 
+PROG=	lab2
+SRCS=	lab2.c timer.c 
 
 CCFLAGS= -Wall
 
 DPADD+=	${LIBDRIVER} ${LIBSYS}
-LDADD+=	-lvt -ldriver -lsys
+LDADD+= -ldriver -lsys
 
 LDFLAGS+= -L .
 
