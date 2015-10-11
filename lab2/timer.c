@@ -115,60 +115,34 @@ int timer_display_conf(unsigned char conf) {
 
 
 int timer_test_int(unsigned long time) {
-	int OM = conf >> 1 & (BIT(0) | BIT(1) | BIT(2));
-	if (OM == 0) {
-		printf("Interrupt on Terminal Count\n");
-	} else if (OM == 1) {
-		printf("Hardware Retriggerable One-shot\n");
-	} else if (OM == 2) {
-		printf("Rate Gnerator\n");
-	} else if (OM == 3) {
-		printf("Square Wave Mode\n");
-	} else if (OM == 4) {
-		printf("Software Triggered Strobe\n");
-	} else if (OM == 5) {
-		printf("Hardware Triggered Strobe(Retriggerable\n");
-	}
-	int TA = conf >> 4 & (BIT(0) | BIT(1));
-	if (TA == 1) {
-		printf("LSB");
-	} else if (TA == 2) {
-		printf("MSB\n");
-	} else if (TA == 3) {
-		printf("LSB followed by MSB\n");
-	}
-	int SC = conf >> 6 & BIT(0);
-	if (SC == 0) {
-		printf("Null Count=True\n");
-	} else if (SC == 1) {
-		printf("Null Count=False\n");
-	}
-	int SC1 = conf >> 7 & BIT(0);
-	if (SC1 == 0) {
-		printf("Output=0\n");
-	} else if (SC == 1) {
-		printf("Output=1\n");
-	}
-	return 0;
-}
 
-	return 1;
 }
 
 
 
 int timer_test_square(unsigned long freq) {
-	timer_set_square(0, freq);
-	return 0;
+	if(timer_set_square(0,freq)==0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 
 
 int timer_test_config(unsigned long timer) {
 
-	char conf;
-	timer_get_conf(timer, &conf);
-	timer_display_conf(conf);
-	return 0;
-
+	unsigned char conf;
+	if(timer_get_conf(timer, &conf)==0)
+	{
+		timer_display_conf(conf);
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 
