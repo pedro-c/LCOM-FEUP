@@ -9,5 +9,6 @@
 		unsigned char x;
 		timer_get_conf(0x00,&x);
 		printf("%x\n",x);
+		timer_set_square(0,60);
 		return 0;
 	}
