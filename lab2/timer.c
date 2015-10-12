@@ -3,15 +3,15 @@
 
 #include "timer.h"
 #include "i8254.h"
- int hook_id=1;
- unsigned long counter;
+ static int hook_id=1;
+ static unsigned long counter=0;
 
 
 int timer_set_square(unsigned long timer, unsigned long freq) {
 	unsigned long lsb;
 	unsigned char msb;
 	unsigned long fr;
-	unsigned long st;
+	unsigned char st;
 
 	fr = TIMER_FREQ / freq;
 	if (timer == 0 || timer == 1 || timer == 2) {
@@ -51,20 +51,20 @@ int timer_subscribe_int(void) {
 
 	int hook=hook_id;
 
-	if ((sys_irqsetpolicy(TIMER0_IRQ, IRQ_ENABLE, &hook_id)==OK) //If the request was successfully handled
-			{
-				//sys_irqenable(&hook id); the policy defined in the call of sys_setpolicy already enables the IRQ?
-				return BIT(hook_temp);
-			}
+	if ((sys_irqsetpolicy(TIMER0_IRQ, IRQ_ENABLE, &hook_id)==OK))
+	{
+		sys_irqenable(&hook);
+		return BIT(hook);
+	}
 	else return -1;
 
 }
 
 int timer_unsubscribe_int() {
 
-	if(sys_irqrmpolicy(&hook_id)==OK) //unsubscribes a previous subscription of the interrupt notification associated with the specified hook_id
+	if(sys_irqdisable(&hook_id)==OK)
 	{
-		sys_irqdisable(&hook_id);  //disables interrupts on the IRQ line associated with the specified hook_id
+		sys_irqrmpolicy(&hook_id);
 		return 0;
 	}
 	else return 1;
@@ -77,7 +77,8 @@ void timer_int_handler() {
 int timer_get_conf(unsigned long timer, unsigned char *st) {
 	char CMD = TIMER_RB_CMD | TIMER_RB_SEL(timer) | TIMER_RB_COUNT_;
 	if (sys_outb(TIMER_CTRL, CMD) == 0) {
-		if (sys_inb(TIMER_0 + timer, st) == 0) {
+		unsigned long stt=(long) st;
+		if (sys_inb(TIMER_0 + timer, &stt) == 0) {
 			return 0;
 		} else
 			return 1;
@@ -129,11 +130,52 @@ int timer_display_conf(unsigned char conf) {
 	return 0;
 }
 
+int ipc_status;
+message msg;
 
-int timer_test_int(unsigned long time) {
+int timer_test_int(unsigned long time)
+{
+	int r,irq_set=BIT(hook_id);
+	int x=0;
+	if(timer_test_square(60)==1)
+	{
+		return 1;
+	}
+	if(timer_subscribe_int()==1)
+	{
+		return 1;
+	}
 
+	while(time>x)
+	{
+		if((r=driver_receive(ANY,&msg,&ipc_status))!=0){
+			printf("driver_receive failed with: %d",r);
+			continue;
+		}
+		if(is_ipc_notify(ipc_status)){
+			 switch (_ENDPOINT_P(msg.m_source)) {
+			 case HARDWARE:
+				 if (msg.NOTIFY_ARG & irq_set) {
+					 timer_int_handler();
+					 if(counter==60)
+					 {
+						 printf("Interrupcao!\n");
+						 counter=0;
+							x++;
+					 }
+				 }
+				 break;
+			 default:
+				 break;
+			 }
+		}
+	}
+	if(timer_unsubscribe_int()==1)
+	{
+		return 1;
+	}
+	return 0;
 }
-
 
 
 int timer_test_square(unsigned long freq) {
@@ -146,7 +188,6 @@ int timer_test_square(unsigned long freq) {
 		return 1;
 	}
 }
-
 
 int timer_test_config(unsigned long timer) {
 
