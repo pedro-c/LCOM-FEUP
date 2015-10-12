@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 		      proc_args(argc, argv);
 		  }
 		  return 0;
-	}
+}
 
 static void print_usage(char *argv[]) {
   printf("Usage: one of the following:\n"
@@ -69,7 +69,7 @@ static int proc_args(int argc, char *argv[]) {
 	  printf("timer:: timer_test_config(%u)\n",(unsigned) timer);
 	  if(timer_test_config(timer)==0)
 	  {
-		  printf("Done !\n");
+		  printf("Done!\n");
 	  }
 	  else
 	  {
@@ -90,11 +90,11 @@ static int proc_args(int argc, char *argv[]) {
 	  printf("timer::timer_test_int(%u)\n",time);
 	 if(timer_test_int(time)==0)
 	 {
-		 printf("Done !\n");
+		 printf("Done!\n");
 	 }
 	 else
 	 {
-		 printf("Error !\n");
+		 printf("Error!\n");
 	 }
   } else {
 	  printf("timer: non valid function \"%s\" to test\n", argv[1]);
@@ -115,7 +115,7 @@ static unsigned long parse_ulong(char *str, int base) {
   }
 
   if (endptr == str) {
-	  printf("video_txt: parse_ulong: no digits were found in %s \n", str);
+	  printf("time: parse_ulong: no digits were found in %s \n", str);
 	  return ULONG_MAX;
   }
 
