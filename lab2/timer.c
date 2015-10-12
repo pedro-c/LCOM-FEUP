@@ -3,6 +3,9 @@
 
 #include "timer.h"
 #include "i8254.h"
+ int hook_id=1;
+ unsigned long counter;
+
 
 int timer_set_square(unsigned long timer, unsigned long freq) {
 	unsigned long lsb;
@@ -46,16 +49,29 @@ int timer_set_square(unsigned long timer, unsigned long freq) {
 
 int timer_subscribe_int(void) {
 
-	return 1;
+	int hook=hook_id;
+
+	if ((sys_irqsetpolicy(TIMER0_IRQ, IRQ_ENABLE, &hook_id)==OK) //If the request was successfully handled
+			{
+				//sys_irqenable(&hook id); the policy defined in the call of sys_setpolicy already enables the IRQ?
+				return BIT(hook_temp);
+			}
+	else return -1;
+
 }
 
 int timer_unsubscribe_int() {
 
-	return 1;
+	if(sys_irqrmpolicy(&hook_id)==OK) //unsubscribes a previous subscription of the interrupt notification associated with the specified hook_id
+	{
+		sys_irqdisable(&hook_id);  //disables interrupts on the IRQ line associated with the specified hook_id
+		return 0;
+	}
+	else return 1;
 }
 
 void timer_int_handler() {
-
+	counter++;
 }
 
 int timer_get_conf(unsigned long timer, unsigned char *st) {
