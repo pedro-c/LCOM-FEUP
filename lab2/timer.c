@@ -3,7 +3,7 @@
 
 #include "timer.h"
 #include "i8254.h"
- static int hook_id=1;
+ static int hook_id=NOTIFICATION_ID;
  static unsigned long counter=0;
 
 
@@ -72,7 +72,7 @@ int timer_unsubscribe_int() {
 
 	if(sys_irqdisable(&hook_id)==OK) //desativar as interrupcoes
 	{
-		sys_irqrmpolicy(&hook_id); //Remove
+		sys_irqrmpolicy(&hook_id); //Remove a policy do qual foi feito o disable
 		return 0;
 	}
 	else return 1;
