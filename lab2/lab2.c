@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 		  return 0;
 }
 
-static void print_usage(char *argv[]) {
+static void print_usage(char *argv[]){ //  quando chamado para testar mostra as funcoes que podem ser testadas
   printf("Usage: one of the following:\n"
 	 "\t service run %s -args \"timer_test_square <freq>\" \n"
 	 "\t service run %s -args \"timer_test_config <timer>\" \n"
@@ -28,7 +28,7 @@ static void print_usage(char *argv[]) {
 	 argv[0], argv[0], argv[0]);
 }
 
-static int proc_args(int argc, char *argv[]) {
+static int proc_args(int argc, char *argv[]) { //chama a funcao correspondente
 
 
   unsigned long timer,freq,time;
