@@ -88,24 +88,29 @@ int timer_get_conf(unsigned long timer, unsigned char *st) {
 
 int timer_display_conf(unsigned char conf) {
 	int CM = conf & BIT(0);
-	if (CM == 0) {
+	if (CM == 0)
+	{
 		printf("BCD\n");
 	} else if (CM == 1) {
-		printf("Binar0y\n");
+		printf("Binary\n");
 	}
 	int OM = conf >> 1 & (BIT(0) | BIT(1) | BIT(2));
-	if (OM == 0) {
+	if (OM == 0){
 		printf("Interrupt on Terminal Count\n");
-	} else if (OM == 1) {
+	} else if (OM == 1){
 		printf("Hardware Retriggerable One-shot\n");
 	} else if (OM == 2) {
-		printf("Rate Gnerator\n");
+		printf("Rate Generator\n");
+	} else if (OM == 6) {
+		printf("Rate Generator\n");
 	} else if (OM == 3) {
+		printf("Square Wave Mode\n");
+	} else if (OM ==7){
 		printf("Square Wave Mode\n");
 	} else if (OM == 4) {
 		printf("Software Triggered Strobe\n");
 	} else if (OM == 5) {
-		printf("Hardware Triggered Strobe(Retriggerable\n");
+		printf("Hardware Triggered Strobe(Retriggerable)\n");
 	}
 	int TA = conf >> 4 & (BIT(0) | BIT(1));
 	if (TA == 1) {
@@ -135,6 +140,8 @@ message msg;
 
 int timer_test_int(unsigned long time)
 {
+	int ipc_status;
+	message msg;
 	int r,irq_set=BIT(hook_id);
 	int x=0;
 	if(timer_test_square(60)==1)
