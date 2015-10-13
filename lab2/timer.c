@@ -13,6 +13,13 @@ int timer_set_square(unsigned long timer, unsigned long freq) {
 	unsigned long fr;
 	unsigned char st;
 
+	//verifica se o resultado da frequencia é menor que o valor maximo possivel de representar em 2 bytes.
+	if(TIMER_FREQ/freq >= 0xFFFF)
+	{
+		printf("Frequencia nao suportavel pelo timer (overflow).\n");
+		return 1;
+	}
+
 	fr = TIMER_FREQ / freq;
 	if (timer == 0 || timer == 1 || timer == 2)
 	{
