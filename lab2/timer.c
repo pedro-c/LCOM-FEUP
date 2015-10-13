@@ -16,9 +16,15 @@ int timer_set_square(unsigned long timer, unsigned long freq) {
 	fr = TIMER_FREQ / freq;
 	if (timer == 0 || timer == 1 || timer == 2) {
 		timer_get_conf(timer, &st);
+
+		st=st<<4;
+		st=st>>4;
+		st=(TIMER_0 + timer | TIMER_LSB_MSB | st);
+		/*
 		st = st << 7;
 		st = st >> 7;
 		st = (TIMER_0 + timer | TIMER_LSB_MSB | TIMER_SQR_WAVE | st); //controlador criado mantendo o counting mode
+		*/
 		if (sys_outb(TIMER_CTRL, st)) {
 			printf("Error by calling sys_outb for confs\n");
 			return 1;
