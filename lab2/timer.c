@@ -151,9 +151,6 @@ int timer_display_conf(unsigned char conf) {
 	return 0;
 }
 
-int ipc_status;
-message msg;
-
 int timer_test_int(unsigned long time)
 {
 	int ipc_status;
