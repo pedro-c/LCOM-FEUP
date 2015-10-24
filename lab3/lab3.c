@@ -46,11 +46,11 @@ static int proc_args(int argc, char *argv[]) { //chama a funcao correspondente
  		printf("KBD::kbd_test_scan(%u)\n",(unsigned)ASM);
  		if(kbd_test_scan(ASM) == 0)
  		{
- 			return 1;
+ 			return 0;
  		}
  		else
  		{
- 			return 0;
+ 			return 1;
  		}
 
   }
@@ -66,11 +66,11 @@ static int proc_args(int argc, char *argv[]) { //chama a funcao correspondente
 
 	  if(kbd_test_leds(n,toggle)==0)
 	  {
-		  return 1;
+		  return 0;
 	  }
 	  else
 	  {
-		  return 0;
+		  return 1;
 	  }
   }
   else if (strncmp(argv[1], "kbd_test_timed_scan", strlen("kbd_test_timed_scan")) == 0)
@@ -87,11 +87,11 @@ static int proc_args(int argc, char *argv[]) { //chama a funcao correspondente
 	  printf("KBD::kbd_test_timed_scan(%u)\n",n);
 	 if(kbd_test_timed_scan(n)==0)
 	 {
-		 return 1;
+		 return 0;
 	 }
 	 else
 	 {
-		 return 0;
+		 return 1;
 	 }
   } else {
 	  printf("KBD: non valid function \"%s\" to test\n", argv[1]);
