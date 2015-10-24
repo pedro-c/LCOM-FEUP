@@ -8,7 +8,6 @@
 int kbd_test_scan(unsigned short ass) {
 	int r,ipc_status;
 	message msg;
-	int hook_kbd = NOTIFICATION_KBD;
 	unsigned char codigo;
 	char irq_set = BIT(hook_kbd);
 	int verifica=0; //verificar se é uma tecla com info de apenas um byte ou dois
