@@ -7,6 +7,9 @@
 #define OUT_BUF 0x60
 #define KBD_IRQ 0x01
 #define VAL_ESC 0x81
+#define ACK		0xFA
+#define RESEND	0xFE
+#define ERROR	0xFC
 
 static int hook_kbd=1;
 
