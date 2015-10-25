@@ -5,6 +5,8 @@
 #include "keyboard.h"
 #include "i8254.h"
 
+static int hook_id=NOTIFICATION_ID;
+
 int kbd_test_scan(unsigned short ass) {
 	int r,ipc_status;
 	message msg;
@@ -75,17 +77,68 @@ int timer_unsubscribe_int() {
 	else return 1;
 }
 
+int sendInst (unsigned long reg, unsigned long cmd)
+{
+	unsigned long stat, r, data, i = 0;
+
+		while(i < 3)
+		{
+			if (sys_inb(STAT_REG, &stat) != OK)
+			{
+				printf("sys_inb failed with: %d", r);
+				return -1;
+			}
+
+			if ((stat & IBF) == 0)
+			{
+				r = sys_outb(reg, cmd);
+				if (r != OK)
+				{
+					printf("sys_inb failed with: %d", r);
+					return -1;
+				}
+				else return 0;
+			}
+
+			tickdelay(micros_to_ticks(DELAY_US));
+
+			i++;
+		}
+
+		printf("unable to write data\n");
+		return -1;
+}
+
+
+int set_leds(unsigned long cmd){
+	unsigned long data;
+
+	sendInst(OUT_BUF, KBC_CMD_ED);
+	sys_inb(OUT_BUF,&data);
+
+	if(data==KB_ACK)
+		sendInst(OUT_BUF, cmd);
+	else
+	{
+		printf("Set command error\n");
+		return -1;
+	}
+	return 0;
+}
+
+
 int kbd_test_leds(unsigned short n, unsigned short *leds) {
 
 	//0 - scrlock
 	//1 - numlock
 	//2 - capslock
 
-	unsigned long irq_set;
+	unsigned long irq_set, cmd;
 	int i=0;
 	int it = n*60; //numero de iterações vezes o tempo (60 segundos) de cada iteração
 	int r;
 	int ipc_status;
+	int t;
 	message msg;
 	unsigned long  numlk=0;
 	unsigned long  scrlk=0;
@@ -109,15 +162,41 @@ int kbd_test_leds(unsigned short n, unsigned short *leds) {
 		{
 			switch(_ENDPOINT_P(msg.m_source)){
 			case HARDWARE:
-				if(msg.NOTIFY_ARG & irq_set)
+				if(msg.NOTIFY_ARG & irq_set){
+					if((i % 60 ==0)||(i==0)){
+						switch(leds[t])
+						{
+						case 0:
+							if(scrlk==0) scrlk = BIT(0);
+							else scrlk=0;
+							break;
+						case 1:
+							if(numlk==0) numlk=BIT(1);
+							else numlk=0;
+						case 2:
+							if(capslk==0) capslk=BIT(2);
+							else capslk=0;
+							break;
+						default:
+							printf("Invalid indicator");
+							return 1;
+							break;
+						}
+						cmd= scrlk|numlk|capslk;
+						set_leds(cmd);
+						t++;
+					}
+				}
+				break;
+			default:
+				break;
 
 			}
 		}
-
-
-
+		i++;
 	}
 
+	timer_unsubscribe_int();
 
 
 }
