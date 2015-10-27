@@ -4,6 +4,7 @@
 #include <minix/sysutil.h>
 #include <minix/syslib.h>
 #include <minix/drivers.h>
+#include "i8254.h"
 #define OUT_BUF 		0x60
 #define KBD_IRQ 		0x01
 #define VAL_ESC 		0x81
@@ -17,7 +18,8 @@
 #define OBF 			BIT(0)
 #define IBF 			BIT(1)
 
-static int hook_kbd=1;
+static int hook_kbd=NOTIFICATION_KBD;
+static int hook_timer=NOTIFICATION_TIMER;
 
 int kbd_subscribe(int *hook_kbd);
 
@@ -26,6 +28,14 @@ int kbd_unsubscribe(int *hook_kbd);
 int kbd_code_scan (unsigned char *codigo);
 
 void print_code(unsigned char codigo);
+
+int timer_subscribe_int(void);
+
+int timer_unsubscribe_int();
+
+int sendInst(unsigned long reg, unsigned long cmd);
+
+int set_leds(unsigned long cmd);
 
 
 
