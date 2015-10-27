@@ -10,6 +10,7 @@ static void print_usage(char *argv[]);
 int main(int argc, char **argv)
 {
 		sef_startup();
+		sys_enable_iop(SELF);
 
 		if ( argc == 1 ) {
 		      print_usage(argv);
@@ -31,7 +32,7 @@ static void print_usage(char *argv[]){ //  quando chamado para testar mostra as 
 static int proc_args(int argc, char *argv[]) { //chama a funcao correspondente
 
 
-  unsigned short ASM,n,*toggle;
+  unsigned short ASM,n,leds,*toggle;
 
   /* check the function to test: if the first characters match, accept it */
   if (strncmp(argv[1], "kbd_test_scan", strlen("kbd_test_scan")) == 0)
@@ -55,29 +56,36 @@ static int proc_args(int argc, char *argv[]) { //chama a funcao correspondente
 
   }
   else if (strncmp(argv[1], "kbd_test_leds", strlen("kbd_test_leds")) == 0) {
-  	  if( argc != 4 ) {
-  		  printf("KBD: wrong no of arguments for test of vt_fill_char() \n");
-  		  return 1;
-  	  }
-  	  if( (n = parse_ulong(argv[2], 10)) == USHRT_MAX)
-  		  return 1;
-  	  if( (*toggle = parse_ulong(argv[3], 10)) == USHRT_MAX)
-  		  return 1;
+    	  if( argc != 4 ) {
+    		  printf("KBD: wrong no of arguments for test of kbd_test_leds \n");
+    		  return 1;
+    	  }
+    	  if( (leds = parse_ulong(argv[2], 10)) == ULONG_MAX)
+    		  return 1;
 
-	  if(kbd_test_leds(n,toggle)==0)
-	  {
-		  return 0;
-	  }
-	  else
-	  {
-		  return 1;
-	  }
-  }
+    	  *toggle= malloc((argc-2)*sizeof(unsigned short));
+    	  n=argc-2;
+
+    	  if( (*toggle = parse_ulong(argv[3], 10)) == ULONG_MAX)
+    		  return 1;
+
+    	  unsigned int i=0;
+    	  while(i<n)
+    	  {
+    		 if((toggle[i]=parse_ulong(argv[i+2],10))==ULONG_MAX || toggle[i]>2 || toggle[i]<0){
+    			  printf("parameters must be between 0 and 2!");
+    			  return 1;
+    		  }
+
+    		  i++;
+    	  }
+  	  return kbd_test_leds(n,toggle);
+    }
   else if (strncmp(argv[1], "kbd_test_timed_scan", strlen("kbd_test_timed_scan")) == 0)
   {
 	  if( argc != 3)
 	  {
-		  printf("KBD: wrong no of arguments for test of timer_test_int() \n");
+		  printf("KBD: wrong no of arguments for test of kbd_test_timed_scan() \n");
 		  return 1;
 	  }
 	  if((n=parse_ulong(argv[2],10))==USHRT_MAX)

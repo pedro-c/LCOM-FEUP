@@ -56,6 +56,19 @@
 #define TIMER_RB_STATUS_        BIT(4)
 #define TIMER_RB_SEL(n)         BIT((n)+1)
 
+#define OUT_BUF 		0x60
+#define KBD_IRQ 		0x01
+#define VAL_ESC 		0x81
+#define ACK				0xFA
+#define RESEND			0xFE
+#define ERROR			0xFC
+#define KB_ACK			0xFA
+#define KBC_CMD_ED		(BIT(7) | BIT(6) | BIT(5) | BIT(3) | BIT(2) | BIT(0))
+#define STAT_REG		0x64
+#define DELAY_US 		20000
+#define OBF 			BIT(0)
+#define IBF 			BIT(1)
+
 
 /**@}*/
 
