@@ -1,5 +1,7 @@
+#include <minix/sysutil.h>
+#include <minix/syslib.h>
+#include <minix/drivers.h>
 #include "keyboard.h"
-#include "i8254.h"
 
 int kbd_subscribe(int *hook_kbd) {
 	if (sys_irqsetpolicy(KBD_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, hook_kbd) == OK)

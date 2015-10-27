@@ -50,12 +50,46 @@ int kbd_test_scan(unsigned short ass) {
 		if (kbd_unsubscribe(&hook_kbd) == -1) {
 			return -1;
 		}
-	}
-	else if(ass==1)
-	{
-
-	}
-	else{
+	} else if (ass == 1) {
+		if (kbd_subscribe(&hook_kbd) == -1) {
+			printf("Unable to subscribe!\n");
+			return -1;
+		}
+		while (codigo != VAL_ESC) { //enquanto nao for pressionado o ESC continua
+			if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
+				printf("driver_receive failed with: %d", r);
+				continue;
+			}
+			if (is_ipc_notify(ipc_status)) {
+				switch (_ENDPOINT_P(msg.m_source)) {
+				case HARDWARE:
+					if (msg.NOTIFY_ARG & irq_set) {
+						codigo = (unsigned char) code_scan_asm();
+						if (verifica == 0) {
+							if (kbd_code_scan(&codigo) == 0) {
+								print_code(codigo);
+							} else {
+								verifica = 1;
+							}
+						} else {
+							if (kbd_code_scan(&codigo) == 0) {
+								print_code(codigo);
+							} else {
+								verifica = 0;
+							}
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		printf("Pressionou a tecla ESC!\n");
+		if (kbd_unsubscribe(&hook_kbd) == -1) {
+			return -1;
+		}
+	} else {
 		printf("Not a correct option!\n");
 	}
 }
