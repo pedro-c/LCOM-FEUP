@@ -1,33 +1,21 @@
 #include <minix/drivers.h>
-
 #include <minix/syslib.h>
-
 #include "test4.h"
 
 static int proc_args(int argc, char *argv[]);
-
 static unsigned short parse_ushort(char *str, int base);
-
 static void print_usage(char *argv[]);
 
 int main(int argc, char **argv) {
 
 	sef_startup();
-
 	if (argc == 1) {
-
 		print_usage(argv);
-
 		return 0;
-
 	} else {
-
 		proc_args(argc, argv);
-
 	}
-
 	return 0;
-
 }
 
 static void print_usage(char *argv[]) {

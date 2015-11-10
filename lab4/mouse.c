@@ -1,13 +1,12 @@
 #include <minix/drivers.h>
 #include <stdbool.h>
-#include <math.h>
 
 #include "mouse.h"
 
 int timer_subscribe_int(void) {
 	if ((sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_timer) == OK)) {
 		sys_irqenable(&hook_timer); //ativa as interrupcoes
-		return BIT(hook_timer);
+		return BIT(NOTIFICATION_TIMER);
 	} else
 		return -1;
 }
@@ -23,25 +22,20 @@ int timer_unsubscribe_int() {
 }
 
 int mouse_subscribe() {
-	int hook_temp = hook_mouse;
-	if (sys_irqsetpolicy(MOUSE_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_mouse)
-			== OK)
+	if (sys_irqsetpolicy(MOUSE_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_mouse)== OK)
 		if (sys_irqenable(&hook_mouse) == OK)
-			return BIT(hook_temp);
+			return BIT(NOTIFICATION_MOUSE);
 	return -1;
 }
 
 int mouse_unsubscribe() {
-	if (sys_irqdisable(&hook_mouse) == OK){
-		if (sys_irqrmpolicy(&hook_mouse) == OK){
+	if (sys_irqdisable(&hook_mouse) == OK)
+		if (sys_irqrmpolicy(&hook_mouse) == OK)
 			return 0;
-		}
-	}
-
 	return -1;
 }
 
-int mouse_write(char cnt, unsigned char cmd) {
+int mouse_write(unsigned long cnt, unsigned char cmd) {
 	unsigned long stat = 0;
 	unsigned int i = 0;
 	while (i < 10) {
@@ -97,7 +91,7 @@ void mouse_print(char packet[]) {
 	printf("XOV: %*d ", 1, xo);
 	printf("YOV: %*d ", 1, yo);
 	if (xs == 1) {
-		char p = packet[1] ^ 0xFF;
+		char p = packet[1]^0xFF;
 		p++;
 		printf("X:%d", (short) p);
 	} else
