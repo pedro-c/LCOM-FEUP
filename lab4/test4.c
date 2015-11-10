@@ -235,6 +235,30 @@ int test_config(void) {
 
 int test_gesture(short length, unsigned short tolerance) {
 
+	typedef enum {
+		INIT, DRAW, COMP
+	} state_t;
 
+	typedef enum {
+		RDOW, RUP, MOVE
+	} ev_type_t;
+
+	void check_hor_line(event_t *evt) {
+		static state_t st = INIT; // initial state; keep state
+		switch (st) {
+		case INIT:
+			if (evt->type == RDOWN)
+				state = DRAW;
+			break;
+		case DRAW:
+			if (evt->type == MOVE) {
+			[...] // need to check if events VERT_LINE or HOR_TOLERANCE occur
+		} else if (evt->type == RUP)
+			state = INIT;
+		break;
+	default:
+		break;
+		}
+	}
 
 }
