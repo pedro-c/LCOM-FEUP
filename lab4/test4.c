@@ -136,9 +136,105 @@ int test_async(unsigned short idle_time) {
 }
 
 int test_config(void) {
-	/* To be completed ... */
+
+		int counter = 0;
+		int ipc_status;
+		message msg;
+		unsigned long irq_set = mouse_subscribe();
+	    if(irq_set==-1)
+	    {
+	    	printf("Error Subscribing mouse");
+	    	return 0;
+	    }
+
+	    //Ativar o rato
+	    if(sys_outb(STAT_REG,ENABLE)!=OK)
+	    {
+	    	printf("Error enabling mourse.");
+	    	return 0;
+	    }
+	    if(sys_outb(STAT_REG,W_TO_MOUSE)!=OK)
+	    {
+	        printf("Error writing byte to mouse.");
+	        return 0;
+	    }
+	    if(sys_outb(IN_BUF,DISABLE_SM)!=OK)
+	    {
+	    	printf("Error disabling stream mode.");
+	    	return 0;
+	    }
+	    if(sys_outb(STAT_REG,W_TO_MOUSE)!=OK)
+	    {
+	        printf("Error writing byte to mouse.");
+	        return 0;
+	    }
+	    if(sys_outb(IN_BUF,STATUS_REQUEST)!=OK) //GET MOUSE CONFIGURATION
+	    {
+	        printf("Error writing byte to mouse.");
+	        return 0;
+	    }
+
+		while (counter < 3) {
+			int b = driver_receive(ANY, &msg, &ipc_status);
+
+			if (b != 0) {
+				printf("driver_receive failed with: %d", b);
+				continue;
+			}
+
+			if (is_ipc_notify(ipc_status)) {
+				switch (_ENDPOINT_P(msg.m_source)) {
+				case HARDWARE:
+					if (msg.NOTIFY_ARG & irq_set) {
+						sys_inb(OUT_BUF, &packet[counter]);
+						counter++;
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+		if (packet[0] & BIT(6)) {
+			printf("Remote (poled) mode\n");
+		} else {
+			printf("Stream mode\n");
+		}
+		if (packet[0] & BIT(5)) {
+			printf("Data reporting enabled\n");
+		} else {
+			printf("Data reporting disabled\n");
+		}
+		if (packet[0] & BIT(4)) {
+			printf("Scaling is 2:1\n");
+		} else {
+			printf("Scaling is 1:1\n");
+		}
+		if (packet[0] & BIT(2)) {
+			printf("Middle button pressed\n");
+		} else {
+			printf("Middle button released\n");
+		}
+		if (packet[0] & BIT(1)) {
+			printf("Right button pressed\n");
+		} else {
+			printf("Right button released\n");
+		}
+		if (packet[0] & BIT(0)) {
+			printf("Left button pressed\n");
+		} else {
+			printf("Left button released\n");
+		}
+		printf("Resolution : %d\n",BIT(packet[1]));
+		printf("Sample Rate : %d\n",BIT(packet[2]));
+
+		mouse_unsubscribe();
+
 }
 
 int test_gesture(short length, unsigned short tolerance) {
-	/* To be completed ... */
+
+
+
 }

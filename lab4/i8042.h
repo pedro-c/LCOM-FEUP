@@ -25,5 +25,9 @@
 #define STATUS_REQUEST      0xE9
 #define ACK                 0xFA
 #define NACK                0xFE
+#define ENABLE              0xA8        //ENABLE MOUSE
+#define W_TO_MOUSE          0xD4        //WRITE BYTE TO MOUSE
+#define DISABLE_SM          0xF5        //DISABLE STREAM MODE
+
 
 #endif
