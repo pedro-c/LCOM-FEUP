@@ -13,6 +13,7 @@
 #define MOUSE_IRQ           12
 #define STAT_REG            0x64
 #define OUT_BUF             0x60
+#define IN_BUF				0x60
 #define IBF                 0x02
 #define OBF                 0x01
 #define MC                  0xD4
@@ -25,9 +26,9 @@
 #define STATUS_REQUEST      0xE9
 #define ACK                 0xFA
 #define NACK                0xFE
-#define ENABLE              0xA8        //ENABLE MOUSE
+#define ENABLE_M            0xA8        //ENABLE MOUSE
 #define W_TO_MOUSE          0xD4        //WRITE BYTE TO MOUSE
-#define DISABLE_SM          0xF5        //DISABLE STREAM MODE
+
 
 
 #endif

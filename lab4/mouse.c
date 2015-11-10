@@ -32,9 +32,12 @@ int mouse_subscribe() {
 }
 
 int mouse_unsubscribe() {
-	if (sys_irqdisable(&hook_mouse) == OK)
-		if (sys_irqrmpolicy(&hook_mouse) == OK)
+	if (sys_irqdisable(&hook_mouse) == OK){
+		if (sys_irqrmpolicy(&hook_mouse) == OK){
 			return 0;
+		}
+	}
+
 	return -1;
 }
 

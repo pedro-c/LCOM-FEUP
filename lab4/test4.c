@@ -131,110 +131,126 @@ int test_async(unsigned short idle_time) {
 	if (sys_outb(OUT_BUF, DISABLE_STREAM) != OK)
 		printf("ERROR-DISABLE_STREAM");
 	if (mouse_unsubscribe() == -1)
-		printf("falhou unsubscribe mouse!\n");
+		printf("Error unsubscribing mouse!\n");
 	return 0;
 }
 
 int test_config(void) {
 
-		int counter = 0;
-		int ipc_status;
-		message msg;
-		unsigned long irq_set = mouse_subscribe();
-	    if(irq_set==-1)
-	    {
-	    	printf("Error Subscribing mouse");
-	    	return 0;
-	    }
+	unsigned long data;
+	char packet[3];
+	int counter = 0;
+	int ipc_status;
+	message msg;
+	unsigned long irq_set = mouse_subscribe();
+	if (irq_set == -1) {
+		printf("Error Subscribing mouse");
+		return 0;
+	}
 
-	    //Ativar o rato
-	    if(sys_outb(STAT_REG,ENABLE)!=OK)
-	    {
-	    	printf("Error enabling mourse.");
-	    	return 0;
-	    }
-	    if(sys_outb(STAT_REG,W_TO_MOUSE)!=OK)
-	    {
-	        printf("Error writing byte to mouse.");
-	        return 0;
-	    }
-	    if(sys_outb(IN_BUF,DISABLE_SM)!=OK)
-	    {
-	    	printf("Error disabling stream mode.");
-	    	return 0;
-	    }
-	    if(sys_outb(STAT_REG,W_TO_MOUSE)!=OK)
-	    {
-	        printf("Error writing byte to mouse.");
-	        return 0;
-	    }
-	    if(sys_outb(IN_BUF,STATUS_REQUEST)!=OK) //GET MOUSE CONFIGURATION
-	    {
-	        printf("Error writing byte to mouse.");
-	        return 0;
-	    }
+	//Ativar o rato
+	if (sys_outb(STAT_REG, ENABLE_M) != OK) {
+		printf("Error enabling mourse.");
+		return 0;
+	}
+	sys_inb(OUT_BUF,&data);
+	if (sys_outb(STAT_REG, W_TO_MOUSE) != OK) {
+		printf("Error writing byte to mouse.");
+		return 0;
+	}
+	sys_inb(OUT_BUF,&data);
+	if (sys_outb(IN_BUF, DISABLE_STREAM) != OK) {
+		printf("Error disabling stream mode.");
+		return 0;
+	}
+	sys_inb(OUT_BUF,&data);
+	if (sys_outb(STAT_REG, W_TO_MOUSE) != OK) {
+		printf("Error writing byte to mouse.");
+		return 0;
+	}
+	sys_inb(OUT_BUF,&data);
+	if (sys_outb(IN_BUF, STATUS_REQUEST) != OK) //GET MOUSE CONFIGURATION
+			{
+		printf("Error writing byte to mouse.");
+		return 0;
+	}
+	sys_inb(OUT_BUF,&data);
 
-		while (counter < 3) {
-			int b = driver_receive(ANY, &msg, &ipc_status);
 
-			if (b != 0) {
-				printf("driver_receive failed with: %d", b);
-				continue;
-			}
+	while (counter < 3) {
+		int b = driver_receive(ANY, &msg, &ipc_status);
 
-			if (is_ipc_notify(ipc_status)) {
-				switch (_ENDPOINT_P(msg.m_source)) {
-				case HARDWARE:
-					if (msg.NOTIFY_ARG & irq_set) {
-						sys_inb(OUT_BUF, &packet[counter]);
-						counter++;
-					}
-					break;
-				default:
-					break;
+		if (b != 0) {
+			printf("driver_receive failed with: %d", b);
+			continue;
+		}
+
+		if (is_ipc_notify(ipc_status)) {
+			switch (_ENDPOINT_P(msg.m_source)) {
+			case HARDWARE:
+				if (msg.NOTIFY_ARG & irq_set) {
+					//unsigned long p = (unsigned long) packet[counter];
+					sys_inb(OUT_BUF, &packet[counter]);
+					counter++;
 				}
+				break;
+			default:
+				break;
 			}
 		}
+	}
 
-		if (packet[0] & BIT(6)) {
-			printf("Remote (poled) mode\n");
-		} else {
-			printf("Stream mode\n");
-		}
-		if (packet[0] & BIT(5)) {
-			printf("Data reporting enabled\n");
-		} else {
-			printf("Data reporting disabled\n");
-		}
-		if (packet[0] & BIT(4)) {
-			printf("Scaling is 2:1\n");
-		} else {
-			printf("Scaling is 1:1\n");
-		}
-		if (packet[0] & BIT(2)) {
-			printf("Middle button pressed\n");
-		} else {
-			printf("Middle button released\n");
-		}
-		if (packet[0] & BIT(1)) {
-			printf("Right button pressed\n");
-		} else {
-			printf("Right button released\n");
-		}
-		if (packet[0] & BIT(0)) {
-			printf("Left button pressed\n");
-		} else {
-			printf("Left button released\n");
-		}
-		printf("Resolution : %d\n",BIT(packet[1]));
-		printf("Sample Rate : %d\n",BIT(packet[2]));
+	if ((packet[0] & BIT(6))==BIT(6)) {
+		printf("Remote (poled) mode\n");
+	} else {
+		printf("Stream mode\n");
+	}
+	if ((packet[0] & BIT(5))==BIT(5)) {
+		printf("Data reporting enabled\n");
+	} else {
+		printf("Data reporting disabled\n");
+	}
+	if ((packet[0] & BIT(4))==BIT(4)) {
+		printf("Scaling is 2:1\n");
+	} else {
+		printf("Scaling is 1:1\n");
+	}
+	if ((packet[0] & BIT(2))==BIT(2)) {
+		printf("Middle button pressed\n");
+	} else {
+		printf("Middle button released\n");
+	}
+	if ((packet[0] & BIT(1))==BIT(1)) {
+		printf("Right button pressed\n");
+	} else {
+		printf("Right button released\n");
+	}
+	if ((packet[0] & BIT(0))==BIT(0)) {
+		printf("Left button pressed\n");
+	} else {
+		printf("Left button released\n");
+	}
 
-		mouse_unsubscribe();
+	int x;
+	if(packet[1]==0)
+		x=0;
+	if(packet[1]==1)
+		x=2;
+	if(packet[1]==2)
+		x=4;
+	if(packet[1]==3)
+		x=8;
 
+	printf("Resolution : %d\n", x);
+	printf("Sample Rate : %d\n", packet[2]);
+
+	mouse_unsubscribe();
+	return 0;
 }
 
 int test_gesture(short length, unsigned short tolerance) {
 
+	/*
 	typedef enum {
 		INIT, DRAW, COMP
 	} state_t;
@@ -260,5 +276,6 @@ int test_gesture(short length, unsigned short tolerance) {
 		break;
 		}
 	}
+	*/
 
 }
