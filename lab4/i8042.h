@@ -11,4 +11,19 @@
 #define DELAY_US 20000
 
 #define MOUSE_IRQ           12
+#define STAT_REG            0x64
+#define OUT_BUF             0x60
+#define IBF                 0x02
+#define OBF                 0x01
+#define MC                  0xD4
+#define COMMAND_PORT        0x60
+#define PAR_ERR             0x80
+#define TO_ERR              0x40
+#define DISABLE_STREAM      0xF5
+#define ENABLE_SEND         0xF4
+#define SET_STREAM          0xEA
+#define STATUS_REQUEST      0xE9
+#define ACK                 0xFA
+#define NACK                0xFE
+
 #endif
