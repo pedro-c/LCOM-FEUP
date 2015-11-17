@@ -1,11 +1,11 @@
 #include <minix/drivers.h>
 
-#include "test5.h"
 #include "video_gr.h"
+#include "test5.h"
 
 static int proc_args(int argc, char *argv[]);
-static void print_usage(char *argv[]);
 static unsigned long parse_ulong(char *str, int base);
+static void print_usage(char *argv[]);
 
 int main(int argc, char **argv) {
 
