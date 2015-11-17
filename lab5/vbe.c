@@ -9,12 +9,10 @@
 
 #define PB2BASE(x) (((x) >> 4) & 0x0F000)
 #define PB2OFF(x) ((x) & 0x0FFFF)
+#define VIDEO_CARD                   0x10
 
 int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
-  
-  /* To be completed */
-  
-  return 1;
+	return 0;
 }
 
 

@@ -16,9 +16,11 @@
  *     service run `pwd`/lab5 -args "mode 0x105"
  */
 #define VRAM_PHYS_ADDR	0xF0000000
-#define H_RES             1024
-#define V_RES		  768
-#define BITS_PER_PIXEL	  8
+#define H_RES                 1024
+#define V_RES		           768
+#define BITS_PER_PIXEL	         8
+#define SET_VBE_MODE        0x4F02
+#define VIDEO_CARD            0x10
 
 /* Private global variables */
 
@@ -41,4 +43,62 @@ int vg_exit() {
       return 1;
   } else
       return 0;
+}
+
+void *vg_init(unsigned short mode){
+	int r;
+	struct mem_range mr;
+	unsigned long vram_size;
+	struct reg86u reg;
+	vbe_mode_info_t vm;
+
+	reg.u.w.ax=SET_VBE_MODE;
+	reg.u.w.bx=1<<14|mode;
+	reg.u.b.intno=VIDEO_CARD;
+	if(sys_int86(&reg)!=OK)
+	{
+		printf("Failed sys_int86().\n");
+	}
+
+	h_res=H_RES;
+	v_res=V_RES;
+	bits_per_pixel=BITS_PER_PIXEL;
+
+	mr.mr_base = VRAM_PHYS_ADDR;
+	mr.mr_limit = mr.mr_base + h_res*v_res*bits_per_pixel;
+
+	  if( OK != (r = sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)))
+		  panic("video_txt: sys_privctl (ADD_MEM) failed: %d\n", r);
+
+	  /* Map memory */
+
+	  video_mem = vm_map_phys(SELF, (void *)mr.mr_base,h_res*v_res*bits_per_pixel);
+
+	  if(video_mem == MAP_FAILED)
+		  panic("Couldn't map video memory");
+	  return video_mem;
+
+}
+
+void fill_pixel(unsigned short x,unsigned short y,unsigned long color){
+	char *vm=video_mem;
+	vm+=h_res*y;
+	*vm=color;
+}
+
+
+int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned long color)
+{
+	unsigned short xmax=x+size,xi=x;
+	unsigned short ymax=y+size;
+
+		for(y;y<ymax;y++)
+		{
+			x=xi;
+			for(x;x<xmax;x++)
+			{
+				fill_pixel(x,y,color);
+			}
+		}
+		return 0;
 }
