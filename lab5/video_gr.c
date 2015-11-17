@@ -65,14 +65,14 @@ void *vg_init(unsigned short mode){
 	bits_per_pixel=BITS_PER_PIXEL;
 
 	mr.mr_base = VRAM_PHYS_ADDR;
-	mr.mr_limit = mr.mr_base + h_res*v_res*bits_per_pixel;
+	mr.mr_limit = mr.mr_base + (h_res*v_res*bits_per_pixel)/8;
 
 	  if( OK != (r = sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)))
 		  panic("video_txt: sys_privctl (ADD_MEM) failed: %d\n", r);
 
 	  /* Map memory */
 
-	  video_mem = vm_map_phys(SELF, (void *)mr.mr_base,h_res*v_res*bits_per_pixel);
+	  video_mem = vm_map_phys(SELF, (void *)mr.mr_base,(h_res*v_res*bits_per_pixel)/8);
 
 	  if(video_mem == MAP_FAILED)
 		  panic("Couldn't map video memory");
@@ -83,22 +83,20 @@ void *vg_init(unsigned short mode){
 void fill_pixel(unsigned short x,unsigned short y,unsigned long color){
 	char *vm=video_mem;
 	vm+=h_res*y;
+	vm+=x;
 	*vm=color;
 }
 
 
 int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned long color)
 {
-	unsigned short xmax=x+size,xi=x;
-	unsigned short ymax=y+size;
-
-		for(y;y<ymax;y++)
+	unsigned int i,j;
+	for(i=y;i<(y+size);i++)
+	{
+		for(j=x;j<(x+size);j++)
 		{
-			x=xi;
-			for(x;x<xmax;x++)
-			{
-				fill_pixel(x,y,color);
-			}
+			fill_pixel(j,i,color);
 		}
+	}
 		return 0;
 }
