@@ -23,11 +23,18 @@ int test_square(unsigned short x, unsigned short y, unsigned short size, unsigne
 
 	if(vg_init(TEST_SQUARE_MODE)==NULL)
 	{
-		printf("Failed vg_init.\n");
+		printf("Failed vg_init().\n");
 		return 1;
 	}
 
 	print_square(x,y,size,color);
+	timer_test_int(10);
+
+	if(vg_exit()!=0)
+	{
+		printf("Failed vg_exit.\n");
+		return 1;
+	}
 	return 0;
 }
 
