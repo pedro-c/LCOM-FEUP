@@ -68,7 +68,7 @@ void *vg_init(unsigned short mode){
 	mr.mr_limit = mr.mr_base + (h_res*v_res*bits_per_pixel)/8;
 
 	  if( OK != (r = sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)))
-		  panic("video_txt: sys_privctl (ADD_MEM) failed: %d\n", r);
+		  panic("video_gr: sys_privctl (ADD_MEM) failed: %d\n", r);
 
 	  /* Map memory */
 
@@ -81,10 +81,10 @@ void *vg_init(unsigned short mode){
 }
 
 void fill_pixel(unsigned short x,unsigned short y,unsigned long color){
-	char *vm=video_mem;
-	vm+=h_res*y;
-	vm+=x;
-	*vm=color;
+	char *ptr=video_mem;
+	ptr+=h_res*y;
+	ptr+=x;
+	*ptr=color;
 }
 
 

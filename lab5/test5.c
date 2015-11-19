@@ -8,49 +8,48 @@
 
 #define TEST_SQUARE_MODE      0x105
 
-void *test_init(unsigned short mode, unsigned short delay){
+void *test_init(unsigned short mode, unsigned short delay) {
 
 	char *video_mem;
-	video_mem=vg_init(mode);
+	video_mem = vg_init(mode);
 
 	timer_test_int(delay);
 
-	if(vg_exit()==1)
+	if (vg_exit() == 1)
 		printf("Failed vg_exit().\n");
 }
 
-int test_square(unsigned short x, unsigned short y, unsigned short size, unsigned long color){
+int test_square(unsigned short x, unsigned short y, unsigned short size,
+		unsigned long color) {
 
-	if(vg_init(TEST_SQUARE_MODE)==NULL)
-	{
+	if (vg_init(TEST_SQUARE_MODE) == NULL) {
 		printf("Failed vg_init().\n");
 		return 1;
 	}
 
-	print_square(x,y,size,color);
-	timer_test_int(10);
+	print_square(x, y, size, color);
 
-	if(vg_exit()!=0)
-	{
-		printf("Failed vg_exit.\n");
+	if (wait_for_ESC() != 0) {
+		printf("Failed wait_for_ESC().\n");
 		return 1;
 	}
 	return 0;
 }
 
-int test_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color){
+int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
+		unsigned short yf, unsigned long color) {
 	return 0;
 }
 
-
-int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]){
+int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 	return 0;
 }
 
-int test_move(unsigned short xi, unsigned short yi, char *xpm[], unsigned short hor, short delta, unsigned short time){
+int test_move(unsigned short xi, unsigned short yi, char *xpm[],
+		unsigned short hor, short delta, unsigned short time) {
 	return 0;
 }
 
-int test_controller(){
+int test_controller() {
 	return 0;
 }
