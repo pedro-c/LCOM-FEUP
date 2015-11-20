@@ -31,6 +31,9 @@ void fill_pixel(unsigned short x,unsigned short y,unsigned long color);
 
 int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned long color);
 
+unsigned getHres();
+
+unsigned getVres();
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */
