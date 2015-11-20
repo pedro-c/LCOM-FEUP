@@ -15,12 +15,6 @@ int kbd_unsubscribe(int *hook_kbd);
 
 int kbd_code_scan (unsigned char *codigo);
 
-void print_code(unsigned char codigo);
-
-int sendInst(unsigned long reg, unsigned long cmd);
-
-int set_leds(unsigned long cmd);
-
 int wait_for_ESC();
 
 

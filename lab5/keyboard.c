@@ -29,55 +29,6 @@ int kbd_code_scan(unsigned char *codigo) {
 		return 0;
 }
 
-void print_code(unsigned char codigo) {
-	int MSB = (0xff & codigo) >> 7;
-	if (MSB == 0) {
-		printf("Make code is: 0x%x\n", codigo);
-	} else {
-		printf("Break code is: 0x%x\n", codigo);
-	}
-}
-
-int sendInst(unsigned long reg, unsigned long cmd) {
-	unsigned long stat, r, data, i = 0;
-
-	while (i < 3) {
-		if (sys_inb(STAT_REG, &stat) != OK) {
-			printf("sys_inb failed with: %d", r);
-			return -1;
-		}
-
-		if ((stat & IBF) == 0) {
-			r = sys_outb(reg, cmd);
-			if (r != OK) {
-				printf("sys_inb failed with: %d", r);
-				return -1;
-			} else
-				return 0;
-		}
-
-		tickdelay(micros_to_ticks(DELAY_US));
-		i++;
-	}
-
-	printf("unable to write data\n");
-	return -1;
-}
-
-int set_leds(unsigned long cmd) {
-	unsigned long data;
-
-	sendInst(OUT_BUF, KBC_CMD_ED);
-	sys_inb(OUT_BUF, &data);
-
-	if (data == KB_ACK)
-		sendInst(OUT_BUF, cmd);
-	else {
-		printf("Set command error\n");
-		return -1;
-	}
-	return 0;
-}
 
 int wait_for_ESC() {
 	int ipc_status, r;

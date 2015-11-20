@@ -60,11 +60,17 @@ void *vg_init(unsigned short mode){
 		printf("Failed sys_int86().\n");
 	}
 
-	h_res=H_RES;
-	v_res=V_RES;
-	bits_per_pixel=BITS_PER_PIXEL;
+	if(vbe_get_mode_info(mode,&vm)==1)
+	{
+		printf("Failed vbe_get_mode_info().\n");
+		return;
+	}
 
-	mr.mr_base = VRAM_PHYS_ADDR;
+	h_res=vm.XResolution;
+	v_res=vm.YResolution;
+	bits_per_pixel=vm.BitsPerPixel;
+
+	mr.mr_base = (phys_bytes)(vm.PhysBasePtr);
 	mr.mr_limit = mr.mr_base + (h_res*v_res*bits_per_pixel)/8;
 
 	  if( OK != (r = sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)))
@@ -82,21 +88,31 @@ void *vg_init(unsigned short mode){
 
 void fill_pixel(unsigned short x,unsigned short y,unsigned long color){
 	char *ptr=video_mem;
-	ptr+=h_res*y;
-	ptr+=x;
+	ptr+=h_res*y+x;
 	*ptr=color;
 }
 
 
 int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned long color)
 {
-	unsigned int i,j;
-	for(i=y;i<(y+size);i++)
+	if((x+size)>h_res ||(y+size)>v_res || x<0 || y<0 || size<=0)
+		return 1;
+	unsigned int xi=x,yi=y;
+	for(y;y<(yi+size);y++)
 	{
-		for(j=x;j<(x+size);j++)
+		x=xi;
+		for(x;x<(xi+size);x++)
 		{
-			fill_pixel(j,i,color);
+			fill_pixel(y,x,color);
 		}
 	}
 		return 0;
+}
+
+unsigned getHres(){
+	return h_res;
+}
+
+unsigned getVres(){
+	return v_res;
 }
