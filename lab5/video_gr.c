@@ -108,11 +108,3 @@ int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned 
 	}
 		return 0;
 }
-
-unsigned getHres(){
-	return h_res;
-}
-
-unsigned getVres(){
-	return v_res;
-}
