@@ -108,3 +108,34 @@ int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned 
 	}
 		return 0;
 }
+
+int print_line(unsigned short xi,unsigned short yi,unsigned short xf,unsigned short yf,unsigned long color)
+{
+
+	int dx = (xf - xi);
+    int dy = (yf - yi);
+	int x = xi;
+	int y = yi;
+	int p = 2 * (dy) - (dx);
+	int i=1;
+
+	if(xf>h_res ||yf>v_res || xi<0 || yi<0)
+		return 1;
+
+	//Bresenham's algorithm
+
+	do {
+	    fill_pixel(x, y, color);
+	    while(p >= 0) {
+	        y = y + 1;
+	        p = p - (2 * dx);
+	    }
+	    x = x + 1;
+	    p = p + (2 * dy);
+	    i = i + 1;
+	}
+	while(i <= dx);
+
+	return 0;
+
+}

@@ -56,9 +56,28 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 	return 0;
 }
 
-int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
-		unsigned short yf, unsigned long color) {
-	return 0;
+int test_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color) {
+	if(vg_init(TEST_SQUARE_MODE)==NULL)
+	{
+		printf("Failed vg_init().\n");
+		return 1;
+	}
+
+	if(print_line(xi,yi,xf,yf,color)==1)
+		{
+			if(vg_exit()==1)
+			{
+				printf("Failed vg_exit().\n");
+			}
+			printf("Wrong coordinates.\n");
+			return 1;
+		}
+
+	if (wait_for_ESC() ==1) {
+			printf("Failed wait_for_ESC().\n");
+			return 1;
+		}
+		return 0;
 }
 
 int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
