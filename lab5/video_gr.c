@@ -3,9 +3,17 @@
 #include <machine/int86.h>
 #include <sys/mman.h>
 #include <sys/types.h>
-
+#include "sprite.h"
 #include "video_gr.h"
 #include "vbe.h"
+#include "timer.h"
+#include "keyboard.h"
+#include "i8254.h"
+
+
+
+static int hook_id=NOTIFICATION_TIMER;
+static unsigned long counter=0;
 
 /* Constants for VBE 0x105 mode */
 
@@ -91,6 +99,18 @@ void fill_pixel(unsigned short x,unsigned short y,unsigned long color){
 	char *ptr=video_mem;
 	ptr+=h_res*y+x;
 	*ptr=color;
+}
+
+void clear_pixels(){
+
+	char *ptr=video_mem;
+	int pixels=h_res*v_res;
+	int i=0;
+	for(i;i<pixels;i++){
+		ptr+=i;
+		*ptr=0;
+	}
+
 }
 
 int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned long color)
@@ -217,4 +237,75 @@ int print_xpm(unsigned short xi,unsigned short yi,char *xpm[]){
 		}
 	}
 	return 0;
+}
+
+int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],
+		unsigned short hor, short delta, unsigned short time) {
+	unsigned int x = 0;
+	unsigned int y = 0;
+	unsigned int xf = 0;
+	unsigned int yf = 0;
+	unsigned char codigo;
+	//variaveis do timer
+	int ipc_status;
+	message msg;
+	int r;
+	unsigned long keyboard_set = kbd_subscribe(&hook_kbd);
+	unsigned long timer_set = timer_subscribe_int();
+
+	//calcula a velocidade
+	float v = (((float) delta) / ((float) (time * 60)));
+
+	//create sprite
+	Sprite *sp = create_sprite(xpm, xi, yi, x, y);
+
+	if(hor==1){
+		sp->xspeed=delta/time;
+		sp->yspeed=0;
+	}
+	else{
+		sp->xspeed=0;
+		sp->yspeed=delta/time;
+	}
+
+	draw_sprite(sp,xi,yi,delta,0,0);
+
+	while (1) {
+
+		r = driver_receive(ANY, &msg, &ipc_status);
+		if (r != 0) {
+			printf("driver_receive failed with: %d", r);
+			continue;
+		}
+
+		if (is_ipc_notify(ipc_status)) {
+			switch (_ENDPOINT_P(msg.m_source)) {
+			case HARDWARE:
+
+				if (msg.NOTIFY_ARG & timer_set) {
+					clear_pixels();
+					draw_sprite(sp,xi,yi,delta,(int)sp->xspeed,(int)sp->yspeed);
+				}
+				if (msg.NOTIFY_ARG & keyboard_set) {
+					kbd_code_scan(&codigo);
+				}
+
+				break;
+			default:
+				break;
+			}
+		}
+		if (codigo == VAL_ESC)
+			break;
+	}
+	destroy_sprite(sp);
+	//vg_exit();
+	if (kbd_unsubscribe(&hook_kbd) == 1) {
+		return 1;
+	}
+	if (timer_unsubscribe_int() == 1) {
+		return 1;
+	}
+	return 0;
+
 }

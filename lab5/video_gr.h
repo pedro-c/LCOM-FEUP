@@ -34,6 +34,10 @@ int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned 
 int print_line(unsigned short xi,unsigned short yi,unsigned short xf,unsigned short yf,unsigned long color);
 
 int print_xpm(unsigned short xi,unsigned short yi,char *xpm[]);
+
+int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short hor, short delta, unsigned short time);
+
+void clear_pixels();
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */
