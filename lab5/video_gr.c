@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include <sys/types.h>
 
+#include "video_gr.h"
 #include "vbe.h"
 
 /* Constants for VBE 0x105 mode */
