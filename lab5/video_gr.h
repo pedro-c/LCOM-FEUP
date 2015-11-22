@@ -32,6 +32,8 @@ void fill_pixel(unsigned short x,unsigned short y,unsigned long color);
 int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned long color);
 
 int print_line(unsigned short xi,unsigned short yi,unsigned short xf,unsigned short yf,unsigned long color);
+
+int vg_xpm(unsigned short xi, unsigned short yi, char *xpm[]);
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */

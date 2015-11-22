@@ -2,6 +2,7 @@
 
 #include "video_gr.h"
 #include "test5.h"
+#include "pixmap.h"
 
 static int proc_args(int argc, char *argv[]);
 static unsigned long parse_ulong(char *str, int base);
@@ -34,9 +35,9 @@ static void print_usage(char *argv[]) {
 
 static int proc_args(int argc, char *argv[]) {
 	unsigned short mode, delay, x, y, size, xi, yi, xf,
-			yf, horizontal, time;
+			yf, hor, time;
 	unsigned long color;
-	short distance;
+	short delta;
 	if (strncmp(argv[1], "test_init", strlen("test_init")) == 0) {
 		if (argc != 4)
 				{
@@ -90,40 +91,38 @@ static int proc_args(int argc, char *argv[]) {
 		return test_line(xi, yi, xf, yf, color);
 
 	} else if (strncmp(argv[1], "test_xpm", strlen("test_xpm")) == 0) {
-		/*if (argc != 5) {
+		if (argc != 5) {
 			printf("wrong no of arguments for test of test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) \n");
 			return 1;
 		}
-		if ((length = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((xi = parse_ulong(argv[2], 10)) == LONG_MAX)
 			return 1;
-		if ((tolerance = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((yi = parse_ulong(argv[3], 10)) == LONG_MAX)
 			return 1;
-		if ((tolerance = parse_ushort(argv[2], 10)) == USHRT_MAX)
-			return 1;
-		printf("test_xpm(%d, %u, %z)\n", xi, yi, xmp);
-		return test_xpm(xi, yi, xmp);*/
+		if(strncmp(argv[4], "pic1", strlen("pic1"))==0)
+		{
+			return test_xpm(xi, yi,pic1);
+		}
 	} else if (strncmp(argv[1], "test_move", strlen("test_move")) == 0) {
-		/*if (argc != 8) {
+		if (argc != 8) {
 			printf(
 					"wrong no of arguments for test of test_move(unsigned short xi, unsigned short yi, char *xpm[], unsigned short hor, short delta, unsigned short time) \n");
 			return 1;
 		}
-		if ((idle_time = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((xi = parse_ulong(argv[2], 10)) == LONG_MAX)
 			return 1;
-		if ((idle_time = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((yi = parse_ulong(argv[3], 10)) == LONG_MAX)
 			return 1;
-		if ((idle_time = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((hor = parse_ulong(argv[5], 10)) == LONG_MAX)
 			return 1;
-		if ((idle_time = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((delta = parse_ulong(argv[6], 10)) == LONG_MAX)
 			return 1;
-		if ((idle_time = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((time = parse_ulong(argv[7], 10)) == LONG_MAX)
 			return 1;
-		if ((idle_time = parse_ushort(argv[2], 10)) == USHRT_MAX)
-			return 1;
-		printf("test5::test_line(%u, %d, %x %y, %z, %w)\n", xi, yi, xpm, hor,
-				delta, time);
-		return test_move(xi, yi, xpm, hor, delta, time);
-		*/
+		if(strncmp(argv[4], "pic1", strlen("pic1"))==0)
+		{
+			return test_move(xi,yi,pic1,hor,delta,time);
+		}
 	} else if (strncmp(argv[1], "test_controller", strlen("test_controller"))
 			== 0) {
 		if (argc != 2) {

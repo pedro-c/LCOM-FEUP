@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "vbe.h"
 
-#define TEST_SQUARE_MODE      0x105
+#define MODE_105      0x105
 
 void *test_init(unsigned short mode, unsigned short delay) {
 
@@ -34,7 +34,7 @@ void *test_init(unsigned short mode, unsigned short delay) {
 int test_square(unsigned short x, unsigned short y, unsigned short size,
 		unsigned long color) {
 
-	if (vg_init(TEST_SQUARE_MODE) == NULL) {
+	if (vg_init(MODE_105) == NULL) {
 		printf("Failed vg_init().\n");
 		return 1;
 	}
@@ -57,7 +57,7 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 }
 
 int test_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color) {
-	if(vg_init(TEST_SQUARE_MODE)==NULL)
+	if(vg_init(MODE_105)==NULL)
 	{
 		printf("Failed vg_init().\n");
 		return 1;
@@ -81,7 +81,28 @@ int test_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned 
 }
 
 int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
-	return 0;
+
+	if(vg_init(MODE_105)==NULL)
+	{
+		printf("Failed vg_init().\n");
+		return 1;
+	}
+	if(print_xpm(xi,yi,xpm)==1)
+		{
+			if(vg_exit()==1)
+			{
+				printf("Failed vg_exit().\n");
+			}
+			printf("Wrong coordinates.\n");
+			return 1;
+		}
+
+	if (wait_for_ESC() ==1) {
+			printf("Failed wait_for_ESC().\n");
+			return 1;
+		}
+		return 0;
+
 }
 
 int test_move(unsigned short xi, unsigned short yi, char *xpm[],
