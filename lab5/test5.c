@@ -6,6 +6,7 @@
 #include "video_gr.h"
 #include "timer.h"
 #include "vbe.h"
+#include "sprite.h"
 
 #define MODE_105      0x105
 
@@ -107,6 +108,25 @@ int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 
 int test_move(unsigned short xi, unsigned short yi, char *xpm[],
 		unsigned short hor, short delta, unsigned short time) {
+
+	if (vg_init(MODE_105) == NULL) {
+		printf("Failed vg_init().\n");
+		return 1;
+	}
+
+	if (move_xpm(xi, yi, xpm, hor, delta, time) == 1) {
+		if (vg_exit() == 1) {
+			printf("Failed vg_exit().\n");
+		}
+		printf("Wrong coordinates.\n");
+		return 1;
+
+	}
+	if (wait_for_ESC() == 1) {
+		printf("Failed wait_for_ESC().\n");
+		return 1;
+	}
+
 	return 0;
 }
 
