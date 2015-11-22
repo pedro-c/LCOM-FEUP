@@ -92,7 +92,6 @@ void fill_pixel(unsigned short x,unsigned short y,unsigned long color){
 	*ptr=color;
 }
 
-
 int print_square(unsigned short x,unsigned short y,unsigned short size,unsigned long color)
 {
 	if((x+size)>h_res ||(y+size)>v_res || x<0 || y<0 || size<=0)
@@ -138,4 +137,83 @@ int print_line(unsigned short xi,unsigned short yi,unsigned short xf,unsigned sh
 
 	return 0;
 
+}
+
+char *read_xpm(char *map[], int *wd, int *ht){
+	int width,height,num_colors;
+	unsigned int i,j,k;
+	char symbols[256];
+	int colors[256];
+	char *pix_col,*pix_col_tmp,*line;
+
+	for(i=0;i<256;i++)
+		symbols[i]=0;
+	for(i=0;i<256;i++)
+		colors[i]=0;
+
+	if (sscanf(map[0],"%d %d %d", &width, &height, &num_colors) != 3){
+		printf("Wrong width/heigth/num_colors.\n");
+		return NULL;
+	}
+
+	if(width>h_res || height>v_res || num_colors>256){
+		printf("Wrong width/heigth/num_colors.\n");
+		return NULL;
+	}
+
+	*wd=width;
+	*ht=height;
+
+	for(i=0;i<num_colors;i++){
+
+		if (sscanf(map[i+1], "%c %d",&symbols[i],&colors[i]) != 2) {
+					printf("Wrong symbol/color.\n");
+					return NULL;
+				}
+				if (colors[i] > 256) {
+					printf("Wrong color.\n");
+					return NULL;
+				}
+	}
+
+	pix_col = pix_col_tmp = malloc(height*width);
+
+		/* parse each pixmap symbol line */
+		for (i=0; i<height;i++) {
+			line = map[num_colors+i+1];
+			for (j=0; j<width;j++) {
+				int cor;
+				for(k=0;k<256;k++)
+				{
+					if(line[j]==symbols[k])
+						cor=colors[k];
+				}
+				*pix_col_tmp++=cor;
+			}
+		}
+		return pix_col;
+}
+
+int print_xpm(unsigned short xi,unsigned short yi,char *xpm[]){
+
+	unsigned int x_var=xi,y_var=yi;
+	char *pix;
+	int widht,height,tmp=0;
+	pix=read_xpm(xpm,&widht,&height);
+	if(pix==NULL)
+	{
+		printf("Failed read_xpm.\n");
+		return 1;
+	}
+
+	for(y_var;y_var<(yi+height);y_var++)
+	{
+		x_var=xi;
+		for(x_var;x_var<(xi+widht);x_var++)
+		{
+			fill_pixel(x_var,y_var,pix[tmp]);
+			tmp++;
+		}
+	}
+	return 0;
 }
