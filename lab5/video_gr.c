@@ -367,14 +367,35 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 	int r;
 	int counter=0;
 
+
+	//verifica se fica dentro do ecra
+	if (hor == 1) {
+		if ((xi + delta) <= 0 || (xi + delta) >= h_res) {
+			printf("Wrong coordinates.\n");
+			return 1;
+		}
+
+	} else {
+		if ((yi + delta) <= 0 || (yi + delta) >= v_res) {
+			printf("Wrong coordinates.\n");
+			return 1;
+		}
+
+	}
+	if (xi <= 0 || yi <= 0 || xi >= h_res || yi >= v_res) {
+		printf("Wrong coordinates.\n");
+		return 1;
+	}
+
+
 	unsigned long keyboard_set;
 	unsigned long timer_set;
 	keyboard_set = kbd_subscribe(&hook_kbd);
 	timer_set = timer_subscribe_int();
 
 	//calcula a velocidade
-	unsigned long v1 = ((float) delta / (float) (time * 60));
-	unsigned long v2 = ((float) (time * 60) / (float) delta);
+	unsigned long v1 = ((float) abs(delta) / (float) (time * 60));
+	unsigned long v2 = ((float) (time * 60) / (float) abs(delta));
 
 	//create sprite
 	Sprite *sp = create_sprite(xpm);
@@ -415,17 +436,28 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 					}
 
 					if (msg.NOTIFY_ARG & timer_set) {
+						if (delta < 0) {
+							tempx = sp->x - sp->xspeed;
+							tempy = sp->y - sp->yspeed;
 
-						tempx = sp->x + sp->xspeed;
-						tempy = sp->y + sp->yspeed;
+							if ((tempx >= (xi + deltax)) && (tempy >= (yi + deltay))) {
+								wipe_sprite(sp);
+								sp->x -= sp->xspeed;
+								sp->y -= sp->yspeed;
+								draw_sprite(sp);
+							}
+						} else {
+							tempx = sp->x + sp->xspeed;
+							tempy = sp->y + sp->yspeed;
 
-						if ((tempx <= (xi + deltax))
-								&& (tempy <= (yi + deltay))) {
-							wipe_sprite(sp);
-							sp->x += sp->xspeed;
-							sp->y += sp->yspeed;
-							draw_sprite(sp);
+							if ((tempx <= (xi + deltax)) && (tempy <= (yi + deltay))) {
+								wipe_sprite(sp);
+								sp->x += sp->xspeed;
+								sp->y += sp->yspeed;
+								draw_sprite(sp);
+							}
 						}
+
 
 					}
 					break;
@@ -473,15 +505,26 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 
 					if (msg.NOTIFY_ARG & timer_set) {
 						if(counter==v2){
-							tempx = sp->x + sp->xspeed;
-							tempy = sp->y + sp->yspeed;
+							if (delta < 0) {
+								tempx = sp->x - sp->xspeed;
+								tempy = sp->y - sp->yspeed;
 
-							if ((tempx <= (xi + deltax))
-									&& (tempy <= (yi + deltay))) {
-								wipe_sprite(sp);
-								sp->x += sp->xspeed;
-								sp->y += sp->yspeed;
-								draw_sprite(sp);
+								if ((tempx >= (xi + deltax)) && (tempy >= (yi + deltay))) {
+									wipe_sprite(sp);
+									sp->x -= sp->xspeed;
+									sp->y -= sp->yspeed;
+									draw_sprite(sp);
+								}
+							} else {
+								tempx = sp->x + sp->xspeed;
+								tempy = sp->y + sp->yspeed;
+
+								if ((tempx <= (xi + deltax)) && (tempy <= (yi + deltay))) {
+									wipe_sprite(sp);
+									sp->x += sp->xspeed;
+									sp->y += sp->yspeed;
+									draw_sprite(sp);
+								}
 							}
 							counter=0;
 						}
