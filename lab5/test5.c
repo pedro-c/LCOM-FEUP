@@ -8,6 +8,7 @@
 #include "vbe.h"
 #include "sprite.h"
 
+
 #define MODE_105      0x105
 
 void *test_init(unsigned short mode, unsigned short delay) {
