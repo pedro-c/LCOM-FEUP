@@ -23,7 +23,7 @@ int timer_set_square(unsigned long timer, unsigned long freq);
  *
  * @return Returns bit order in interrupt mask; negative value on failure
  */
-int timer_subscribe_int(void );
+int timer_subscribe_int();
 
 /**
  * @brief Unsubscribes Timer 0 interrupts
