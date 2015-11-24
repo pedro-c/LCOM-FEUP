@@ -62,7 +62,7 @@ int timer_subscribe_int(void) {
 	if ((sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_id)==OK))
 	{
 		sys_irqenable(&hook_id);//ativa as interrupcoes
-		return BIT(hook_id);
+		return BIT(NOTIFICATION_TIMER);
 	}
 	else return -1;
 

@@ -131,34 +131,136 @@ int print_square(unsigned short x, unsigned short y, unsigned short size,
 	return 0;
 }
 
-int print_line(unsigned short xi, unsigned short yi, unsigned short xf,
-		unsigned short yf, unsigned long color) {
+int print_line(unsigned short xi, unsigned short yi, unsigned short xf,	unsigned short yf, unsigned long color) {
 
-	int dx = (xf - xi);
-	int dy = (yf - yi);
-	int x = xi;
-	int y = yi;
-	int p = 2 * (dy) - (dx);
-	int i = 1;
+	/*
+	 //Bresenham's algorithm
+	 int dx = (xf - xi);
+	 int dy = (yf - yi);
+	 int x = xi;
+	 int y = yi;
+	 int p = 2 * (dy) - (dx);
+	 int i = 1;
 
-	if (xf > h_res || yf > v_res || xi < 0 || yi < 0)
+	 if (xf > h_res || yf > v_res || xi < 0 || yi < 0)
+	 return 1;
+
+	 //Bresenham's algorithm
+
+	 do {
+	 fill_pixel(x, y, color);
+	 while (p >= 0) {
+	 y = y + 1;
+	 p = p - (2 * dx);
+	 }
+	 x = x + 1;
+	 p = p + (2 * dy);
+	 i = i + 1;
+	 } while (i <= dx);
+
+
+	 while(x<xf){
+	 fill_pixel(x, y, color);
+	 p+=2*dy;
+	 if(p>0){
+	 y++;
+	 p=p-(2*dx);
+	 }
+	 x++;
+	 }
+
+
+	 return 0;
+	 */
+
+	int d,dx,dy, temp, Eincr, NEincr;
+
+	if(xf>H_RES || xf<0 || yf >V_RES || yf<0 || xi>H_RES || xi<0 || yi>V_RES || yi<0)
 		return 1;
 
-	//Bresenham's algorithm
+	dx=abs(xf-xi);
+	dy=abs(yf-yi);
 
-	do {
-		fill_pixel(x, y, color);
-		while (p >= 0) {
-			y = y + 1;
-			p = p - (2 * dx);
+	if(dy <=dx){
+
+		if (xf < xi) {
+			temp = xf;
+			xf = xi;
+			xi = temp;
+			temp = yf;
+			yf = yi;
+			yi = temp;
 		}
-		x = x + 1;
-		p = p + (2 * dy);
-		i = i + 1;
-	} while (i <= dx);
+		d=2*dy-dx;
+		Eincr = 2*dy;
+		NEincr = 2*(dy - dx);
+		fill_pixel(xi,yi,color);
+		if (yf > yi){
+			for (xi++; xi <= xf; xi++)
+			{
+				if (d < 0)
+					d += Eincr;
+				else
+				{
+					d += NEincr;
+					yi++;
+				}
+				fill_pixel(xi,yi,color);
+			}
+		}
+		else{
+			for (xi++; xi <= xf; xi++)
+			{
+				if (d < 0)
+					d += Eincr;
+				else
+				{
+					d += NEincr;
+					yi--;
+				}
+				fill_pixel(xi,yi,color);
+			}
+		}
+	}
+	else {
+		if (yf < yi) {
+			temp = xf;
+			xf = xi;
+			xi = temp;
+			temp = yf;
+			yf = yi;
+			yi = temp;
+		}
+		d = 2 * dx - dy;
+		Eincr = 2 * dx;
+		NEincr = 2 * (dx - dy);
+		fill_pixel(xi,yi,color);
+
+		if (xf > xi) {
+			for (yi++; yi <= yf; yi++) {
+				if (d < 0)
+					d += Eincr; /* Choose the Eastern Pixel */
+				else {
+					d += NEincr; /* Choose the North Eastern Pixel */
+					xi++; /* (or SE pixel for dx/dy < 0!) */
+				}
+				fill_pixel(xi,yi,color); /* Draw the point */
+			}
+		} else {
+			for (yi++; yi <= yf; yi++) {
+				if (d < 0)
+					d += Eincr; /* Choose the Eastern Pixel */
+				else {
+					d += NEincr; /* Choose the North Eastern Pixel */
+					xi--; /* (or SE pixel for dx/dy < 0!) */
+				}
+				fill_pixel(xi,yi,color); /* Draw the point */
+			}
+		}
+
+	}
 
 	return 0;
-
 }
 
 char *read_xpm(char *map[], int *wd, int *ht) {
@@ -260,6 +362,8 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 	unsigned int xf = 0;
 	unsigned int yf = 0;
 	unsigned char codigo;
+	unsigned int tempx=0;
+	unsigned int tempy=0;
 	//variaveis do timer
 	int ipc_status;
 	message msg;
@@ -290,7 +394,7 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 
 	sp->x=xi;
 	sp->y=yi;
-	draw_sprite(sp);
+	//draw_sprite(sp);
 
 	while (1) {
 
@@ -299,17 +403,6 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 			printf("driver_receive failed with: %d", r);
 			continue;
 		}
-
-		/*
-		wipe_sprite(sp);
-		sp->x += sp->xspeed;
-		sp->y += sp->yspeed;
-		if ((sp->x <= (xi + deltax)) && (sp->y <= (yi + deltay))) {
-
-			draw_sprite(sp);
-			tickdelay(micros_to_ticks(((time)*100000)));
-		}
-		*/
 
 
 		//draw_sprite(sp);
@@ -322,11 +415,14 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 
 				if (msg.NOTIFY_ARG & timer_set) {
 
-					sp->x += sp->xspeed;
-					sp->y += sp->yspeed;
-					if ((sp->x <= (xi + deltax)) && (sp->y <= (yi + deltay)))
+					tempx=sp->x + sp->xspeed;
+					tempy=sp->y + sp->yspeed;
+
+					if ((tempx <= (xi + deltax)) && (tempy <= (yi + deltay)))
 					{
 						wipe_sprite(sp);
+						sp->x += sp->xspeed;
+						sp->y += sp->yspeed;
 						draw_sprite(sp);
 					}
 

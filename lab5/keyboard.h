@@ -7,7 +7,6 @@
 #include "i8254.h"
 
 static int hook_kbd=NOTIFICATION_KBD;
-static int hook_timer=NOTIFICATION_TIMER;
 
 int kbd_subscribe(int *hook_kbd);
 
