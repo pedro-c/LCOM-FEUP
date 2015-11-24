@@ -37,7 +37,7 @@ static char *video_mem; /* Process address to which VRAM is mapped */
 static unsigned h_res; /* Horizontal screen resolution in pixels */
 static unsigned v_res; /* Vertical screen resolution in pixels */
 static unsigned bits_per_pixel; /* Number of VRAM bits per pixel */
-static unsigned bytes_per_pixel;
+
 
 int vg_exit() {
 	struct reg86u reg86;
@@ -77,10 +77,7 @@ void *vg_init(unsigned short mode) {
 	v_res = vm.YResolution;
 	bits_per_pixel = vm.BitsPerPixel;
 
-	if(bits_per_pixel/8<=0)
-		bytes_per_pixel=1;
-	else
-		bytes_per_pixel=bits_per_pixel/8;
+
 
 
 	mr.mr_base = (phys_bytes)(vm.PhysBasePtr);
@@ -91,7 +88,7 @@ void *vg_init(unsigned short mode) {
 
 	/* Map memory */
 
-	video_mem = vm_map_phys(SELF, (void *) mr.mr_base, h_res * v_res * bytes_per_pixel);
+	video_mem = vm_map_phys(SELF, (void *) mr.mr_base, h_res * v_res * bits_per_pixel/8);
 
 	if (video_mem == MAP_FAILED)
 		panic("Couldn't map video memory");
@@ -362,12 +359,13 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 	unsigned int xf = 0;
 	unsigned int yf = 0;
 	unsigned char codigo;
-	unsigned int tempx=0;
-	unsigned int tempy=0;
+	unsigned int tempx = 0;
+	unsigned int tempy = 0;
 	//variaveis do timer
 	int ipc_status;
 	message msg;
 	int r;
+	int counter=0;
 
 	unsigned long keyboard_set;
 	unsigned long timer_set;
@@ -375,66 +373,135 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 	timer_set = timer_subscribe_int();
 
 	//calcula a velocidade
-	unsigned long v = ((float) delta / (float) (time*60)) ;
+	unsigned long v1 = ((float) delta / (float) (time * 60));
+	unsigned long v2 = ((float) (time * 60) / (float) delta);
 
 	//create sprite
 	Sprite *sp = create_sprite(xpm);
 
-	if (hor == 1) {
-		sp->xspeed = v;
-		sp->yspeed = 0;
-		deltax = delta;
-		deltay = 0;
-	} else {
-		sp->xspeed = 0;
-		sp->yspeed = v;
-		deltax = 0;
-		deltay = delta;
-	}
+	if (v1 > v2) {
 
-	sp->x=xi;
-	sp->y=yi;
-	//draw_sprite(sp);
 
-	while (1) {
-
-		r = driver_receive(ANY, &msg, &ipc_status);
-		if (r != 0) {
-			printf("driver_receive failed with: %d", r);
-			continue;
+		if (hor == 1) {
+			sp->xspeed = (int) v1;
+			sp->yspeed = 0;
+			deltax = delta;
+			deltay = 0;
+		} else {
+			sp->xspeed = 0;
+			sp->yspeed = (int) v1;
+			deltax = 0;
+			deltay = delta;
 		}
 
-
+		sp->x = xi;
+		sp->y = yi;
 		//draw_sprite(sp);
-		if (is_ipc_notify(ipc_status)) {
-			switch (_ENDPOINT_P(msg.m_source)) {
-			case HARDWARE:
-				if (msg.NOTIFY_ARG & keyboard_set) {
-					kbd_code_scan(&codigo);
-				}
 
-				if (msg.NOTIFY_ARG & timer_set) {
+		while (1) {
 
-					tempx=sp->x + sp->xspeed;
-					tempy=sp->y + sp->yspeed;
+			r = driver_receive(ANY, &msg, &ipc_status);
+			if (r != 0) {
+				printf("driver_receive failed with: %d", r);
+				continue;
+			}
 
-					if ((tempx <= (xi + deltax)) && (tempy <= (yi + deltay)))
-					{
-						wipe_sprite(sp);
-						sp->x += sp->xspeed;
-						sp->y += sp->yspeed;
-						draw_sprite(sp);
+			//draw_sprite(sp);
+			if (is_ipc_notify(ipc_status)) {
+				switch (_ENDPOINT_P(msg.m_source)) {
+				case HARDWARE:
+					if (msg.NOTIFY_ARG & keyboard_set) {
+						kbd_code_scan(&codigo);
 					}
 
+					if (msg.NOTIFY_ARG & timer_set) {
+
+						tempx = sp->x + sp->xspeed;
+						tempy = sp->y + sp->yspeed;
+
+						if ((tempx <= (xi + deltax))
+								&& (tempy <= (yi + deltay))) {
+							wipe_sprite(sp);
+							sp->x += sp->xspeed;
+							sp->y += sp->yspeed;
+							draw_sprite(sp);
+						}
+
+					}
+					break;
+				default:
+					break;
 				}
-				break;
-			default:
-				break;
 			}
+			if (codigo == VAL_ESC)
+				break;
 		}
-		if (codigo == VAL_ESC)
-			break;
 	}
+	else {
+
+		if (hor == 1) {
+			sp->xspeed = 1;
+			sp->yspeed = 0;
+			deltax = delta;
+			deltay = 0;
+		} else {
+			sp->xspeed = 0;
+			sp->yspeed = 1;
+			deltax = 0;
+			deltay = delta;
+		}
+
+		sp->x = xi;
+		sp->y = yi;
+		//draw_sprite(sp);
+
+		while (1) {
+
+			r = driver_receive(ANY, &msg, &ipc_status);
+			if (r != 0) {
+				printf("driver_receive failed with: %d", r);
+				continue;
+			}
+
+			//draw_sprite(sp);
+			if (is_ipc_notify(ipc_status)) {
+				switch (_ENDPOINT_P(msg.m_source)) {
+				case HARDWARE:
+					if (msg.NOTIFY_ARG & keyboard_set) {
+						kbd_code_scan(&codigo);
+					}
+
+					if (msg.NOTIFY_ARG & timer_set) {
+						if(counter==v2){
+							tempx = sp->x + sp->xspeed;
+							tempy = sp->y + sp->yspeed;
+
+							if ((tempx <= (xi + deltax))
+									&& (tempy <= (yi + deltay))) {
+								wipe_sprite(sp);
+								sp->x += sp->xspeed;
+								sp->y += sp->yspeed;
+								draw_sprite(sp);
+							}
+							counter=0;
+						}
+						else
+							counter++;
+
+
+					}
+					break;
+				default:
+					break;
+				}
+			}
+			if (codigo == VAL_ESC)
+				break;
+		}
+
+	}
+
+
 	destroy_sprite(sp);
 
 	if (kbd_unsubscribe(&hook_kbd) == 1) {
