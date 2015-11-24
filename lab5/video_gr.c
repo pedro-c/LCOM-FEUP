@@ -367,16 +367,17 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 	int r;
 	int counter=0;
 
-
+	//create sprite
+		Sprite *sp = create_sprite(xpm);
 	//verifica se fica dentro do ecra
 	if (hor == 1) {
-		if ((xi + delta) <= 0 || (xi + delta) >= h_res) {
+		if ((xi + delta) <= 0 || (xi + delta+sp->width) >= h_res) {
 			printf("Wrong coordinates.\n");
 			return 1;
 		}
 
 	} else {
-		if ((yi + delta) <= 0 || (yi + delta) >= v_res) {
+		if ((yi + delta) <= 0 || (yi + delta+sp->height) >= v_res) {
 			printf("Wrong coordinates.\n");
 			return 1;
 		}
@@ -397,8 +398,7 @@ int move_xpm(unsigned short xi, unsigned short yi, char *xpm[],	unsigned short h
 	unsigned long v1 = ((float) abs(delta) / (float) (time * 60));
 	unsigned long v2 = ((float) (time * 60) / (float) abs(delta));
 
-	//create sprite
-	Sprite *sp = create_sprite(xpm);
+
 
 	if (v1 > v2) {
 
