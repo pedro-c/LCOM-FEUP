@@ -123,6 +123,10 @@ static int proc_args(int argc, char *argv[]) {
 		{
 			return test_move(xi,yi,pic1,hor,delta,time);
 		}
+		else if(strncmp(argv[4], "penguin", strlen("penguin"))==0)
+		{
+			return test_move(xi,yi,penguin,hor,delta,time);
+		}
 	} else if (strncmp(argv[1], "test_controller", strlen("test_controller"))
 			== 0) {
 		if (argc != 2) {
