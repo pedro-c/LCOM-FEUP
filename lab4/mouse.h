@@ -7,6 +7,7 @@
 
 #include "i8042.h"
 
+long packet[3];
 static int hook_mouse=NOTIFICATION_MOUSE;
 static int hook_timer=NOTIFICATION_TIMER;
 
@@ -16,6 +17,7 @@ int mouse_subscribe();
 int mouse_unsubscribe();
 int mouse_write_command(char port, unsigned char cmd);
 int mouse_read();
-void mouse_print(char packet[]);
+int get_packet();
+void mouse_print();
 
 #endif

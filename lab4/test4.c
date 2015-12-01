@@ -4,7 +4,7 @@
 int test_packet(unsigned short cnt) {
 	int conta = 0, ind = 0, r, ipc_status;
 	unsigned long irq_set, data;
-	char cmd, packet[3];
+	char cmd;
 	message msg;
 	if ((irq_set = mouse_subscribe()) == -1) {
 		printf("Unable to subscribe mouse!\n");
@@ -25,24 +25,9 @@ int test_packet(unsigned short cnt) {
 			switch (_ENDPOINT_P(msg.m_source)) {
 			case HARDWARE:
 				if (msg.NOTIFY_ARG & irq_set) {
-					cmd = mouse_read();
-					switch (ind) {
-					case 0:
-						if (cmd & BIT(3))
-							packet[0] = cmd;
-						ind++;
-						break;
-					case 1:
-						packet[1] = cmd;
-						ind++;
-						break;
-					case 2:
-						packet[2] = cmd;
-						conta++;
-						ind = 0;
-						mouse_print(packet);
-						break;
-					}
+					get_packet();
+					mouse_print();
+
 				}
 				break;
 			default:
