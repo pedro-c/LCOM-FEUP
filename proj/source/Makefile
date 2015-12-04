@@ -3,7 +3,7 @@ COMPILER_TYPE= gnu
 CC=gcc
 
 PROG=	proj
-SRCS=	proj.c video_gr.c vbe.c sprite.c keyboard.c timer.c
+SRCS=	proj.c vbe.c timer.c interface.c Player.c keyboard.c
 SRCS+=	Bitmap.c
 
 CCFLAGS= -Wall
