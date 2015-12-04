@@ -1,7 +1,7 @@
 #include "Bitmap.h"
 
 #include "stdio.h"
-#include "video_gr.h"
+#include "interface.h"
 
 Bitmap* loadBitmap(const char* filename) {
     // allocating necessary size
@@ -119,6 +119,7 @@ void drawBitmap(Bitmap* bmp, int x, int y, Alignment alignment) {
         imgStartPos = bmp->bitmapData + xCorrection * 2 + i * width * 2;
 
         memcpy(bufferStartPos, imgStartPos, drawWidth * 2);
+        flipDisplay(bufferStartPos);
     }
 }
 
