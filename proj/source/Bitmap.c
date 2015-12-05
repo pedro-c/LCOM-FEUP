@@ -1,5 +1,4 @@
 #include "Bitmap.h"
-
 #include "stdio.h"
 #include "interface.h"
 

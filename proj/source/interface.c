@@ -12,6 +12,7 @@ static unsigned long counter = 0;
 #define DELAY_US 20000
 #define SET_VBE_MODE        0x4F02
 #define VIDEO_CARD            0x10
+#define GFXMODE "0x114"
 
 static char *video_mem; /* Process address to which VRAM is mapped */
 static unsigned h_res; /* Horizontal screen resolution in pixels */
@@ -191,3 +192,42 @@ int print_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 	}
 	return 0;
 }
+
+const char* getImagePath(const char* image){
+
+	char num[256];
+	sprintf(num,"/home/lcom/lcom1516-t2g12/proj/res/images/%s-%s.bmp", image, GFXMODE);
+
+	char* str =(char*)malloc(256);
+	strcpy(str,num);
+
+	return str;
+}
+/*
+int drawRectangle(long xi, long yi, long xf, long yf, int color){
+	int i;
+
+	if(yi>yf)
+		swap(int, yi, yf);
+
+	if(xi>xf)
+		swap(int, xi, xf);
+
+	for(i=xi, i<xf;i++){
+		fill_pixel(yi, i, color);
+		fill_pixel(yf-1,i,color);
+	}
+
+	for(i=yi, i<yf;i++){
+		fill_pixel(xi, i, color);
+		fill_pixel(xf-1,i,color);
+	}
+
+	return 0;
+}
+
+
+int drawRect(Rectangle* rect, int color){
+	drawRectangle(rect->x1, rect->y1, rect->x2 , rect->y2,color);
+}
+*/
