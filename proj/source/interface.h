@@ -13,15 +13,14 @@ unsigned getVerResolution();
 
 unsigned getHorResolution();
 
-unsigned getGraphicsBuffer();
+char* getGraphicsBuffer();
+
+char* getGraphicsBufferTmp();
+
+unsigned getVRAMSize();
 
 void flipDisplay(char* vm);
 
 const char* getImagePath(const char* image);
-
-//int drawRectangle(long xi, long yi, long xf, long yf, int color);
-
-//int drawRect(Rectangle* rect, int color);
-
 
 #endif

@@ -6,30 +6,17 @@
 #include "Player.h"
 #include "Game.h"
 
-
-
-
-FILE* logfd=NULL;
-
-void initLog(){
-	logfd=fopen(LOG_PATH, "w");
-	LOG("initLog", "loggin successfully initialized");
-}
-
 int main(int argc, char **argv) {
 
-	initLog();
-	LOG("main", "starting program");
 	sef_startup();
-	CarPlayer *p=newPlayer(10,10,pic1);
 	initGame(0x114);
-	Game* c=startGame();
-	drawMenu(c);
-	newMouse();
-	while(1){
-		updateMouse();
-		drawMouse();
-	}
+	Bitmap* p=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/pokemon.bmp");
+	drawBitmap(p,0,0,ALIGN_LEFT);
+	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
+	timer_test_int(3);
+	/*CarPlayer *p=newPlayer(10,10);
+	movePlayer(p);
+	timer_test_int(3);*/
 	exitGame();
 	return 0;
 }
