@@ -5,6 +5,9 @@
 #include "Game.h"
 
 
+
+
+
 Game* startGame(){
 	Game* g =(Game*)malloc(sizeof(Game));
 

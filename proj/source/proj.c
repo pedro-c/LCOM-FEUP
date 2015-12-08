@@ -6,15 +6,30 @@
 #include "Player.h"
 #include "Game.h"
 
+
+
+
+FILE* logfd=NULL;
+
+void initLog(){
+	logfd=fopen(LOG_PATH, "w");
+	LOG("initLog", "loggin successfully initialized");
+}
+
 int main(int argc, char **argv) {
 
+	initLog();
+	LOG("main", "starting program");
 	sef_startup();
 	CarPlayer *p=newPlayer(10,10,pic1);
 	initGame(0x114);
-	//movePlayer(p);
 	Game* c=startGame();
 	drawMenu(c);
-	timer_test_int(10);
+	newMouse();
+	while(1){
+		updateMouse();
+		drawMouse();
+	}
 	exitGame();
 	return 0;
 }

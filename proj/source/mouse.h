@@ -5,36 +5,32 @@
 #include <stdbool.h>
 #include <math.h>
 #include "i8254.h"
+#include "Bitmap.h"
 
 long packet[3];
 static int hook_mouse=NOTIFICATION_MOUSE;
 static int hook_timer=NOTIFICATION_TIMER;
 
-/*
+
 typedef struct {
-    int x, y;
-    int xSign, ySign;
-    int deltaX, deltaY;
-    double speedMultiplier;
+	int x,y;
 
-    int byteBeingRead;
-    unsigned long packet[3];
+	unsigned long packet[3];
 
-    int leftButtonDown;
-    int middleButtonDown;
-    int rightButtonDown;
+	int lb_pressed;
+	int mb_pressed;
+	int rb_pressed;
+	int lb_released;
+	int mb_released;
+	int rb_released;
 
-    int leftButtonReleased;
-    int rightButtonReleased;
-    int middleButtonReleased;
+	Bitmap* image;
 
-    int size;
-    int color1, color2;
-
-    int hasBeenUpdated;
-    int draw;
 } Mouse;
-*/
+
+Mouse* newMouse();
+void updateMouse();
+void drawMouse(Mouse* mouse);
 
 int mouse_subscribe();
 int mouse_unsubscribe();
