@@ -54,8 +54,8 @@ void *initGame(unsigned short mode) {
 		return;
 	}
 
-	h_res = vm.XResolution;
-	v_res = vm.YResolution;
+	h_res = vm.YResolution;
+	v_res = vm.XResolution;
 	bits_per_pixel = vm.BitsPerPixel;
 	bytes_per_pixel=bits_per_pixel/8;
 

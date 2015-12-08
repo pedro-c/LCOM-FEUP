@@ -1,7 +1,86 @@
 #include <minix/drivers.h>
 #include <stdbool.h>
-
 #include "mouse.h"
+#include "Bitmap.h"
+
+Mouse* mouse=NULL;
+Mouse mousePreviousState;
+
+Mouse* newMouse(){
+	Mouse* mouse = (Mouse*)malloc(sizeof(Mouse));
+	mouse->x=400;
+	mouse->y=300;
+	mouse->image=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/mouse.bmp");
+}
+
+void updateMouse(){
+	get_packet();
+	int mb = 0, rb = 0, lb = 0, yo = 0, xo = 0, ys = 0, xs = 0;
+	int convert = BIT(
+			7) | BIT(6) | BIT(5) | BIT(4) | BIT(3) | BIT(2) | BIT(1) | BIT(0);
+	if (packet[0] & BIT(7))
+		yo = 1;
+	if (packet[0] & BIT(6))
+		xo = 1;
+	if (packet[0] & BIT(5))
+		ys = 1;
+	if (packet[0] & BIT(4))
+		xs = 1;
+	if (packet[0] & BIT(2))
+		mb = 1;
+	if (packet[0] & BIT(1))
+		rb = 1;
+	if (packet[0] & BIT(0))
+		lb = 1;
+
+	if (packet[1] & BIT(7)) {
+			char p = packet[1]^convert;
+			p++;
+			mouse->x+=(short) p;
+		} else
+			mouse->x+=packet[1];
+		if (packet[2] & BIT(7)) {
+			char p = packet[2] ^ convert;
+			p++;
+			mouse->y+=(short) p;
+		} else
+			mouse->y+=packet[2];
+
+	if(mb=1){
+		mouse->mb_pressed=1;
+		mouse->mb_released=0;
+
+	}
+	else{
+		mouse->mb_pressed=0;
+		mouse->mb_released=1;
+	}
+	if(rb=1){
+		mouse->rb_pressed=1;
+		mouse->rb_released=0;
+
+	}
+	else{
+		mouse->rb_pressed=0;
+		mouse->rb_released=1;
+	}
+	if(lb=1){
+		mouse->lb_pressed=1;
+		mouse->lb_released=0;
+
+	}
+	else{
+		mouse->lb_pressed=0;
+		mouse->lb_released=1;
+	}
+}
+
+void drawMouse(Mouse* mouse){
+
+	drawBitmap(mouse->image, mouse->x, mouse->y, ALIGN_LEFT);
+
+}
+
 int mouse_subscribe() {
 	if (sys_irqsetpolicy(MOUSE_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_mouse)== OK)
 		if (sys_irqenable(&hook_mouse) == OK)
@@ -85,6 +164,8 @@ int get_packet(){
 		}
 	}
 }
+
+
 void mouse_print() {
 	int mb = 0, rb = 0, lb = 0, yo = 0, xo = 0, ys = 0, xs = 0;
 	int convert = BIT(7) | BIT(6) | BIT(5) | BIT(4) | BIT(3) | BIT(2) | BIT(1) | BIT(0);
@@ -128,6 +209,8 @@ void mouse_print() {
 		printf("Y:%d ", packet[2]);
 	printf("\n");
 }
+
+
 
 /*
 int mouseInside(int x1, int y1, int x2, int y2){
