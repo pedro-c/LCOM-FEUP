@@ -85,12 +85,12 @@ void fill_pixel(unsigned short x, unsigned short y, unsigned long color) {
 
 unsigned getVerResolution()
 {
-	return h_res;
+	return v_res;
 }
 
 unsigned getHorResolution()
 {
-	return v_res;
+	return h_res;
 }
 
 char* getGraphicsBuffer()
