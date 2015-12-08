@@ -5,6 +5,7 @@
 #include "Bitmap.h"
 #include "Player.h"
 #include "Game.h"
+#include "mouse.h"
 
 int main(int argc, char **argv) {
 
@@ -17,6 +18,7 @@ int main(int argc, char **argv) {
 	/*CarPlayer *p=newPlayer(10,10);
 	movePlayer(p);
 	timer_test_int(3);*/
+	timer_test_int(3);
 	exitGame();
 	return 0;
 }
