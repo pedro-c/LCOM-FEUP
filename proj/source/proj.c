@@ -11,9 +11,10 @@ int main(int argc, char **argv) {
 	sef_startup();
 	CarPlayer *p=newPlayer(10,10,pic1);
 	initGame(0x114);
-	movePlayer(p);
-	//Game* c=startGame();
-	//drawMenu(c);
+	//movePlayer(p);
+	Game* c=startGame();
+	drawMenu(c);
+	timer_test_int(10);
 	exitGame();
 	return 0;
 }
