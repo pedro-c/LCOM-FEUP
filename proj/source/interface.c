@@ -15,6 +15,7 @@ static unsigned long counter = 0;
 #define GFXMODE "0x114"
 
 static char *video_mem; /* Process address to which VRAM is mapped */
+static char *double_video; /* Temporary process address to which VRAM is mapped */
 static unsigned h_res; /* Horizontal screen resolution in pixels */
 static unsigned v_res; /* Vertical screen resolution in pixels */
 static unsigned bits_per_pixel; /* Number of VRAM bits per pixel */
@@ -54,8 +55,8 @@ void *initGame(unsigned short mode) {
 		return;
 	}
 
-	h_res = vm.YResolution;
-	v_res = vm.XResolution;
+	h_res = vm.XResolution;
+	v_res = vm.YResolution;
 	bits_per_pixel = vm.BitsPerPixel;
 	bytes_per_pixel=bits_per_pixel/8;
 
@@ -73,8 +74,13 @@ void *initGame(unsigned short mode) {
 
 	if (video_mem == MAP_FAILED)
 		panic("Couldn't map video memory");
+	double_video=(char*)malloc(h_res*v_res*bits_per_pixel/8);
 	return video_mem;
 
+}
+
+unsigned getVRAMSize(){
+	return h_res*v_res*bits_per_pixel;
 }
 
 void fill_pixel(unsigned short x, unsigned short y, unsigned long color) {
@@ -96,6 +102,10 @@ unsigned getHorResolution()
 char* getGraphicsBuffer()
 {
 	return video_mem;
+}
+
+char* getGraphicsBufferTmp(){
+	return double_video;
 }
 
 void flipDisplay(char* vm){
@@ -193,41 +203,10 @@ int print_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 	return 0;
 }
 
-const char* getImagePath(const char* image){
+void refresh(){
+	unsigned i,j;
+	for(i=0;i<v_res;i++)
+		for(j=0;j<h_res;j++)
+			fill_pixel(j,i,0);
 
-	char num[256];
-	sprintf(num,"/home/lcom/lcom1516-t2g12/proj/res/images/%s-%s.bmp", image, GFXMODE);
-
-	char* str =(char*)malloc(256);
-	strcpy(str,num);
-
-	return str;
 }
-/*
-int drawRectangle(long xi, long yi, long xf, long yf, int color){
-	int i;
-
-	if(yi>yf)
-		swap(int, yi, yf);
-
-	if(xi>xf)
-		swap(int, xi, xf);
-
-	for(i=xi, i<xf;i++){
-		fill_pixel(yi, i, color);
-		fill_pixel(yf-1,i,color);
-	}
-
-	for(i=yi, i<yf;i++){
-		fill_pixel(xi, i, color);
-		fill_pixel(xf-1,i,color);
-	}
-
-	return 0;
-}
-
-
-int drawRect(Rectangle* rect, int color){
-	drawRectangle(rect->x1, rect->y1, rect->x2 , rect->y2,color);
-}
-*/

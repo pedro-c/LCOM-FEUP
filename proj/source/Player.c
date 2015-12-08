@@ -7,14 +7,16 @@
 #include "interface.h"
 #include "keyboard.h"
 
+
 #define MAKECODE_A 0x1e
 #define MAKECODE_D 0x20
 
-CarPlayer* newPlayer(int x, int y, char* pix[]) {
+CarPlayer* newPlayer(int x, int y) {
 	CarPlayer* p = (CarPlayer*) malloc(sizeof(CarPlayer));
 	p->x = x;
 	p->y = y;
-	p->pixm = pix;
+	p->car=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/pokemon.bmp");
+	return p;
 }
 
 void setCoordinates(CarPlayer* p, int x, int y) {
@@ -23,7 +25,7 @@ void setCoordinates(CarPlayer* p, int x, int y) {
 }
 
 void drawPlayer(CarPlayer* p) {
-	print_xpm(p->x, p->y, p->pixm);
+	drawBitmap(p->car,p->x,p->y,ALIGN_LEFT);
 }
 
 void movePlayer(CarPlayer* p) {
@@ -50,9 +52,9 @@ void movePlayer(CarPlayer* p) {
 				if (msg.NOTIFY_ARG & irq_keyboard) {
 					kbd_code_scan(&codigo);
 					if(codigo==MAKECODE_A)
-						p->x--;
+						p->x=p->x-10;
 					else if(codigo==MAKECODE_D)
-						p->x++;
+						p->x=p->x+10;
 				}
 				else if(msg.NOTIFY_ARG & irq_timer)
 				{

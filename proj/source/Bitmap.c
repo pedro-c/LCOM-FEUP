@@ -113,20 +113,16 @@ void drawBitmap(Bitmap* bmp, int x, int y, Alignment alignment) {
         if (pos < 0 || pos >= getVerResolution())
             continue;
 
-        bufferStartPos = getGraphicsBuffer();
+        bufferStartPos = getGraphicsBufferTmp();
         bufferStartPos += x * 2 + pos * getHorResolution() * 2;
 
         imgStartPos = bmp->bitmapData + xCorrection * 2 + i * width * 2;
 
         memcpy(bufferStartPos, imgStartPos, drawWidth * 2);
-        flipDisplay(bufferStartPos);
     }
 }
 
 void deleteBitmap(Bitmap* bmp) {
     if (bmp == NULL)
         return;
-
-    free(bmp->bitmapData);
-    free(bmp);
 }
