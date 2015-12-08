@@ -1,5 +1,5 @@
-#ifndef __KEYBOARD_H
-#define __KEYBOARD_H
+#ifndef __MOUSE_H
+#define __MOUSE_H
 
 #include <minix/drivers.h>
 #include <stdbool.h>
@@ -7,15 +7,13 @@
 #include "i8254.h"
 #include "Bitmap.h"
 
-long packet[3];
+unsigned long packet[3];
 static int hook_mouse=NOTIFICATION_MOUSE;
 static int hook_timer=NOTIFICATION_TIMER;
 
 
 typedef struct {
 	int x,y;
-
-	unsigned long packet[3];
 
 	int lb_pressed;
 	int mb_pressed;
@@ -29,9 +27,9 @@ typedef struct {
 } Mouse;
 
 Mouse* newMouse();
-void updateMouse();
+void updateMouse(Mouse* mouse);
 void drawMouse(Mouse* mouse);
-
+void enableMouse();
 int mouse_subscribe();
 int mouse_unsubscribe();
 int mouse_write_command(char port, unsigned char cmd);

@@ -2,87 +2,122 @@
 #include <stdbool.h>
 #include "mouse.h"
 #include "Bitmap.h"
+#include "interface.h"
 
-Mouse* mouse=NULL;
 Mouse mousePreviousState;
 
-Mouse* newMouse(){
-	Mouse* mouse = (Mouse*)malloc(sizeof(Mouse));
-	mouse->x=400;
-	mouse->y=300;
-	mouse->image=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/mouse.bmp");
+unsigned long irq_set;
+int ipc_status;
+message msg;
+int conta = 0, ind = 0, r, ipc_status;
+unsigned long irq_set, data;
+char cmd;
+message msg;
+
+Mouse* newMouse() {
+	Mouse* mouse = (Mouse*) malloc(sizeof(Mouse));
+
+	mouse->x = 400;
+	mouse->y = 300;
+
+	mouse->image = loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/mouse.bmp");
+
+	if ((irq_set = mouse_subscribe()) == -1) {
+		printf("Unable to subscribe mouse!\n");
+	}
+	if (sys_outb(STAT_REG, ENABLE_MOUSE) != OK) //rato enable
+		printf("Error\n");
+	if (sys_outb(STAT_REG, W_TO_MOUSE) != OK) //MOUSE
+		printf("Error-MC\n");
+	if (sys_outb(OUT_BUF, ENABLE_SEND) != OK) //Ativar o envio
+		printf("Error-SEND\n");
+
+	return mouse;
 }
 
-void updateMouse(){
-	get_packet();
-	int mb = 0, rb = 0, lb = 0, yo = 0, xo = 0, ys = 0, xs = 0;
-	int convert = BIT(
-			7) | BIT(6) | BIT(5) | BIT(4) | BIT(3) | BIT(2) | BIT(1) | BIT(0);
-	if (packet[0] & BIT(7))
-		yo = 1;
-	if (packet[0] & BIT(6))
-		xo = 1;
-	if (packet[0] & BIT(5))
-		ys = 1;
-	if (packet[0] & BIT(4))
-		xs = 1;
-	if (packet[0] & BIT(2))
-		mb = 1;
-	if (packet[0] & BIT(1))
-		rb = 1;
-	if (packet[0] & BIT(0))
-		lb = 1;
-
-	if (packet[1] & BIT(7)) {
-			char p = packet[1]^convert;
-			p++;
-			mouse->x+=(short) p;
-		} else
-			mouse->x+=packet[1];
-		if (packet[2] & BIT(7)) {
-			char p = packet[2] ^ convert;
-			p++;
-			mouse->y+=(short) p;
-		} else
-			mouse->y+=packet[2];
-
-	if(mb=1){
-		mouse->mb_pressed=1;
-		mouse->mb_released=0;
-
-	}
-	else{
-		mouse->mb_pressed=0;
-		mouse->mb_released=1;
-	}
-	if(rb=1){
-		mouse->rb_pressed=1;
-		mouse->rb_released=0;
-
-	}
-	else{
-		mouse->rb_pressed=0;
-		mouse->rb_released=1;
-	}
-	if(lb=1){
-		mouse->lb_pressed=1;
-		mouse->lb_released=0;
-
-	}
-	else{
-		mouse->lb_pressed=0;
-		mouse->lb_released=1;
-	}
-}
 
 void drawMouse(Mouse* mouse){
+	drawBitmap(mouse->image,mouse->x,mouse->y,ALIGN_LEFT);
+}
 
-	drawBitmap(mouse->image, mouse->x, mouse->y, ALIGN_LEFT);
+void updateMouse(Mouse* mouse) {
+	int mouseVelocity=3; //higher is slower
+	int convert = BIT(7) | BIT(6) | BIT(5) | BIT(4) | BIT(3) | BIT(2) | BIT(1) | BIT(0);
+	if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
+		printf("driver_receive failed with: %d", r);
+	}
+	if (is_ipc_notify(ipc_status)) {
+		switch (_ENDPOINT_P(msg.m_source)) {
+		case HARDWARE:
+			if (msg.NOTIFY_ARG & irq_set) {
+				get_packet();
+
+				int ys = 0;
+				int xs = 0;
+
+				if (packet[0] & BIT(5))
+					ys = 1;
+				if (packet[0] & BIT(4))
+					xs = 1;
+
+				if (packet[1] & BIT(7)) {
+					char p = packet[1] ^ convert;
+					p++;
+					if (xs == 0) {
+						mouse->x+=(int)((short) p/mouseVelocity);
+					} else {
+						mouse->x-=(int)((short) p/mouseVelocity);
+					}
+
+				} else if (xs == 0) {
+					mouse->x+=(int)(packet[1]/mouseVelocity);
+				} else {
+					mouse->x-=(int)(packet[1]/mouseVelocity);
+				}
+
+				if (packet[2] & BIT(7)) {
+					char p = packet[2] ^ convert;
+					p++;
+					if (ys == 1) {
+						mouse->y+=(int)((short) p/mouseVelocity);
+					} else {
+						mouse->y-=(int)((short) p/mouseVelocity);
+					}
+				} else if (ys == 1) {
+					mouse->y+=(int)(packet[2]/mouseVelocity);
+				} else {
+					mouse->y-=(int)(packet[2]/mouseVelocity);
+				}
+
+				if(mouse->x > (getHorResolution()-35)){
+					mouse->x = (getHorResolution()-35);
+				}
+				else if(mouse->x < 1){
+					mouse->x = 1;
+				}
+				if(mouse->y > (getVerResolution()-48)){
+					mouse->y = (getVerResolution()-48);
+				}
+				else if(mouse->y < 1){
+					mouse->y = 1;
+				}
+
+				drawMouse(mouse);
+
+			}
+			break;
+		default:
+			break;
+		}
+	} else {
+	}
 
 }
 
+
 int mouse_subscribe() {
-	if (sys_irqsetpolicy(MOUSE_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_mouse)== OK)
+	if (sys_irqsetpolicy(MOUSE_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_mouse)
+			== OK)
 		if (sys_irqenable(&hook_mouse) == OK)
 			return BIT(NOTIFICATION_MOUSE);
 	return -1;
@@ -113,7 +148,7 @@ int mouse_write(unsigned long cnt, unsigned char cmd) {
 int mouse_read() {
 	unsigned long stat, data;
 	unsigned int i = 0;
-	int ind=0;
+	int ind = 0;
 
 	while (i < 10) {
 		sys_inb(STAT_REG, &stat);
