@@ -15,7 +15,7 @@ CarPlayer* newPlayer(int x, int y) {
 	CarPlayer* p = (CarPlayer*) malloc(sizeof(CarPlayer));
 	p->x = x;
 	p->y = y;
-	p->car=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/pokemon.bmp");
+	p->car=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/car4.bmp");
 	return p;
 }
 
@@ -32,6 +32,7 @@ void movePlayer(CarPlayer* p) {
 	int r, ipc_status;
 	message msg;
 	unsigned char codigo;
+	int flag=0;
 	char irq_keyboard, irq_timer;
 	if ((irq_keyboard = kbd_subscribe(&hook_kbd)) == -1) {
 		printf("Failed keyboard subscribe.\n");
@@ -41,6 +42,7 @@ void movePlayer(CarPlayer* p) {
 		printf("Failed timer subscribe.\n");
 		return;
 	}
+	drawPlayer(p);
 	while (codigo != VAL_ESC) { //enquanto nao for pressionado o ESC continua
 		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
 			printf("driver_receive failed with: %d", r);
@@ -51,14 +53,13 @@ void movePlayer(CarPlayer* p) {
 			case HARDWARE:
 				if (msg.NOTIFY_ARG & irq_keyboard) {
 					kbd_code_scan(&codigo);
-					if(codigo==MAKECODE_A)
-						p->x=p->x-10;
-					else if(codigo==MAKECODE_D)
-						p->x=p->x+10;
-				}
-				else if(msg.NOTIFY_ARG & irq_timer)
-				{
+					if (codigo == MAKECODE_A)
+						p->x -= 5;
+					else if (codigo == MAKECODE_D)
+						p->x += 5;
+				} else if (msg.NOTIFY_ARG & irq_timer) {
 					drawPlayer(p);
+					refresh();
 				}
 				break;
 			default:

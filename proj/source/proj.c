@@ -5,20 +5,15 @@
 #include "Bitmap.h"
 #include "Player.h"
 #include "Game.h"
-#include "mouse.h"
 
 int main(int argc, char **argv) {
 
 	sef_startup();
 	initGame(0x114);
-	Bitmap* p=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/pokemon.bmp");
-	drawBitmap(p,0,0,ALIGN_LEFT);
-	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
-	timer_test_int(3);
-	/*CarPlayer *p=newPlayer(10,10);
+	//Bitmap* p=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/pokemon.bmp");
+	//mmrawBitmap(p,0,0,ALIGN_LEFT);
+	CarPlayer *p=newPlayer(100,100);
 	movePlayer(p);
-	timer_test_int(3);*/
-	timer_test_int(3);
 	exitGame();
 	return 0;
 }
