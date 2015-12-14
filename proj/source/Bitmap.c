@@ -126,3 +126,4 @@ void deleteBitmap(Bitmap* bmp) {
     if (bmp == NULL)
         return;
 }
+

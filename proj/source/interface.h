@@ -7,7 +7,7 @@ int exitGame();
 
 void *initGame(unsigned short mode);
 
-void fill_pixel(unsigned short x, unsigned short y, unsigned long color);
+void fill_pixel(unsigned short x, unsigned short y, unsigned short color);
 
 unsigned getVerResolution();
 
