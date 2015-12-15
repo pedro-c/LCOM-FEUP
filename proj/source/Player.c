@@ -35,8 +35,7 @@ void movePlayer(CarPlayer* p) {
 	int flag=0;
 	char irq_keyboard, irq_timer;
 
-	Obstacles *obs1=newObstacle(0,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/left track.bmp"));
-	Obstacles *obs2=newObstacle(500,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/right track.bmp"));
+	Obstacles *obs1=newObstacle(0,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/background.bmp"));
 
 	if ((irq_keyboard = kbd_subscribe(&hook_kbd)) == -1) {
 		printf("Failed keyboard subscribe.\n");
@@ -57,15 +56,21 @@ void movePlayer(CarPlayer* p) {
 			case HARDWARE:
 				if (msg.NOTIFY_ARG & irq_keyboard) {
 					kbd_code_scan(&codigo);
-					if (codigo == MAKECODE_A)
-						p->x -= 5;
-					else if (codigo == MAKECODE_D)
-						p->x += 5;
+					if (checkTrackCollision(p) == 0) {
+						if (codigo == MAKECODE_A)
+							p->x -= 5;
+						else if (codigo == MAKECODE_D)
+							p->x += 5;
+					} else if (checkTrackCollision(p) == 1) {
+						if (codigo == MAKECODE_D)
+							p->x += 5;
+					} else if (checkTrackCollision(p) == 2){
+						if (codigo == MAKECODE_A)
+							p->x -= 5;
+					}
 				} else if (msg.NOTIFY_ARG & irq_timer) {
-					drawTrack(obs1,obs2);
+					drawTrack(obs1);
 					drawPlayer(p);
-					if(checkTrackCollision(p)==1)
-						return;
 					refresh();
 				}
 				break;
@@ -86,7 +91,9 @@ void movePlayer(CarPlayer* p) {
 }
 
 int checkTrackCollision(CarPlayer* p){
-	if(p->x<=10 || p->x>=450)
+	if (p->x <= 200)
 		return 1;
+	if (p->x >= 540)
+		return 2;
 	return 0;
 }

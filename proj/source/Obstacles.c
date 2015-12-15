@@ -10,9 +10,8 @@ Obstacles *newObstacle(int x,int y, Bitmap* tp){
 	return Obs;
 }
 
-void drawTrack(Obstacles *obs1,Obstacles *obs2){
-	drawBitmap(obs1->type,obs1->x,obs1->y,ALIGN_LEFT);
-	drawBitmap(obs2->type,obs2->x,obs2->y,ALIGN_LEFT);
+void drawTrack(Obstacles *obs){
+	drawBitmap(obs->type,obs->x,obs->y,ALIGN_LEFT);
 }
 
 void drawObstacle(Obstacles* obs){

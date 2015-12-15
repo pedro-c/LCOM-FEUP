@@ -10,7 +10,7 @@ typedef struct{
 
 Obstacles *newObstacle(int x,int y, Bitmap* tp);
 
-void drawTrack(Obstacles *obs1,Obstacles *obs2);
+void drawTrack(Obstacles *obs);
 
 void drawObstacle(Obstacles* obs);
 
