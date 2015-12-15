@@ -1,11 +1,11 @@
 #include "Player.h"
-
 #include <minix/sysutil.h>
 #include <minix/syslib.h>
 #include <minix/drivers.h>
 #include <stdio.h>
 #include "interface.h"
 #include "keyboard.h"
+#include "Obstacles.h"
 
 
 #define MAKECODE_A 0x1e
@@ -34,6 +34,10 @@ void movePlayer(CarPlayer* p) {
 	unsigned char codigo;
 	int flag=0;
 	char irq_keyboard, irq_timer;
+
+	Obstacles *obs1=newObstacle(0,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/left track.bmp"));
+	Obstacles *obs2=newObstacle(500,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/right track.bmp"));
+
 	if ((irq_keyboard = kbd_subscribe(&hook_kbd)) == -1) {
 		printf("Failed keyboard subscribe.\n");
 		return;
@@ -58,7 +62,10 @@ void movePlayer(CarPlayer* p) {
 					else if (codigo == MAKECODE_D)
 						p->x += 5;
 				} else if (msg.NOTIFY_ARG & irq_timer) {
+					drawTrack(obs1,obs2);
 					drawPlayer(p);
+					if(checkTrackCollision(p)==1)
+						return;
 					refresh();
 				}
 				break;
@@ -76,4 +83,10 @@ void movePlayer(CarPlayer* p) {
 		printf("Failed timer unsubscribe.\n");
 		return;
 	}
+}
+
+int checkTrackCollision(CarPlayer* p){
+	if(p->x<=10 || p->x>=450)
+		return 1;
+	return 0;
 }
