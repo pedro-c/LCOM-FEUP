@@ -15,7 +15,7 @@ CarPlayer* newPlayer(int x, int y) {
 	CarPlayer* p = (CarPlayer*) malloc(sizeof(CarPlayer));
 	p->x = x;
 	p->y = y;
-	p->car=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/car4.bmp");
+	p->car=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/ash.bmp");
 	return p;
 }
 
@@ -35,7 +35,7 @@ void movePlayer(CarPlayer* p) {
 	int flag=0;
 	char irq_keyboard, irq_timer;
 
-	Obstacles *obs1=newObstacle(0,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/background.bmp"));
+	Obstacles *obs1=newObstacle(0,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/gamebackgroung.bmp"));
 
 	if ((irq_keyboard = kbd_subscribe(&hook_kbd)) == -1) {
 		printf("Failed keyboard subscribe.\n");
@@ -45,7 +45,6 @@ void movePlayer(CarPlayer* p) {
 		printf("Failed timer subscribe.\n");
 		return;
 	}
-	drawPlayer(p);
 	while (codigo != VAL_ESC) { //enquanto nao for pressionado o ESC continua
 		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
 			printf("driver_receive failed with: %d", r);
@@ -93,7 +92,7 @@ void movePlayer(CarPlayer* p) {
 int checkTrackCollision(CarPlayer* p){
 	if (p->x <= 200)
 		return 1;
-	if (p->x >= 540)
+	if (p->x+p->car->bitmapInfoHeader.width >= 600)
 		return 2;
 	return 0;
 }
