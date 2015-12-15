@@ -5,7 +5,7 @@
 
 typedef struct{
 	int x,y; //coordenadas do carro
-	int verfifyCrash; //1-Carro colidiu,0- Não colidiu
+	int verifyCrash; //1-Carro colidiu,0-Não colidiu
 	Bitmap* car;
 }CarPlayer;
 
@@ -16,5 +16,7 @@ void setCoordinates(CarPlayer* p,int x,int y);
 void drawPlayer(CarPlayer* p);
 
 void movePlayer(CarPlayer* p);
+
+int checkTrackCollision(CarPlayer* p);
 
 #endif
