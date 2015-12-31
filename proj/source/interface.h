@@ -1,5 +1,5 @@
-#ifndef __VIDEO_GR_H
-#define __VIDEO_GR_H
+#ifndef __INTERFACE_H
+#define __INTERFACE_H
 
 #include "MainMenuState.h"
 
@@ -18,6 +18,10 @@ char* getGraphicsBuffer();
 char* getGraphicsBufferTmp();
 
 unsigned getVRAMSize();
+
+unsigned getBytesPerPixel();
+
+int print_Bitmap(unsigned char* data,int x, int y,int ht,int wt);
 
 void flipDisplay(char* vm);
 

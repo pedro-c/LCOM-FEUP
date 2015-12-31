@@ -1,6 +1,7 @@
 #include "Bitmap.h"
-#include "stdio.h"
-#include "interface.h"
+
+#define FIRST_BYTE_GREEN_COLOR  0xFFFFFFE0 // necessário a extensão devido ao sinal negativo
+#define SECOND_BYTE_GREEN_COLOR 0x07
 
 Bitmap* loadBitmap(const char* filename) {
     // allocating necessary size
@@ -74,8 +75,7 @@ Bitmap* loadBitmap(const char* filename) {
 }
 
 void drawBitmap(Bitmap* bmp, int x, int y, Alignment alignment) {
-
-	if (bmp == NULL)
+    if (bmp == NULL)
         return;
 
     int width = bmp->bitmapInfoHeader.width;
@@ -92,38 +92,44 @@ void drawBitmap(Bitmap* bmp, int x, int y, Alignment alignment) {
         return;
 
     int xCorrection = 0;
-    if (x < 0) {
-        xCorrection = -x;
-        drawWidth -= xCorrection;
-        x = 0;
+	if (x < 0) {
+		xCorrection = -x;
+		drawWidth -= xCorrection;
+		x = 0;
 
-        if (drawWidth > getHorResolution())
-            drawWidth = getHorResolution();
-    } else if (x + drawWidth >= getHorResolution()) {
-        drawWidth = getHorResolution() - x;
-    }
+		if (drawWidth > getHorResolution())
+			drawWidth = getHorResolution();
+	} else if (x + drawWidth >= getHorResolution()) {
+		drawWidth = getHorResolution() - x;
+	}
 
-    char* bufferStartPos;
-    char* imgStartPos;
+	char* bufferStartPos;
+	char* imgStartPos;
 
-    int i;
-    for (i = 0; i < height; i++) {
-        int pos = y + height - 1 - i;
+	int i, j;
+	for (i = 0; i < height; i++) {
+		int pos = y + height - 1 - i;
+		if (pos < 0 || pos >= getVerResolution()) {
+			pos -= getVerResolution();
+		}
+		for (j = 0; j < width; j++) {
+			bufferStartPos = getGraphicsBufferTmp();
+			bufferStartPos += (x * getBytesPerPixel()) + (pos * getHorResolution() * getBytesPerPixel())
+					+ (j * getBytesPerPixel());
+			imgStartPos = bmp->bitmapData + xCorrection * getBytesPerPixel() + j * getBytesPerPixel()
+					+ i * width * getBytesPerPixel();
 
-        if (pos < 0 || pos >= getVerResolution())
-            continue;
-
-        bufferStartPos = getGraphicsBufferTmp();
-        bufferStartPos += x * 2 + pos * getHorResolution() * 2;
-
-        imgStartPos = bmp->bitmapData + xCorrection * 2 + i * width * 2;
-
-        memcpy(bufferStartPos, imgStartPos, drawWidth * 2);
-    }
+			if (*imgStartPos != FIRST_BYTE_GREEN_COLOR
+					&& *(imgStartPos + 1) != SECOND_BYTE_GREEN_COLOR)
+				memcpy(bufferStartPos, imgStartPos, getBytesPerPixel());
+		}
+	}
 }
 
 void deleteBitmap(Bitmap* bmp) {
     if (bmp == NULL)
         return;
-}
 
+    free(bmp->bitmapData);
+    free(bmp);
+}
