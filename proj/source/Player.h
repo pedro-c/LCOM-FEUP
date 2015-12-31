@@ -1,22 +1,29 @@
 #ifndef __PLAYER_H
 #define __PLAYER_H
 
+#include "interface.h"
+#include "keyboard.h"
+#include "Obstacles.h"
 #include "Bitmap.h"
 
 typedef struct{
-	int x,y; //coordenadas do carro
-	int verifyCrash; //1-Carro colidiu,0-Não colidiu
-	Bitmap* car;
-}CarPlayer;
+	int x,y,vel; //coordenadas do carro e velocidade
+	Bitmap* ash_l;
+	Bitmap* ash_r;
+	int hPlayer, wPlayer; //width e height
+	int counter,sec,change;
+}Player;
 
-CarPlayer* newPlayer(int x,int y);
+Player* newPlayer();
 
-void setCoordinates(CarPlayer* p,int x,int y);
+void drawPlayer(Player* p);
 
-void drawPlayer(CarPlayer* p);
+void movePlayer(Player* p,unsigned char code);
 
-void movePlayer(CarPlayer* p);
+void deletePlayer(Player* p);
 
-int checkTrackCollision(CarPlayer* p);
+int checkTrackCollision(Player* p);
+
+void updateCounter(Player* p);
 
 #endif

@@ -67,29 +67,36 @@ void *initGame(unsigned short mode) {
 	double_video = (char*) malloc(h_res * v_res * bits_per_pixel / 8);
 	return video_mem;
 }
-unsigned getVRAMSize() {
-	return h_res * v_res * bits_per_pixel/8;
-}
 
 void fill_pixel(unsigned short x, unsigned short y, unsigned short color) {
-	char *ptr = double_video;
-	ptr += h_res * y * bytes_per_pixel + x * bytes_per_pixel;
-	*ptr = color;
+	*(double_video+((x+h_res*y)*bits_per_pixel/8))=color;
 }
+
 unsigned getVerResolution()
 {
 	return v_res;
 }
+
 unsigned getHorResolution()
 {
 	return h_res;
 }
+
 char* getGraphicsBuffer()
 {
 	return video_mem;
 }
+
 char* getGraphicsBufferTmp() {
 	return double_video;
+}
+
+unsigned getVRAMSize() {
+	return h_res * v_res * bits_per_pixel/8;
+}
+
+unsigned getBytesPerPixel(){
+	return bytes_per_pixel;
 }
 
 char *read_xpm(char *map[], int *wd, int *ht) {
@@ -177,6 +184,5 @@ int print_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 
 void refresh() {
 	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
-	int i,j;
 	memset(double_video,0,getVRAMSize());
 }

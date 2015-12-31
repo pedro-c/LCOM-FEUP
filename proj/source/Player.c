@@ -3,96 +3,88 @@
 #include <minix/syslib.h>
 #include <minix/drivers.h>
 #include <stdio.h>
-#include "interface.h"
-#include "keyboard.h"
-#include "Obstacles.h"
 
 
 #define MAKECODE_A 0x1e
 #define MAKECODE_D 0x20
+#define X_INIT      360
+#define Y_INIT      450
+#define VEL_PLAYER    3
 
-CarPlayer* newPlayer(int x, int y) {
-	CarPlayer* p = (CarPlayer*) malloc(sizeof(CarPlayer));
-	p->x = x;
-	p->y = y;
-	p->car=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/ash.bmp");
+Player* newPlayer() {
+	Player* p = (Player*) malloc(sizeof(Player));
+	p->x = X_INIT;
+	p->y = Y_INIT;
+	p->vel=0;
+	p->sec=0;
+	p->change=0;
+	p->counter=0;
+	p->change=0;
+	p->ash_l=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/ash.bmp");
+	p->ash_r=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/ash2.bmp");
+	p->hPlayer=p->ash_l->bitmapInfoHeader.height;
+	p->wPlayer=p->ash_l->bitmapInfoHeader.width;
 	return p;
 }
 
-void setCoordinates(CarPlayer* p, int x, int y) {
-	p->x = x;
-	p->y = y;
+void drawPlayer(Player* p) {
+	if(p->change==0)
+		drawBitmap(p->ash_l,p->x,p->y,ALIGN_LEFT);
+	else if(p->change==1)
+		drawBitmap(p->ash_r,p->x,p->y,ALIGN_LEFT);
 }
 
-void drawPlayer(CarPlayer* p) {
-	drawBitmap(p->car,p->x,p->y,ALIGN_LEFT);
-}
-
-void movePlayer(CarPlayer* p) {
-	int r, ipc_status;
-	message msg;
-	unsigned char codigo;
-	int flag=0;
-	char irq_keyboard, irq_timer;
-
-	Obstacles *obs1=newObstacle(0,0,loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/gamebackgroung.bmp"));
-
-	if ((irq_keyboard = kbd_subscribe(&hook_kbd)) == -1) {
-		printf("Failed keyboard subscribe.\n");
-		return;
-	}
-	if ((irq_timer = timer_subscribe_int()) == 1) {
-		printf("Failed timer subscribe.\n");
-		return;
-	}
-	while (codigo != VAL_ESC) { //enquanto nao for pressionado o ESC continua
-		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
-			printf("driver_receive failed with: %d", r);
-			continue;
+void movePlayer(Player* p,unsigned char code){
+	if (checkTrackCollision(p) == 0) {
+		if (code == MAKECODE_A) {
+			p->vel += VEL_PLAYER;
+			p->x -= p->vel;
+		} else if (code == MAKECODE_D) {
+			p->vel += VEL_PLAYER;
+			p->x += p->vel;
 		}
-		if (is_ipc_notify(ipc_status)) {
-			switch (_ENDPOINT_P(msg.m_source)) {
-			case HARDWARE:
-				if (msg.NOTIFY_ARG & irq_keyboard) {
-					kbd_code_scan(&codigo);
-					if (checkTrackCollision(p) == 0) {
-						if (codigo == MAKECODE_A)
-							p->x -= 5;
-						else if (codigo == MAKECODE_D)
-							p->x += 5;
-					} else if (checkTrackCollision(p) == 1) {
-						if (codigo == MAKECODE_D)
-							p->x += 5;
-					} else if (checkTrackCollision(p) == 2){
-						if (codigo == MAKECODE_A)
-							p->x -= 5;
-					}
-				} else if (msg.NOTIFY_ARG & irq_timer) {
-					drawTrack(obs1);
-					drawPlayer(p);
-					refresh();
-				}
-				break;
-			default:
-				break;
-			}
+	} else if (checkTrackCollision(p) == 1) {
+		if (code == MAKECODE_D) {
+			p->vel += VEL_PLAYER;
+			p->x += p->vel;
+		}
+	} else if (checkTrackCollision(p) == 2) {
+		if (code == MAKECODE_A) {
+			p->vel += VEL_PLAYER;
+			p->x -= p->vel;
 		}
 	}
-	if (kbd_unsubscribe(&hook_kbd) == -1) {
-		printf("Failed keyboard unsubscribe.\n");
-		return;
-	}
-
-	if (timer_unsubscribe_int() == 1) {
-		printf("Failed timer unsubscribe.\n");
-		return;
-	}
+	p->vel = VEL_PLAYER;
 }
 
-int checkTrackCollision(CarPlayer* p){
+void deletePlayer(Player* p){
+	if(p==NULL)
+		return;
+	deleteBitmap(p->ash_l);
+	deleteBitmap(p->ash_r);
+	free(p);
+}
+
+int checkTrackCollision(Player* p){
 	if (p->x <= 200)
 		return 1;
-	if (p->x+p->car->bitmapInfoHeader.width >= 600)
+	if (p->x+p->ash_l->bitmapInfoHeader.width >= 600)
 		return 2;
 	return 0;
+}
+
+void updateCounter(Player* p){
+	p->counter++;
+	if(p->counter==10 || p->counter==20 || p->counter==30 || p->counter==40 || p->counter==50 || p->counter==60)
+	{
+		if(p->change==0)
+			p->change=1;
+		else
+			p->change=0;
+	}
+	if(p->counter==60)
+	{
+		p->counter=0;
+		p->sec++;
+	}
 }

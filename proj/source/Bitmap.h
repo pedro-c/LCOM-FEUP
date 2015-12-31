@@ -39,6 +39,8 @@ typedef struct {
     unsigned char* bitmapData;
 } Bitmap;
 
+#include "stdio.h"
+
 /**
  * @brief Loads a bmp image
  *
