@@ -1,95 +1,99 @@
+#include <minix/drivers.h>
 #include "MainMenuState.h"
 #include "keyboard.h"
 #include "interface.h"
 #include "mouse.h"
-
-/*
-Rectangle* newRectangle(int x1, int y1, int x2, int y2){
-	Rectangle* rect=(Rectangle*)malloc(sizeof(Rectangle));
-
-	rect->x1=x1;
-	rect->y1=y1;
-	rect->x2=x2;
-	rect->y2=y2;
-
-	return rect;
-}
-
-void deleteRectangle(Rectangle* rect){
-	free(rect);
-}
-
+#include "vbe.h"
+#include "Bitmap.h"
+#include "Button.h"
+#include "i8254.h"
 
 MainMenuState* newMainMenuState() {
     MainMenuState* state = (MainMenuState*) malloc(sizeof(MainMenuState));
 
-    state->done = 0;
-    state->background = loadBitmap(getImagePath("menu-background"));
-
-    // these numbers are just meant to create the buttons boundaries
-    double w = .075, hi = .44, hf = hi + .12;
-    int x1 = getHorResolution() / 2 - getHorResolution() * w;
-    int x2 = getHorResolution() / 2 + getHorResolution() * w;
-    int y1 = getVerResolution() * hi;
-    int y2 = getVerResolution() * hf;
-    state->playButton = newRectangle(x1, y1, x2, y2);
-    state->mouseOnPlay = 0;
-
-    hi = .64, hf = hi + .12;
-    y1 = getVerResolution() * hi;
-    y2 = getVerResolution() * hf;
-    state->exitButton = newRectangle(x1, y1, x2, y2);
-    state->mouseOnExit = 0;
+    state->menuImage = loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/menubackground.bmp");
+    state->pokeball = loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/poke.bmp");
+    state->playButton = newBox(330, 300, 470, 390);
+    state->exitButton = newBox(330, 410, 470, 500);
 
     return state;
 }
 
-int updateMainMenuState(MainMenuState* state, unsigned long scancode) {
-    int draw = 0;
-
-    // if ESC has been pressed, quit
-    if (scancode == KEY_DOWN(KEY_ESC)) {
-        state->action = 1;
-        state->done = 1;
-    }
-
-    // if mouse is inside the play button rectangle (boundaries)
-    if (mouseInsideRect(state->playButton))
-        state->mouseOnPlay = 1;
-    else
-        state->mouseOnPlay = 0;
-
-    // if mouse is inside the exit button rectangle (boundaries)
-    if (mouseInsideRect(state->exitButton)) {
-        state->mouseOnExit = 1;
-
-        // and left mouse button has been released
-        if (getMouse()->leftButtonReleased) {
-            state->action = 1;
-            state->done = 1;
-        }
-    } else
-        state->mouseOnExit = 0;
-
-    return draw;
+int verifyStateChange(MainMenuState* state){
+	if(state->play)
+		return 1;
+	else
+		return 0;
 }
 
-void drawMainMenuState(MainMenuState* state) {
-    drawBitmap(state->background, 0, 0, ALIGN_LEFT);
+void drawPokeball(MainMenuState* state){
+	if(state->overPlay){
+		drawBitmap(state->pokeball,308,320,ALIGN_CENTER);
+		memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
+	}else if(state->overExit){
+		drawBitmap(state->pokeball,308,434,ALIGN_CENTER);
+		memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
+	}
+}
 
-    if (state->mouseOnPlay)
-        drawRect(state->playButton, YELLOW);
-    else if (state->mouseOnExit)
-        drawRect(state->exitButton, YELLOW);
+int updateMainMenuState(MainMenuState* state, unsigned long scancode) {
+	int exit = 0;
+	int exitK = 0;
+	int exitR = 0;
+	state->overPlay=0;
+	state->overExit=0;
+	updateMouse();
+	//unsigned char code = kbd_code();
+
+	Mouse* m = getMouse();
+
+
+	 if (scancode == VAL_ESC) {
+	 exitK = 1;
+	 }
+
+
+	// if mouse is inside the play button rectangle (boundaries)
+	if (mouseInsideBox(state->playButton)) {
+		state->overPlay=1;
+		if (m->lb_pressed) {
+			state->play = 1;
+		} else {
+			state->play = 0;
+		}
+	}
+
+	// if mouse is inside the exit button rectangle (boundaries)
+	if (mouseInsideBox(state->exitButton)) {
+		state->overExit=1;
+
+		if (m->lb_pressed) {
+			exitR = 1;
+		} else {
+			exitR = 0;
+		}
+	}
+
+	if (exitR == 1 || exitK == 1) {
+		exit = 1;
+		mouse_unsubscribe();
+	}
+
+	return exit;
+}
+
+
+void drawMenu(MainMenuState* state){
+	drawBitmap(state->menuImage,0,0,ALIGN_LEFT);
+	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 }
 
 void deleteMainMenuState(MainMenuState* state) {
-    deleteBitmap(state->background);
-    deleteRectangle(state->playButton);
-    deleteRectangle(state->exitButton);
+    deleteBitmap(state->menuImage);
+    deleteBox(state->playButton);
+    deleteBox(state->exitButton);
 
     free(state);
 }
 
-*/
 

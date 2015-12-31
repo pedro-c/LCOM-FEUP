@@ -186,3 +186,4 @@ void refresh() {
 	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 	memset(double_video,0,getVRAMSize());
 }
+

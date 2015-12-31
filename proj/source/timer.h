@@ -1,6 +1,11 @@
 #ifndef __TIMER_H
 #define __TIMER_H
 
+#include "i8254.h"
+
+
+ static int hook_timer=NOTIFICATION_TIMER;
+ static unsigned long mouse_counter=0;
 /** @defgroup timer timer
  * @{
  *

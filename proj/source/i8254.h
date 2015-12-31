@@ -1,5 +1,5 @@
-#ifndef _LCOM_I8254_H_
-#define _LCOM_I8254_H_
+#ifndef __I8254_H_
+#define __I8254_H_
 
 /** @defgroup i8254 i8254
  * @{
@@ -13,12 +13,13 @@
 
 #define TIMER0_IRQ	        0    /**< @brief Timer 0 IRQ line */
 
+
 #define NOTIFICATION_KBD          1
-#define NOTIFICATION_MOUSE  	  2
-#define NOTIFICATION_TIMER        3
+#define NOTIFICATION_MOUSE  	  12
+#define NOTIFICATION_TIMER        0
+#define NOTIFICATION_RTC		  8
 
 /* I/O port addresses */
-
 #define TIMER_0			0x40 /**< @brief Timer 0 count register */
 #define TIMER_1			0x41 /**< @brief Timer 1 count register */
 #define TIMER_2			0x42 /**< @brief Timer 2 count register */
@@ -57,8 +58,9 @@
 #define TIMER_RB_STATUS_        BIT(4)
 #define TIMER_RB_SEL(n)         BIT((n)+1)
 
+//keyboard
 #define OUT_BUF 		0x60
-#define KBD_IRQ 		0x01
+#define KBD_IRQ 		1
 #define VAL_ESC 		0x81
 #define STAT_REG		0x64
 #define DELAY_US 		20000
@@ -82,6 +84,14 @@
 #define ACK                 0xFA
 #define ENABLE_MOUSE        0xA8
 
+//RTC
+#define RTC_IRQ 			8
+#define RTC_ADDR_REG 		0x70
+#define RTC_DATA_REG 		0x71
+#define RTC_REG_A			10
+#define RTC_REG_B			11
+#define RTC_REG_C			12
+#define RTC_UIP				BIT(7)
 
 /**@}*/
 

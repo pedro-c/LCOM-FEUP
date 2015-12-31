@@ -4,15 +4,54 @@
 #include "Bitmap.h"
 #include "interface.h"
 
-Mouse mousePreviousState;
-
 unsigned long irq_set;
+
+
+
 int ipc_status;
 message msg;
 int conta = 0, ind = 0, r, ipc_status;
 unsigned long irq_set, data;
 char cmd;
 message msg;
+
+Mouse* mouse=NULL;
+
+Mouse* getMouse() {
+	unsigned long r;
+	unsigned long stat;
+	if (mouse == NULL) {
+		while (r != ACK) {
+			sys_outb(STAT_REG, ENABLE_MOUSE);
+			while (1) {
+				sys_inb(STAT_REG, &stat);
+				if ((stat & IBF) == 0) {
+					sys_outb(STAT_REG, W_TO_MOUSE);
+					break;
+				}
+
+				tickdelay(micros_to_ticks(DELAY_US));
+			}
+			while (1) {
+				sys_inb(STAT_REG, &stat);
+				if ((stat & IBF) == 0) {
+					sys_outb(OUT_BUF, ENABLE_SEND);
+					break;
+				}
+
+				tickdelay(micros_to_ticks(DELAY_US));
+			}
+			sys_inb(OUT_BUF, &r);
+		}
+		mouse = newMouse();
+	}
+
+	return mouse;
+}
+
+void setMouse(Mouse* m){
+	mouse=m;
+}
 
 Mouse* newMouse() {
 	Mouse* mouse = (Mouse*) malloc(sizeof(Mouse));
@@ -22,6 +61,7 @@ Mouse* newMouse() {
 
 	mouse->image = loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/mouse.bmp");
 
+/*
 	if ((irq_set = mouse_subscribe()) == -1) {
 		printf("Unable to subscribe mouse!\n");
 	}
@@ -31,29 +71,71 @@ Mouse* newMouse() {
 		printf("Error-MC\n");
 	if (sys_outb(OUT_BUF, ENABLE_SEND) != OK) //Ativar o envio
 		printf("Error-SEND\n");
-
+*/
 	return mouse;
 }
 
 
-void drawMouse(Mouse* mouse){
-	drawBitmap(mouse->image,mouse->x,mouse->y,ALIGN_LEFT);
+void drawMouse(){
+	Mouse* m=getMouse();
+	drawBitmap(m->image,m->x,m->y,ALIGN_LEFT);
+	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 }
 
-void updateMouse(Mouse* mouse) {
-	int mouseVelocity=3; //higher is slower
+void updateMouse() {
+	Mouse* mouse=getMouse();
+	int mouseVelocity = 2; //higher is slower
 	int convert = BIT(7) | BIT(6) | BIT(5) | BIT(4) | BIT(3) | BIT(2) | BIT(1) | BIT(0);
+
+	/*
 	if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
 		printf("driver_receive failed with: %d", r);
 	}
 	if (is_ipc_notify(ipc_status)) {
 		switch (_ENDPOINT_P(msg.m_source)) {
 		case HARDWARE:
-			if (msg.NOTIFY_ARG & irq_set) {
+			if (msg.NOTIFY_ARG & irq_set) {*/
+
 				get_packet();
 
 				int ys = 0;
 				int xs = 0;
+
+
+				int mb = 0;
+				int rb = 0;
+				int lb = 0;
+
+
+				if (packet[0] & BIT(2))
+						mb = 1;
+				if (packet[0] & BIT(1))
+						rb = 1;
+				if (packet[0] & BIT(0))
+						lb = 1;
+
+				if(mb){
+					mouse->mb_pressed=1;
+					mouse->mb_released=0;
+				}else{
+					mouse->mb_pressed=0;
+					mouse->mb_released=1;
+				}
+				if(rb){
+					mouse->rb_pressed=1;
+					mouse->rb_released=0;
+				}else{
+					mouse->rb_pressed=0;
+					mouse->rb_released=1;
+				}
+				if(lb){
+					mouse->lb_pressed=1;
+					mouse->lb_released=0;
+				}else{
+					mouse->lb_pressed=0;
+					mouse->lb_released=1;
+				}
+
 
 				if (packet[0] & BIT(5))
 					ys = 1;
@@ -64,54 +146,77 @@ void updateMouse(Mouse* mouse) {
 					char p = packet[1] ^ convert;
 					p++;
 					if (xs == 0) {
-						mouse->x+=(int)((short) p/mouseVelocity);
+						mouse->x += (int) ((short) p / mouseVelocity);
 					} else {
-						mouse->x-=(int)((short) p/mouseVelocity);
+						if (abs((int) ((short) p / mouseVelocity)) > mouse->x) {
+							if (mouse->x > 2) {
+								mouse->x--;
+							}
+						} else {
+							mouse->x -= (int) ((short) p / mouseVelocity);
+						}
 					}
 
 				} else if (xs == 0) {
-					mouse->x+=(int)(packet[1]/mouseVelocity);
+					mouse->x += (int) (packet[1] / mouseVelocity);
 				} else {
-					mouse->x-=(int)(packet[1]/mouseVelocity);
+					if (abs((int) (packet[1] / mouseVelocity)) > mouse->x) {
+						if (mouse->x > 2) {
+							mouse->x--;
+						}
+					} else {
+						mouse->x -= (int) (packet[1] / mouseVelocity);
+					}
+
 				}
 
 				if (packet[2] & BIT(7)) {
 					char p = packet[2] ^ convert;
 					p++;
 					if (ys == 1) {
-						mouse->y+=(int)((short) p/mouseVelocity);
+						mouse->y += (int) ((short) p / mouseVelocity);
 					} else {
-						mouse->y-=(int)((short) p/mouseVelocity);
+						if (abs((int) ((short) p / mouseVelocity)) > mouse->y) {
+							if (mouse->y > 2) {
+								mouse->y--;
+							}
+						} else {
+							mouse->y -= (int) ((short) p / mouseVelocity);
+						}
+
 					}
 				} else if (ys == 1) {
-					mouse->y+=(int)(packet[2]/mouseVelocity);
+					mouse->y += (int) (packet[2] / mouseVelocity);
 				} else {
-					mouse->y-=(int)(packet[2]/mouseVelocity);
+					if (abs((int) (packet[2] / mouseVelocity)) > mouse->y) {
+						if (mouse->y > 2) {
+							mouse->y--;
+						}
+					} else {
+						mouse->y -= (int) (packet[2] / mouseVelocity);
+					}
+
 				}
 
-				if(mouse->x > (getHorResolution()-35)){
-					mouse->x = (getHorResolution()-35);
-				}
-				else if(mouse->x < 1){
+				if (mouse->x > (getHorResolution() - 35)) {
+					mouse->x = (getHorResolution() - 35);
+				} else if (mouse->x < 1) {
 					mouse->x = 1;
 				}
-				if(mouse->y > (getVerResolution()-48)){
-					mouse->y = (getVerResolution()-48);
-				}
-				else if(mouse->y < 1){
+				if (mouse->y > (getVerResolution() - 48)) {
+					mouse->y = (getVerResolution() - 48);
+				} else if (mouse->y < 1) {
 					mouse->y = 1;
 				}
 
-				drawMouse(mouse);
-
-			}
+			/*}
 			break;
 		default:
 			break;
 		}
-	} else {
-	}
+	}*/
 
+	setMouse(mouse);
 }
 
 
@@ -124,6 +229,16 @@ int mouse_subscribe() {
 }
 
 int mouse_unsubscribe() {
+
+	if (sys_outb(STAT_REG, W_TO_MOUSE) != OK)
+		printf("ERROR-MC");
+	if (sys_outb(OUT_BUF, DISABLE_STREAM) != OK)
+		printf("ERROR-DISABLE_STREAM");
+	if (sys_inb(OUT_BUF, &data) != OK)
+		printf("OUT_BUF not full!\n");
+	if (data != ACK)
+		printf("Not ACK!\n");
+
 	if (sys_irqdisable(&hook_mouse) == OK)
 		if (sys_irqrmpolicy(&hook_mouse) == OK)
 			return 0;
@@ -247,12 +362,11 @@ void mouse_print() {
 
 
 
-/*
+
 int mouseInside(int x1, int y1, int x2, int y2){
-	return x1 <= getMouse()->x && getMouse()->x <= x2 && y1 <= getMouse()->y && getMouse()->y <= y2;
+	return x1 <= mouse->x && mouse->x <= x2 && y1 <= mouse->y && mouse->y <= y2;
 }
-int mouseInsideRect(Rectangle* rect){
-	return mouseInside(rect->x1,rect->y1,rect->x2,rect->y2);
+int mouseInsideBox(Box* box){
+	return mouseInside(box->x1,box->y1,box->x2,box->y2);
 }
-*/
 

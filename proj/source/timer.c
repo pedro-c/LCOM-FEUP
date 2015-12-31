@@ -3,8 +3,8 @@
 
 #include "timer.h"
 #include "i8254.h"
- static int hook_id=NOTIFICATION_TIMER;
- static unsigned long counter=0;
+
+
 
 
 int timer_set_square(unsigned long timer, unsigned long freq) {
@@ -59,9 +59,9 @@ int timer_set_square(unsigned long timer, unsigned long freq) {
 
 int timer_subscribe_int(void) {
 
-	if ((sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_id)==OK))
+	if ((sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_timer))==OK)
 	{
-		sys_irqenable(&hook_id);//ativa as interrupcoes
+		sys_irqenable(&hook_timer);//ativa as interrupcoes
 		return BIT(NOTIFICATION_TIMER);
 	}
 	else return -1;
@@ -70,16 +70,16 @@ int timer_subscribe_int(void) {
 
 int timer_unsubscribe_int() {
 
-	if(sys_irqdisable(&hook_id)==OK) //desativar as interrupcoes
+	if(sys_irqdisable(&hook_timer)==OK) //desativar as interrupcoes
 	{
-		sys_irqrmpolicy(&hook_id); //Remove a policy do qual foi feito o disable
+		sys_irqrmpolicy(&hook_timer); //Remove a policy do qual foi feito o disable
 		return 0;
 	}
 	else return 1;
 }
 
 void timer_int_handler() {
-	counter++;
+	mouse_counter++;
 }
 
 int timer_get_conf(unsigned long timer, unsigned char *st) {
@@ -155,7 +155,7 @@ int timer_test_int(unsigned long time)
 {
 	int ipc_status;
 	message msg;
-	int r,irq_set=BIT(hook_id);
+	int r,irq_set=BIT(hook_timer);
 	int x=0; //contar as interrupcoes feitas
 	if(timer_test_square(60)==1) //verificar e colocar freq a 60 por segundo
 	{
@@ -177,10 +177,10 @@ int timer_test_int(unsigned long time)
 			 case HARDWARE:
 				 if (msg.NOTIFY_ARG & irq_set) {
 					 timer_int_handler();
-					 if(counter==60) //sempre que counter for igual a 60 (passou 1 segundo)
+					 if(mouse_counter==60) //sempre que counter for igual a 60 (passou 1 segundo)
 					 {
 						 printf("Interrupcao!\n");
-						 counter=0;
+						 mouse_counter=0;
 							x++;
 					 }
 				 }

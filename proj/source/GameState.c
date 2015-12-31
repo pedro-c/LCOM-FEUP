@@ -1,6 +1,7 @@
 #include "GameState.h"
 
 #include "stdio.h"
+#include "score.h"
 
 #define MAKECODE_A 0x1e
 #define MAKECODE_D 0x20
@@ -11,6 +12,8 @@
 GameState* newGameState(){
 	srand(time(NULL));
 	GameState* g = (GameState*) malloc(sizeof(GameState));
+
+	g->score=loadScoreFont();;
 	g->y=0;
 	g->complete=0;
 	g->background=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/gamebackground.bmp");
@@ -24,49 +27,60 @@ GameState* newGameState(){
 		dist+=200;
 	}
 
+
 	return g;
 }
 
-void updateGameState(GameState* g,unsigned char* keyCode){
-	if(*keyCode==VAL_ESC)
-		g->complete=1;
-	moveBackGround(g);
-	movePlayer(g->player,*keyCode);
-	updateCounter(g->player);
-	unsigned i;
-	for(i=0;i<OBS_SIZE;i++)
-	{
-		while (1) {
-			if (g->obs_l[i]->use + g->obs_c[i]->use + g->obs_r[i]->use == 2)
-				break;
-			updateObstacleUse(g->obs_l[i]);
-			updateObstacleUse(g->obs_c[i]);
-			updateObstacleUse(g->obs_r[i]);
-		}
-		if (g->obs_l[i]->use == 1)
-			updateObstacle(g->obs_l[i]);
-		else
-			g->obs_l[i]->y=0;
-
-		if (g->obs_c[i]->use == 1)
-			updateObstacle(g->obs_c[i]);
-		else
-			g->obs_c[i]->y=0;
-
-		if (g->obs_r[i]->use == 1)
-			updateObstacle(g->obs_r[i]);
-		else
-			g->obs_r[i]->y=0;
+int updateGameState(GameState* g, unsigned long scancode, int counter) {
+	if (scancode == VAL_ESC) {
+		g->complete = 1;
+		return 1;
 	}
 
-	if(checkEndGame(g)==1)
-		*keyCode=VAL_ESC;
+	moveBackGround(g);
+	movePlayer(g->player, scancode);
+	updateCounter(g->player);
+	if (counter > 120) {
+		unsigned i;
+		for (i = 0; i < OBS_SIZE; i++) {
+			while (1) {
+				if (g->obs_l[i]->use + g->obs_c[i]->use + g->obs_r[i]->use == 2)
+					break;
+				updateObstacleUse(g->obs_l[i]);
+				updateObstacleUse(g->obs_c[i]);
+				updateObstacleUse(g->obs_r[i]);
+			}
+			if (g->obs_l[i]->use == 1)
+				updateObstacle(g->obs_l[i]);
+			else
+				g->obs_l[i]->y = 0;
+
+			if (g->obs_c[i]->use == 1)
+				updateObstacle(g->obs_c[i]);
+			else
+				g->obs_c[i]->y = 0;
+
+			if (g->obs_r[i]->use == 1)
+				updateObstacle(g->obs_r[i]);
+			else
+				g->obs_r[i]->y = 0;
+		}
+		if (checkEndGame(g) == 1) {
+			//*keyCode=VAL_ESC;
+			return 1;
+		}
+	}
+
+	return 0;
+
 }
 
-void drawGameState(GameState* g){
+void drawGameState(GameState* g,int counter){
+	int score;
 	drawBitmap(g->background,0,g->y,ALIGN_LEFT);
 	drawPlayer(g->player);
-
+	scoreDisplay(g->score, counter);
+if(counter>120){
 	unsigned i;
 	for(i=0;i<OBS_SIZE;i++)
 	{
@@ -77,6 +91,8 @@ void drawGameState(GameState* g){
 		if (g->obs_r[i]->use == 1)
 			drawObstacle(g->obs_r[i]);
 	}
+}
+
 }
 
 void deleteGameState(GameState* g){
