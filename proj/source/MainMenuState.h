@@ -1,32 +1,34 @@
-#pragma once
+#ifndef __MAINMENUSTATE_H
+#define __MAINMENUSTATE_H
 
+#include <stdio.h>
 #include "Bitmap.h"
-/*
-typedef struct{
-	int x1,y1,x2,y2;
-}Rectangle;
-
-Rectangle* newRectangle(int x1, int y1, int x2, int y2);
-void deleteRectangle(Rectangle* rect);
+#include "mouse.h"
+#include "Button.h"
 
 typedef enum{
 	PLAY_CHOSEN, EXIT_CHOSEN
 }MainMenuAction;
 
 typedef struct{
-	int done;
 
-	Bitmap* background;
+	int play;
+	int overPlay;
+	int overExit;
 
-	int mouseOnPlay;
-	Rectangle* playButton;
-	int mouseOnExit;
-	Rectangle* exitButton;
+	Bitmap* menuImage;
+	Bitmap* pokeball;
+	Box* playButton;
+	Box* exitButton;
+
 
 }MainMenuState;
 
 MainMenuState* newMainMenuState();
-int updateMainMenuState(MainMenuState* state, unsigned long scancode);
-void drawMainMenuState(MainMenuState* state);
+void drawPokeball(MainMenuState* state);
+int verifyStateChange(MainMenuState* state);
+int updateMainMenuState(MainMenuState* state,  unsigned long scancode);
+void drawMenu(MainMenuState* state);
 void deleteMainMenuState(MainMenuState* state);
-*/
+
+#endif

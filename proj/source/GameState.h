@@ -4,6 +4,7 @@
 #include "Bitmap.h"
 #include "Player.h"
 #include "Collisions.h"
+#include "score.h"
 
 #define OBS_SIZE      3
 
@@ -11,6 +12,7 @@ typedef struct{
 	int y, complete;
 	Bitmap* background;
 	Player* player;
+	Score* score;
 	Obstacles* obs_l[OBS_SIZE];
 	Obstacles* obs_c[OBS_SIZE];
 	Obstacles* obs_r[OBS_SIZE];
@@ -19,8 +21,8 @@ typedef struct{
 } GameState;
 
 GameState* newGameState();
-void updateGameState(GameState* g,unsigned char* keyCode);
-void drawGameState(GameState* g);
+int updateGameState(GameState* g,unsigned long scancode,int counter);
+void drawGameState(GameState* g,int counter);
 void deleteGameState(GameState* g);
 void moveBackGround(GameState* g);
 int checkEndGame(GameState *g);

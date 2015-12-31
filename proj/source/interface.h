@@ -25,6 +25,10 @@ int print_Bitmap(unsigned char* data,int x, int y,int ht,int wt);
 
 void flipDisplay(char* vm);
 
-const char* getImagePath(const char* image);
+char *read_xpm(char *map[], int *wd, int *ht);
+
+int print_xpm(unsigned short xi, unsigned short yi, char *xpm[]);
+
+void refresh();
 
 #endif

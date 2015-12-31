@@ -1,31 +1,32 @@
 #ifndef __GAME_H
 #define __GAME_H
 
-#include "Bitmap.h"
-#include "timer.h"
 #include <stdio.h>
-
-char msg, tag, var;
-//log data
-extern FILE* logfd;
-#define LOG_PATH "home/lcom/lcom1516-t2g12/proj/log.txt"
-#define LOG(tag, msg) fprintf(logfd,"%s: %d/n", tag, var)
-#define LOG_VAR(tag,var) fprintf(logfd, "%s: %d/n", tag, var)
+#include "MainMenuState.h"
 
 
-
+typedef enum{
+	MAIN_MENU_STATE, GAME_STATE
+}State;
 
 
 typedef struct{
-	int subscribe_KB;
-	int subscribe_MOUSE;
-	int subscribe_TIMER;
 
-	Bitmap* menu;
+	int set_kb;
+	int set_mouse;
+	int set_timer;
+	int counter;
+	State currentState;
+	void* state;
+	unsigned long scancode;
+
 
 }Game;
 
 Game* startGame();
-void drawMenu(Game* g);
+int updateGame(Game* game);
+void drawGame(Game* game);
+void deleteState(Game* game);
+void deleteGame(Game* game);
 
 #endif

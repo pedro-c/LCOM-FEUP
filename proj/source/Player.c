@@ -34,22 +34,22 @@ void drawPlayer(Player* p) {
 		drawBitmap(p->ash_r,p->x,p->y,ALIGN_LEFT);
 }
 
-void movePlayer(Player* p,unsigned char code){
+void movePlayer(Player* p,unsigned long scancode){
 	if (checkTrackCollision(p) == 0) {
-		if (code == MAKECODE_A) {
+		if (scancode == MAKECODE_A) {
 			p->vel += VEL_PLAYER;
 			p->x -= p->vel;
-		} else if (code == MAKECODE_D) {
+		} else if (scancode == MAKECODE_D) {
 			p->vel += VEL_PLAYER;
 			p->x += p->vel;
 		}
 	} else if (checkTrackCollision(p) == 1) {
-		if (code == MAKECODE_D) {
+		if (scancode == MAKECODE_D) {
 			p->vel += VEL_PLAYER;
 			p->x += p->vel;
 		}
 	} else if (checkTrackCollision(p) == 2) {
-		if (code == MAKECODE_A) {
+		if (scancode == MAKECODE_A) {
 			p->vel += VEL_PLAYER;
 			p->x -= p->vel;
 		}

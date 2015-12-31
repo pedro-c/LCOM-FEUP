@@ -18,7 +18,7 @@ Player* newPlayer();
 
 void drawPlayer(Player* p);
 
-void movePlayer(Player* p,unsigned char code);
+void movePlayer(Player* p,unsigned long scancode);
 
 void deletePlayer(Player* p);
 

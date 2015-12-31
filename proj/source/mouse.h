@@ -6,11 +6,10 @@
 #include <math.h>
 #include "i8254.h"
 #include "Bitmap.h"
+#include "Button.h"
 
 unsigned long packet[3];
 static int hook_mouse=NOTIFICATION_MOUSE;
-static int hook_timer=NOTIFICATION_TIMER;
-
 
 typedef struct {
 	int x,y;
@@ -25,10 +24,11 @@ typedef struct {
 	Bitmap* image;
 
 } Mouse;
-
+Mouse* getMouse();
+void setMouse(Mouse* m);
 Mouse* newMouse();
-void updateMouse(Mouse* mouse);
-void drawMouse(Mouse* mouse);
+void updateMouse();
+void drawMouse();
 void enableMouse();
 int mouse_subscribe();
 int mouse_unsubscribe();
@@ -36,7 +36,7 @@ int mouse_write_command(char port, unsigned char cmd);
 int mouse_read();
 int get_packet();
 void mouse_print();
-//int mouseInside(int x1, int y1, int x2, int y2);
-//int mouseInsideRect(Rectangle* rect);
+int mouseInside(int x1, int y1, int x2, int y2);
+int mouseInsideBox(Box* box);
 
 #endif
