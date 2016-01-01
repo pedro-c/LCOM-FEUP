@@ -94,7 +94,7 @@ void drawGame(Game* g) {
 		break;
 	case GAME_STATE:
 		drawGameState(g->state,g->counter);
-		refresh();
+		//refresh();
 		break;
 	default:
 		break;
