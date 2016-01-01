@@ -40,7 +40,6 @@ int updateGameState(GameState* g, unsigned long scancode, int counter) {
 	moveBackGround(g);
 	movePlayer(g->player, scancode);
 	updateCounter(g->player);
-	if (counter > 120) {
 		unsigned i;
 		for (i = 0; i < OBS_SIZE; i++) {
 			while (1) {
@@ -69,7 +68,6 @@ int updateGameState(GameState* g, unsigned long scancode, int counter) {
 			//*keyCode=VAL_ESC;
 			return 1;
 		}
-	}
 
 	return 0;
 
@@ -80,7 +78,7 @@ void drawGameState(GameState* g,int counter){
 	drawBitmap(g->background,0,g->y,ALIGN_LEFT);
 	drawPlayer(g->player);
 	scoreDisplay(g->score, counter);
-if(counter>120){
+
 	unsigned i;
 	for(i=0;i<OBS_SIZE;i++)
 	{
@@ -91,7 +89,7 @@ if(counter>120){
 		if (g->obs_r[i]->use == 1)
 			drawObstacle(g->obs_r[i]);
 	}
-}
+	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 
 }
 
