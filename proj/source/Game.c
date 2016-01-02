@@ -15,7 +15,7 @@ Game* startGame(){
 	Game* game =(Game*)malloc(sizeof(Game));
 
 	//subscribing
-	timer_set_square(0,30);
+	timer_set_square(0,60);
 	game->set_kb=kbd_subscribe();
 	game->set_mouse=mouse_subscribe();
 
