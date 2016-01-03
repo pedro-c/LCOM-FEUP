@@ -4,7 +4,7 @@
 #include "Bitmap.h"
 
 typedef struct{
-
+	unsigned score;
 	Bitmap* score1;
 	Bitmap* score2;
 	Bitmap* score3;
@@ -16,10 +16,11 @@ typedef struct{
 	Bitmap* score9;
 	Bitmap* score0;
 	Bitmap* scoreBoard;
-
 }Score;
 
-Score* loadScoreFont();
-void scoreDisplay(Score* s,int score);
+Score* newScore();
+void updateScore(Score* s,int hitPoke);//hitPoke=0 se nao atingiu e hitPoke=1 atingiu pokeball
+void drawScore(Score* s);
+void deleteScore(Score* s);
 
 #endif

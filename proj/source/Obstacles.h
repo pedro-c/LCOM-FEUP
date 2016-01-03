@@ -8,6 +8,7 @@ typedef struct{
 	Bitmap* type; // bitmap referente ao obstaculo
 	int ht,wh;
 	int use; //igual a 0 quando nao esta a ser usado e igual 1 quando esta a ser usado
+	int vel;
 } Obstacles;
 
 Obstacles *newObstacle(int x,int y);
@@ -20,6 +21,7 @@ void deleteObstacle(Obstacles* obs);
 
 void updateObstacleUse(Obstacles* obs);
 
+void updateObstacleSpeed(Obstacles* obs,int incSpeed);//incSpeed=1 para aumentar a velocidade
 
 
 #endif

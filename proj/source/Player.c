@@ -4,7 +4,6 @@
 #include <minix/drivers.h>
 #include <stdio.h>
 
-
 #define MAKECODE_A 0x1e
 #define MAKECODE_D 0x20
 #define X_INIT      360
@@ -16,6 +15,7 @@ Player* newPlayer() {
 	p->x = X_INIT;
 	p->y = Y_INIT;
 	p->vel=0;
+	p->vel_i=VEL_PLAYER;
 	p->sec=0;
 	p->change=0;
 	p->counter=0;
@@ -54,7 +54,7 @@ void movePlayer(Player* p,unsigned long scancode){
 			p->x -= p->vel;
 		}
 	}
-	p->vel = VEL_PLAYER;
+	p->vel = p->vel_i;
 }
 
 void deletePlayer(Player* p){
@@ -73,7 +73,7 @@ int checkTrackCollision(Player* p){
 	return 0;
 }
 
-void updateCounter(Player* p){
+void updateCounterPlayer(Player* p){
 	p->counter++;
 	if(p->counter==10 || p->counter==20 || p->counter==30 || p->counter==40 || p->counter==50 || p->counter==60)
 	{
@@ -87,4 +87,9 @@ void updateCounter(Player* p){
 		p->counter=0;
 		p->sec++;
 	}
+}
+
+void updatePlayerSpeed(Player* p,int incSpeed){
+	if(incSpeed==1)
+		p->vel_i++;
 }
