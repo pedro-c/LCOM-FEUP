@@ -7,7 +7,7 @@
 #include "Bitmap.h"
 
 typedef struct{
-	int x,y,vel; //coordenadas do carro e velocidade
+	int x,y,vel,vel_i; //coordenadas do jogador,velocidade variavel  e velocidade constante
 	Bitmap* ash_l;
 	Bitmap* ash_r;
 	int hPlayer, wPlayer; //width e height
@@ -24,6 +24,9 @@ void deletePlayer(Player* p);
 
 int checkTrackCollision(Player* p);
 
-void updateCounter(Player* p);
+void updateCounterPlayer(Player* p);
+
+void updatePlayerSpeed(Player* p,int incSpeed);
 
 #endif
+

@@ -1,9 +1,11 @@
 #include "score.h"
 #include "Bitmap.h"
 
-Score* loadScoreFont() {
-	Score* s = (Score*) malloc(sizeof(Score));
+#define POKE_SCORE   60
 
+Score* newScore() {
+	Score* s = (Score*) malloc(sizeof(Score));
+	s->score=0;
 	s->score1=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/score1.bmp");
 	s->score2=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/score2.bmp");
 	s->score3=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/score3.bmp");
@@ -18,19 +20,24 @@ Score* loadScoreFont() {
 	return s;
 }
 
-void scoreDisplay(Score* s, int score){
+void updateScore(Score* s,int hitPoke){
+	s->score++;
+	if(hitPoke==1)
+		s->score+=POKE_SCORE;
+}
+
+void drawScore(Score* s){
 
 	drawBitmap(s->scoreBoard,5,18,ALIGN_LEFT);
-	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 	char scoreStr[1];
-	if(score<10){
+	if(s->score<10){
 		char scoreStr[2];
 	}
 	else{
 		char scoreStr[6];
 	}
 
-	sprintf(scoreStr, "%d", score);
+	sprintf(scoreStr, "%d", s->score);
 	int x=18;
 	int y=55;
 	int i;
@@ -39,48 +46,54 @@ void scoreDisplay(Score* s, int score){
 		switch (number) {
 			case '1':
 				drawBitmap(s->score1,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '2':
 				drawBitmap(s->score2,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '3':
 				drawBitmap(s->score3,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '4':
 				drawBitmap(s->score4,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '5':
 				drawBitmap(s->score5,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '6':
 				drawBitmap(s->score6,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '7':
 				drawBitmap(s->score7,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '8':
 				drawBitmap(s->score8,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '9':
 				drawBitmap(s->score9,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			case '0':
 				drawBitmap(s->score0,x,y,ALIGN_LEFT);
-				memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 				break;
 			default:
 				break;
 			}
 		x+=10;
 	}
+}
 
+void deleteScore(Score* s){
+	if(s==NULL)
+		return;
+	deleteBitmap(s->score1);
+	deleteBitmap(s->score2);
+	deleteBitmap(s->score3);
+	deleteBitmap(s->score4);
+	deleteBitmap(s->score5);
+	deleteBitmap(s->score6);
+	deleteBitmap(s->score7);
+	deleteBitmap(s->score8);
+	deleteBitmap(s->score9);
+	deleteBitmap(s->score0);
+
+	free(s);
 }

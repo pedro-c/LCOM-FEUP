@@ -63,13 +63,12 @@ int updateGame(Game* g) {
 		exit = updateMainMenuState(g->state, g->scancode);
 		play = verifyStateChange(g->state);
 		drawGame(g);
-		drawMouse();
-		drawPokeball(g->state);
+		refresh();
 		break;
 	case GAME_STATE:
 		exit = updateGameState(g->state, g->scancode, g->counter);
 		drawGame(g);
-
+		refresh();
 		break;
 	default:
 		break;
@@ -91,10 +90,11 @@ void drawGame(Game* g) {
 	switch (g->currentState) {
 	case MAIN_MENU_STATE:
 		drawMenu(g->state);
+		drawMouse();
+		drawPokeball(g->state);
 		break;
 	case GAME_STATE:
-		drawGameState(g->state,g->counter);
-		//refresh();
+		drawGameState(g->state);
 		break;
 	default:
 		break;

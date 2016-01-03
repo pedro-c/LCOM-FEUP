@@ -29,10 +29,8 @@ int verifyStateChange(MainMenuState* state){
 void drawPokeball(MainMenuState* state){
 	if(state->overPlay){
 		drawBitmap(state->pokeball,308,320,ALIGN_CENTER);
-		memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 	}else if(state->overExit){
 		drawBitmap(state->pokeball,308,434,ALIGN_CENTER);
-		memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 	}
 }
 
@@ -85,7 +83,6 @@ int updateMainMenuState(MainMenuState* state, unsigned long scancode) {
 
 void drawMenu(MainMenuState* state){
 	drawBitmap(state->menuImage,0,0,ALIGN_LEFT);
-	memcpy(getGraphicsBuffer(),getGraphicsBufferTmp(),getVRAMSize());
 }
 
 void deleteMainMenuState(MainMenuState* state) {
