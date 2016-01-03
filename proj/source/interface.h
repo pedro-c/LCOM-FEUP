@@ -21,8 +21,6 @@ unsigned getVRAMSize();
 
 unsigned getBytesPerPixel();
 
-int print_Bitmap(unsigned char* data,int x, int y,int ht,int wt);
-
 void flipDisplay(char* vm);
 
 char *read_xpm(char *map[], int *wd, int *ht);

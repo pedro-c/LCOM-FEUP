@@ -1,5 +1,7 @@
 #include "Bitmap.h"
 
+#include "interface.h"
+
 #define FIRST_BYTE_GREEN_COLOR  0xFFFFFFE0 // necessário a extensão devido ao sinal negativo
 #define SECOND_BYTE_GREEN_COLOR 0x07
 
@@ -76,33 +78,21 @@ Bitmap* loadBitmap(const char* filename) {
 
 void drawBitmap(Bitmap* bmp, int x, int y, Alignment alignment) {
     if (bmp == NULL)
-        return;
+		return;
 
-    int width = bmp->bitmapInfoHeader.width;
-    int drawWidth = width;
-    int height = bmp->bitmapInfoHeader.height;
+	int width = bmp->bitmapInfoHeader.width;
+	int height = bmp->bitmapInfoHeader.height;
 
-    if (alignment == ALIGN_CENTER)
-        x -= width / 2;
-    else if (alignment == ALIGN_RIGHT)
-        x -= width;
+	if (alignment == ALIGN_CENTER)
+		x -= width / 2;
+	else if (alignment == ALIGN_RIGHT)
+		x -= width;
 
-    if (x + width < 0 || x > getHorResolution() || y + height < 0
-            || y > getVerResolution())
-        return;
-
-    int xCorrection = 0;
+	int xCorrection = 0;
 	if (x < 0) {
 		xCorrection = -x;
-		drawWidth -= xCorrection;
 		x = 0;
-
-		if (drawWidth > getHorResolution())
-			drawWidth = getHorResolution();
-	} else if (x + drawWidth >= getHorResolution()) {
-		drawWidth = getHorResolution() - x;
 	}
-
 	char* bufferStartPos;
 	char* imgStartPos;
 
@@ -113,12 +103,11 @@ void drawBitmap(Bitmap* bmp, int x, int y, Alignment alignment) {
 			pos -= getVerResolution();
 		}
 		for (j = 0; j < width; j++) {
-			bufferStartPos = getGraphicsBufferTmp();
-			bufferStartPos += (x * getBytesPerPixel()) + (pos * getHorResolution() * getBytesPerPixel())
+			bufferStartPos = getGraphicsBufferTmp() + (x * getBytesPerPixel())
+					+ (pos * getHorResolution() * getBytesPerPixel())
 					+ (j * getBytesPerPixel());
-			imgStartPos = bmp->bitmapData + xCorrection * getBytesPerPixel() + j * getBytesPerPixel()
-					+ i * width * getBytesPerPixel();
-
+			imgStartPos = bmp->bitmapData + xCorrection * getBytesPerPixel()
+					+ j * getBytesPerPixel() + i * width * getBytesPerPixel();
 			if (*imgStartPos != FIRST_BYTE_GREEN_COLOR
 					&& *(imgStartPos + 1) != SECOND_BYTE_GREEN_COLOR)
 				memcpy(bufferStartPos, imgStartPos, getBytesPerPixel());
