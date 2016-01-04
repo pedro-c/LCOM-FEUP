@@ -97,17 +97,17 @@ void readHighScores(FinalState* state){
 }
 
 void printHighScores(FinalState* state){
-	stringDisplay(state->f, state->firstDate, 112, 230);
+	stringDisplay(state->f, state->firstDate, 112, 230, 25);
 	//stringDisplay(state->f, state->firstName, 330, 230);
-	stringDisplay(state->f, state->first, 580, 230);
+	stringDisplay(state->f, state->first, 580, 230,6);
 
-	stringDisplay(state->f, state->secondDate, 112, 300);
+	stringDisplay(state->f, state->secondDate, 112, 300,25);
 	//stringDisplay(state->f, state->secondName, 330, 300);
-	stringDisplay(state->f, state->second, 580, 300);
+	stringDisplay(state->f, state->second, 580, 300,6);
 
-	stringDisplay(state->f, state->thirdDate, 112, 370);
+	stringDisplay(state->f, state->thirdDate, 112, 370,25);
 	//stringDisplay(state->f, state->thirdName, 330, 370);
-	stringDisplay(state->f, state->third, 580, 370);
+	stringDisplay(state->f, state->third, 580, 370,6);
 }
 
 void printScores(FinalState* state){

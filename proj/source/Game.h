@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "MainMenuState.h"
 
-/** @defgroup FinalState FinalState
+/** @defgroup Game Game
  * @{
  * Struct containing all the information of the game and its states
  */
