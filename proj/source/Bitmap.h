@@ -3,6 +3,9 @@
 /** @defgroup Bitmap Bitmap
  * @{
  * Functions for manipulating bitmaps
+ * This Code was partially based on Henrique Ferrolho's Blog
+ * ("http://difusal.blogspot.pt/2014/07/minix-posts-index.html")
+ * which was based on this forum: http://forums.fedoraforum.org/archive/index.php/t-171389.html
  */
 
 typedef enum {
@@ -55,28 +58,6 @@ Bitmap* loadBitmap(const char* filename);
  * @param alignment image alignment
  */
 void drawBitmap(Bitmap* bitmap, int x, int y, Alignment alignment);
-
-/**
- * @brief Draws a filtered, unscaled, unrotated bitmap at the given position
- *
- * @param bitmap bitmap to be drawn
- * @param x destiny x coord
- * @param y destiny y coord
- * @param colorToFilter pixels with this color will not be drawn
- */
-void drawFilteredBitmap(Bitmap* bmp, int x, int y, int colorToFilter,
-		Alignment alignment);
-
-/**
- * @brief Draws a filtered, unscaled, unrotated bitmap at the given position with the given color
- *
- * @param bitmap bitmap to be drawn
- * @param x destiny x coord
- * @param y destiny y coord
- * @param color font color
- */
-void drawFontBitmap(Bitmap* bmp, int x, int y, int color);
-
 /**
  * @brief Destroys the given bitmap, freeing all resources used by it.
  *
