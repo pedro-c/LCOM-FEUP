@@ -53,8 +53,11 @@ int updateFinalState(FinalState* state, unsigned long scancode, int score, int s
 	}
 
 
-	if(scancode==code3)
+	if(scancode==code3){
+		 mouse_unsubscribe();
 		return 1;
+	}
+
 	if(scancode==code1)
 		state->scoreTable=1;
 
@@ -187,6 +190,7 @@ void drawFinalMenu(FinalState* state){
 void deleteFinalState(FinalState* state) {
     deleteBitmap(state->background);
     deleteBitmap(state->HighScoresBackground);
+    deleteFonts(state->f);
 
     free(state);
 }

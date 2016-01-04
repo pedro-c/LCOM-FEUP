@@ -496,3 +496,78 @@ void stringDisplay(Fonts* f,  char string[], int x, int y, int length) {
 	}
 
 }
+
+void deleteFonts(Fonts* font) {
+	deleteBitmap(font->barra);
+	deleteBitmap(font->traco);
+	deleteBitmap(font->doispontos);
+	deleteBitmap(font->espaco);
+
+	deleteBitmap(font->zero);
+	deleteBitmap(font->um);
+	deleteBitmap(font->dois);
+	deleteBitmap(font->tres);
+	deleteBitmap(font->quatro);
+	deleteBitmap(font->cinco);
+	deleteBitmap(font->seis);
+	deleteBitmap(font->sete);
+	deleteBitmap(font->oito);
+	deleteBitmap(font->nove);
+
+	deleteBitmap(font->a);
+	deleteBitmap(font->b);
+	deleteBitmap(font->c);
+	deleteBitmap(font->d);
+	deleteBitmap(font->e);
+	deleteBitmap(font->f);
+	deleteBitmap(font->g);
+	deleteBitmap(font->h);
+	deleteBitmap(font->i);
+	deleteBitmap(font->j);
+	deleteBitmap(font->k);
+	deleteBitmap(font->l);
+	deleteBitmap(font->m);
+	deleteBitmap(font->n);
+	deleteBitmap(font->o);
+	deleteBitmap(font->p);
+	deleteBitmap(font->q);
+	deleteBitmap(font->r);
+	deleteBitmap(font->s);
+	deleteBitmap(font->t);
+	deleteBitmap(font->u);
+	deleteBitmap(font->v);
+	deleteBitmap(font->w);
+	deleteBitmap(font->x);
+	deleteBitmap(font->y);
+	deleteBitmap(font->z);
+
+	deleteBitmap(font->aa);
+	deleteBitmap(font->bb);
+	deleteBitmap(font->cc);
+	deleteBitmap(font->dd);
+	deleteBitmap(font->ee);
+	deleteBitmap(font->ff);
+	deleteBitmap(font->gg);
+	deleteBitmap(font->hh);
+	deleteBitmap(font->ii);
+	deleteBitmap(font->jj);
+	deleteBitmap(font->kk);
+	deleteBitmap(font->ll);
+	deleteBitmap(font->mm);
+	deleteBitmap(font->nn);
+	deleteBitmap(font->oo);
+	deleteBitmap(font->pp);
+	deleteBitmap(font->qq);
+	deleteBitmap(font->rr);
+	deleteBitmap(font->ss);
+	deleteBitmap(font->tt);
+	deleteBitmap(font->uu);
+	deleteBitmap(font->vv);
+	deleteBitmap(font->ww);
+	deleteBitmap(font->xx);
+	deleteBitmap(font->yy);
+	deleteBitmap(font->zz);
+
+	free(font);
+}
+

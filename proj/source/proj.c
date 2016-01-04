@@ -23,6 +23,7 @@ int main(int argc, char **argv) {
 		exit=updateGame(g);
 	}
 	exitGame();
+	deleteGame(g);
 
 	return 0;
 }
