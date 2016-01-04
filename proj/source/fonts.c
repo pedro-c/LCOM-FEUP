@@ -279,12 +279,12 @@ char receiveCharMaiusculo(unsigned long scancode) {
 	}
 }
 
-void stringDisplay(Fonts* f,  char string[], int x, int y) {
+void stringDisplay(Fonts* f,  char string[], int x, int y, int length) {
 
 	//char str[15];
 	//sprintf(str, "%s", string);
 	int i;
-	for (i = 0; i < 25; i++) {
+	for (i = 0; i < length; i++) {
 		char letra = string[i];
 		switch (letra) {
 		case '_':

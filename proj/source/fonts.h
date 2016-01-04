@@ -158,8 +158,9 @@ char receiveCharMaiusculo(unsigned long scancode);
  * @param string to be printed
  * @param x coordinate
  * @param y coordinate
+ * @param length of the string
  */
-void stringDisplay(Fonts* f, char string[], int x, int y);
+void stringDisplay(Fonts* f, char string[], int x, int y, int length);
 
 /**@}*/
 

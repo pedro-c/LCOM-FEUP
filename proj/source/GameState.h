@@ -10,9 +10,9 @@
 #define OBS_SIZE      3
 #define POKE_SIZE     3
 
-/** @defgroup FinalState FinalState
+/** @defgroup GameState GameState
  * @{
- * Struct containing all the information of the game and its states
+ * Struct containing all the information of the gamestate
  */
 
 typedef struct{
