@@ -3,6 +3,8 @@
 
 #include "Bitmap.h"
 
+
+
 #define shiftP		0x2a
 #define shiftR		0xaa
 #define codeA		0x1e
@@ -45,6 +47,10 @@
 #define codeEnter	0x1c
 #define codeBack	0xe
 
+/** @defgroup Fonts Fonts
+ * @{
+ * Functions for manipulating fonts
+ */
 
 typedef struct{
 
@@ -122,9 +128,39 @@ typedef struct{
 
 }Fonts;
 
+/**
+ * @brief Loads the fonts bitmaps
+ *
+ */
+
 Fonts* loadFonts();
+
+/**
+ * @brief returns the letter corresponding to the make code
+ *
+ * @param keyboard make code
+ */
 char receiveCharMinusculo(unsigned long scancode);
+
+
+/**
+ * @brief returns the letter corresponding to the make code in capital
+ *
+ * @param keyboard make code
+ */
 char receiveCharMaiusculo(unsigned long scancode);
+
+
+/**
+ * @brief prints a string
+ *
+ * @param font to be used
+ * @param string to be printed
+ * @param x coordinate
+ * @param y coordinate
+ */
 void stringDisplay(Fonts* f, char string[], int x, int y);
+
+/**@}*/
 
 #endif
