@@ -1,0 +1,12 @@
+<map id="drawMouse" name="drawMouse">
+<area shape="rect" id="node2" href="$group___mouse.html#ga8d3f3987b96a716cc9c3aa8e484ff1d7" title="gets created mouse " alt="" coords="165,5,243,32"/>
+<area shape="rect" id="node5" href="$group___bitmap.html#ga18d05a1c671f4638bc63d37874efb9d4" title="Draws an unscaled, unrotated bitmap at the given position. " alt="" coords="159,107,249,133"/>
+<area shape="rect" id="node7" href="$group___interface.html#gaf109727103cfb94a2b82ca03d08698be" title="gets temporary graphics buffer " alt="" coords="315,56,465,83"/>
+<area shape="rect" id="node10" href="$group___interface.html#ga0823d182cf2b320e5f344bdc420a02d0" title="gets graphics buffer " alt="" coords="141,157,267,184"/>
+<area shape="rect" id="node11" href="$group___interface.html#gade1e438322fa1adfb5b8f37b99ccda57" title="gets size of the vram " alt="" coords="152,208,256,235"/>
+<area shape="rect" id="node3" href="$group___mouse.html#gabd64fd476265e0fb0463cc3d82823701" title="creates a new mouse, loads bitmap image and sets initial coordinates " alt="" coords="348,5,432,32"/>
+<area shape="rect" id="node4" href="$group___bitmap.html#ga3506880ffd407c36eb8aaddd2c1606d2" title="Loads a bmp image. " alt="" coords="513,5,600,32"/>
+<area shape="rect" id="node6" href="$group___interface.html#ga7ee85b0f333d227380a2c43e5fb8507a" title="returns vertical resolution " alt="" coords="329,107,451,133"/>
+<area shape="rect" id="node8" href="$group___interface.html#gaed5b07d4a09b1fa1fd530659686e15d0" title="gets bytes per pixel " alt="" coords="329,157,451,184"/>
+<area shape="rect" id="node9" href="$group___interface.html#gae2b9b38f4f97e1c580123c8e9a993353" title="returns horizontal resolution " alt="" coords="329,208,451,235"/>
+</map>

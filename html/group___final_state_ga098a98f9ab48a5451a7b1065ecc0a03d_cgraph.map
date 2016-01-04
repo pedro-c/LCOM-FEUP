@@ -1,0 +1,5 @@
+<map id="newFinalState" name="newFinalState">
+<area shape="rect" id="node2" href="$group___bitmap.html#ga3506880ffd407c36eb8aaddd2c1606d2" title="Loads a bmp image. " alt="" coords="320,5,407,32"/>
+<area shape="rect" id="node3" href="$group___fonts.html#gaf4961197bf663777ba0e4ef291048396" title="Loads the fonts bitmaps. " alt="" coords="175,31,254,57"/>
+<area shape="rect" id="node4" href="$group___final_state.html#gaaf50b1193f56573a9651da889fcb1b17" title="reads from a file the highest scores achivied before " alt="" coords="157,81,272,108"/>
+</map>

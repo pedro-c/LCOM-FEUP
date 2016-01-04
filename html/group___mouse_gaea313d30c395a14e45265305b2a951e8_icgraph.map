@@ -1,0 +1,7 @@
+<map id="mouse_read" name="mouse_read">
+<area shape="rect" id="node2" href="$group___mouse.html#ga18bf64fcc0078949507f8aaa9393116b" title="gets mouse packet containing its definitions " alt="" coords="147,5,233,32"/>
+<area shape="rect" id="node3" href="$group___mouse.html#ga6498182307b6c3f4a9c9c03a9d5116dc" title="updates mouse definitions " alt="" coords="281,5,381,32"/>
+<area shape="rect" id="node4" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="629,5,725,32"/>
+<area shape="rect" id="node6" href="$group___main_menu_state.html#ga09372f78f7edf6c5597f5ef15cb90860" title="updates the main menu " alt="" coords="429,31,581,57"/>
+<area shape="rect" id="node5" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="773,5,824,32"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="deletePlayer" name="deletePlayer">
+<area shape="rect" id="node2" href="$group___game_state.html#ga43079b63c96e8f588be2a9afc938e8e2" title="deletes the game state " alt="" coords="148,5,271,32"/>
+<area shape="rect" id="node3" href="$group___game.html#ga37a3236b91e8d912939042faaec761c6" title="deletes one of the game states " alt="" coords="319,5,407,32"/>
+<area shape="rect" id="node4" href="$group___game.html#gac6f1c791e766ba56f4c4df48cdaa28b7" title="deletes all game states " alt="" coords="455,5,547,32"/>
+</map>

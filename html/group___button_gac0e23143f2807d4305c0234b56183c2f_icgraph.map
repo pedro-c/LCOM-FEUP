@@ -1,0 +1,7 @@
+<map id="newCollision" name="newCollision">
+<area shape="rect" id="node2" href="$group___game_state.html#ga508d6bcd4631e600033a5645ec44471c" title="checks for collisions " alt="" coords="172,5,287,32"/>
+<area shape="rect" id="node6" href="$group___game_state.html#ga29488208a253f7a12df1f757d3bbaf21" title="checks collisions with pokeballs " alt="" coords="148,56,311,83"/>
+<area shape="rect" id="node3" href="$group___game_state.html#gafd2c39d42ad222b8120814c1f1af53fe" title="updates the game state " alt="" coords="359,31,485,57"/>
+<area shape="rect" id="node4" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="533,31,629,57"/>
+<area shape="rect" id="node5" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="677,31,728,57"/>
+</map>

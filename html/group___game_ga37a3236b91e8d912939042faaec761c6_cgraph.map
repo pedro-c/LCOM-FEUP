@@ -1,0 +1,11 @@
+<map id="deleteState" name="deleteState">
+<area shape="rect" id="node2" href="$group___main_menu_state.html#ga239427f0b6e850858a9b32b593f76d51" title="deletes the main menu state " alt="" coords="141,37,289,63"/>
+<area shape="rect" id="node5" href="$group___game_state.html#ga43079b63c96e8f588be2a9afc938e8e2" title="deletes the game state " alt="" coords="154,189,277,215"/>
+<area shape="rect" id="node10" href="$group___final_state.html#gadac9c4ccef24f25bb4e302720433f22e" title="deletes the state " alt="" coords="157,290,273,317"/>
+<area shape="rect" id="node3" href="$group___bitmap.html#ga08c1d4f4fff81df260d979ea8fc1aa61" title="Destroys the given bitmap, freeing all resources used by it. " alt="" coords="495,189,593,215"/>
+<area shape="rect" id="node4" href="$group___button.html#gaccb5f8d7fe78a3a564935ca8c743dfc9" title="deletes the box " alt="" coords="352,37,432,63"/>
+<area shape="rect" id="node6" href="$group___player.html#gaba07a2cc0bf6e811389cb8cbada6c07c" title="deletes a player " alt="" coords="345,138,439,165"/>
+<area shape="rect" id="node7" href="$group___obstacles.html#ga1b50fb75d4c9afca0b6ff1758e2ec528" title="deletes the obstacle " alt="" coords="337,189,447,215"/>
+<area shape="rect" id="node8" href="$group___pokeball.html#ga225e8ceb05b19a6e5f250136452adfca" title="deletes pokeball " alt="" coords="349,239,435,266"/>
+<area shape="rect" id="node9" href="$group___score.html#gaf39db209f51c1f22c569b5bd77429dca" title="deletes a player score " alt="" coords="347,290,437,317"/>
+</map>

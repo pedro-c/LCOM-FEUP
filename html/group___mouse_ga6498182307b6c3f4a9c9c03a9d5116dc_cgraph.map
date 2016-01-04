@@ -1,0 +1,10 @@
+<map id="updateMouse" name="updateMouse">
+<area shape="rect" id="node2" href="$group___mouse.html#ga8d3f3987b96a716cc9c3aa8e484ff1d7" title="gets created mouse " alt="" coords="175,5,253,32"/>
+<area shape="rect" id="node5" href="$group___mouse.html#ga18bf64fcc0078949507f8aaa9393116b" title="gets mouse packet containing its definitions " alt="" coords="171,56,257,83"/>
+<area shape="rect" id="node7" href="$group___interface.html#gae2b9b38f4f97e1c580123c8e9a993353" title="returns horizontal resolution " alt="" coords="153,107,275,133"/>
+<area shape="rect" id="node8" href="$group___interface.html#ga7ee85b0f333d227380a2c43e5fb8507a" title="returns vertical resolution " alt="" coords="153,157,275,184"/>
+<area shape="rect" id="node9" href="$group___mouse.html#ga944b541d99bb47c06f47c91ed3f88a1c" title="sets new mouse definitions " alt="" coords="175,208,253,235"/>
+<area shape="rect" id="node3" href="$group___mouse.html#gabd64fd476265e0fb0463cc3d82823701" title="creates a new mouse, loads bitmap image and sets initial coordinates " alt="" coords="327,5,411,32"/>
+<area shape="rect" id="node4" href="$group___bitmap.html#ga3506880ffd407c36eb8aaddd2c1606d2" title="Loads a bmp image. " alt="" coords="464,5,551,32"/>
+<area shape="rect" id="node6" href="$group___mouse.html#gaea313d30c395a14e45265305b2a951e8" title="reads mouse definitions " alt="" coords="323,56,416,83"/>
+</map>

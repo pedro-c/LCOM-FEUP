@@ -1,0 +1,8 @@
+<map id="timer_test_int" name="timer_test_int">
+<area shape="rect" id="node2" href="$group__timer.html#ga2e596aede5a7bfc4a6f4382779bf0d7d" title="Tests programming timer in square wave mode. " alt="" coords="166,5,293,32"/>
+<area shape="rect" id="node5" href="$group__timer.html#ga915070da84f7a3baa2e0fe634cb4bcd8" title="Subscribes and enables Timer 0 interrupts. " alt="" coords="162,56,297,83"/>
+<area shape="rect" id="node6" href="$group__timer.html#ga10fc9c867b15c7da6649311c9987cd17" title="Timer 0 interrupt handler. " alt="" coords="169,107,290,133"/>
+<area shape="rect" id="node7" href="$group__timer.html#gab9eea51549744bca5c5c923b388bb4ee" title="Unsubscribes Timer 0 interrupts. " alt="" coords="155,157,304,184"/>
+<area shape="rect" id="node3" href="$group__timer.html#gada4efbb5c88275795526fc45f0814aa3" title="Configures a timer to generate a square wave. " alt="" coords="352,5,475,32"/>
+<area shape="rect" id="node4" href="$group__timer.html#ga8eb3357bc05265afc4bea5bbbb480a53" title="Reads the input timer configuration via read&#45;back command. " alt="" coords="523,5,629,32"/>
+</map>

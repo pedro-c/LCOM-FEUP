@@ -1,0 +1,11 @@
+<map id="Player.c" name="Player.c">
+<area shape="rect" id="node2" href="$_player_8h.html" title="Player.h" alt="" coords="274,80,345,107"/>
+<area shape="rect" id="node3" href="$interface_8h.html" title="interface.h" alt="" coords="333,155,416,181"/>
+<area shape="rect" id="node6" href="$_bitmap_8h.html" title="Bitmap.h" alt="" coords="595,379,669,405"/>
+<area shape="rect" id="node13" href="$keyboard_8h.html" title="keyboard.h" alt="" coords="195,229,282,256"/>
+<area shape="rect" id="node14" href="$_obstacles_8h.html" title="Obstacles.h" alt="" coords="586,304,678,331"/>
+<area shape="rect" id="node4" href="$_main_menu_state_8h.html" title="MainMenuState.h" alt="" coords="319,229,443,256"/>
+<area shape="rect" id="node7" href="$mouse_8h.html" title="mouse.h" alt="" coords="345,304,417,331"/>
+<area shape="rect" id="node12" href="$_button_8h.html" title="Button.h" alt="" coords="263,379,334,405"/>
+<area shape="rect" id="node11" href="$i8254_8h.html" title="i8254.h" alt="" coords="175,379,239,405"/>
+</map>

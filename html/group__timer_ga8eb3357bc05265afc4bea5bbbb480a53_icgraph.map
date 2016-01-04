@@ -1,0 +1,8 @@
+<map id="timer_get_conf" name="timer_get_conf">
+<area shape="rect" id="node2" href="$group__timer.html#gada4efbb5c88275795526fc45f0814aa3" title="Configures a timer to generate a square wave. " alt="" coords="160,31,283,57"/>
+<area shape="rect" id="node7" href="$group__timer.html#ga363e72d1c055d859746cb3305a68af6d" title="Tests display of timer config. " alt="" coords="161,81,282,108"/>
+<area shape="rect" id="node3" href="$group___game.html#gadf0b0e23d862996b1c252ab29227ffb1" title="Creates a new game. " alt="" coords="353,5,435,32"/>
+<area shape="rect" id="node5" href="$group__timer.html#ga2e596aede5a7bfc4a6f4382779bf0d7d" title="Tests programming timer in square wave mode. " alt="" coords="331,56,457,83"/>
+<area shape="rect" id="node4" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="531,5,581,32"/>
+<area shape="rect" id="node6" href="$group__timer.html#ga459859709b7cc1ee37899fa48cce6a6e" title="Tests Timer 0 interrupt handling. " alt="" coords="505,56,607,83"/>
+</map>

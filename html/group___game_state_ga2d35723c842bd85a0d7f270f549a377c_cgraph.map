@@ -1,0 +1,7 @@
+<map id="newGameState" name="newGameState">
+<area shape="rect" id="node2" href="$group___score.html#ga945d4c8f59cd1a6c77abf9d9a2364383" title="creates a new score and loads it&#39;s bitmaps " alt="" coords="173,5,252,32"/>
+<area shape="rect" id="node3" href="$group___bitmap.html#ga3506880ffd407c36eb8aaddd2c1606d2" title="Loads a bmp image. " alt="" coords="309,107,396,133"/>
+<area shape="rect" id="node4" href="$group___player.html#ga0573052ab3b803dec8022b4e16837f3d" title="creates a new player " alt="" coords="171,107,254,133"/>
+<area shape="rect" id="node5" href="$group___obstacles.html#ga55b786773dde7e067343b28565f837ef" title="creates a new obstacle " alt="" coords="164,157,261,184"/>
+<area shape="rect" id="node6" href="$group___pokeball.html#ga2d1f499a1887a4de58447fd2c20c6c1b" title="creates a new pokeball " alt="" coords="175,208,250,235"/>
+</map>

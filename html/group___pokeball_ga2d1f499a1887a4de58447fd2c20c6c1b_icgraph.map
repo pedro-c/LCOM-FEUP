@@ -1,0 +1,5 @@
+<map id="newPoke" name="newPoke">
+<area shape="rect" id="node2" href="$group___game_state.html#ga2d35723c842bd85a0d7f270f549a377c" title="Creates a new game state. " alt="" coords="128,5,239,32"/>
+<area shape="rect" id="node3" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="287,5,383,32"/>
+<area shape="rect" id="node4" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="431,5,481,32"/>
+</map>

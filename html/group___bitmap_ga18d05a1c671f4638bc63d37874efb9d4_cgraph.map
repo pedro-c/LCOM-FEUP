@@ -1,0 +1,6 @@
+<map id="drawBitmap" name="drawBitmap">
+<area shape="rect" id="node2" href="$group___interface.html#ga7ee85b0f333d227380a2c43e5fb8507a" title="returns vertical resolution " alt="" coords="159,5,280,32"/>
+<area shape="rect" id="node3" href="$group___interface.html#gaf109727103cfb94a2b82ca03d08698be" title="gets temporary graphics buffer " alt="" coords="144,56,295,83"/>
+<area shape="rect" id="node4" href="$group___interface.html#gaed5b07d4a09b1fa1fd530659686e15d0" title="gets bytes per pixel " alt="" coords="158,107,281,133"/>
+<area shape="rect" id="node5" href="$group___interface.html#gae2b9b38f4f97e1c580123c8e9a993353" title="returns horizontal resolution " alt="" coords="159,157,280,184"/>
+</map>

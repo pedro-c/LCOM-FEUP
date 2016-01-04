@@ -1,0 +1,19 @@
+<map id="getHorResolution" name="getHorResolution">
+<area shape="rect" id="node2" href="$group___bitmap.html#ga18d05a1c671f4638bc63d37874efb9d4" title="Draws an unscaled, unrotated bitmap at the given position. " alt="" coords="175,255,265,282"/>
+<area shape="rect" id="node17" href="$group___mouse.html#ga6498182307b6c3f4a9c9c03a9d5116dc" title="updates mouse definitions " alt="" coords="630,508,730,535"/>
+<area shape="rect" id="node3" href="$group___final_state.html#ga6f912727d4f7b009c81bec6495922a55" title="draws the state " alt="" coords="625,52,735,79"/>
+<area shape="rect" id="node7" href="$group___fonts.html#ga0ca1ff9686c14904748b13ee16e44493" title="prints a string " alt="" coords="315,52,413,79"/>
+<area shape="rect" id="node9" href="$group___game_state.html#ga87ae11c641156ce8d3e2bae50ea0c2c3" title="draws the game state " alt="" coords="463,230,577,256"/>
+<area shape="rect" id="node10" href="$group___main_menu_state.html#gafde610210ed714dc2f613cfddb42eb96" title="draws a pokeball next to the menu options " alt="" coords="471,356,569,383"/>
+<area shape="rect" id="node11" href="$group___main_menu_state.html#gaed914aee9e5f097be6bb539e33f7af8a" title="draws the main menu state " alt="" coords="639,407,721,434"/>
+<area shape="rect" id="node12" href="$group___mouse.html#gaab7430a217db9969c46ead48adffbd05" title="draws mouse on screan " alt="" coords="476,458,564,484"/>
+<area shape="rect" id="node13" href="$group___obstacles.html#gadf57c87681f9dcec56b25959330af864" title="draws the obstacle " alt="" coords="313,154,415,180"/>
+<area shape="rect" id="node14" href="$group___player.html#gaa5ed3d2e3149b89a28a1dfb5535a523d" title="draws the player " alt="" coords="321,204,407,231"/>
+<area shape="rect" id="node15" href="$group___pokeball.html#ga799440efa3f490c13f9432ef775c321a" title="draws pokeball on the track " alt="" coords="325,255,403,282"/>
+<area shape="rect" id="node16" href="$group___score.html#ga5d28957ba1875a016b555d3429dad2cf" title="draws score on the screen " alt="" coords="323,306,405,332"/>
+<area shape="rect" id="node4" href="$group___game.html#ga097cd21d0d869a2e824901d45cb07b2c" title="draws the game " alt="" coords="817,407,901,434"/>
+<area shape="rect" id="node5" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="983,458,1079,484"/>
+<area shape="rect" id="node6" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1127,432,1177,459"/>
+<area shape="rect" id="node8" href="$group___final_state.html#gaa6701fed2a2c7f0a2ddcdfd8e307d10d" title="prints the highest scores " alt="" coords="463,52,577,79"/>
+<area shape="rect" id="node18" href="$group___main_menu_state.html#ga09372f78f7edf6c5597f5ef15cb90860" title="updates the main menu " alt="" coords="783,508,935,535"/>
+</map>

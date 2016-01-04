@@ -1,0 +1,5 @@
+<map id="newHighScore" name="newHighScore">
+<area shape="rect" id="node2" href="$group___r_t_c.html#gad541628ec8bd836bbd3b2eefd316069b" title="subscribes rtc interruptions " alt="" coords="159,5,259,32"/>
+<area shape="rect" id="node3" href="$group___r_t_c.html#gaeba64915bd008b68943940bc3c0d8f87" title="reads rtc date and saves it no a string " alt="" coords="161,56,256,83"/>
+<area shape="rect" id="node4" href="$group___r_t_c.html#ga788e56085fe57e083210ad3c8887ecb1" title="waits until it receives a valid rtc " alt="" coords="307,56,405,83"/>
+</map>
