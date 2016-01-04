@@ -162,6 +162,14 @@ char receiveCharMaiusculo(unsigned long scancode);
  */
 void stringDisplay(Fonts* f, char string[], int x, int y, int length);
 
+/**
+ * @brief frees fonts
+ *
+ * @param font to be deleted
+ */
+
+void deleteFonts(Fonts* f);
+
 /**@}*/
 
 #endif
