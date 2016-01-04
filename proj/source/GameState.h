@@ -14,7 +14,7 @@ typedef struct{
 	int y, complete,vel;
 	Bitmap* background;
 	Player* player;
-	Score* score;
+	Score* s;
 	Obstacles* obs_l[OBS_SIZE];
 	Obstacles* obs_c[OBS_SIZE];
 	Obstacles* obs_r[OBS_SIZE];
@@ -26,7 +26,7 @@ typedef struct{
 } GameState;
 
 GameState* newGameState();
-int updateGameState(GameState* g,unsigned long scancode,int counter);
+int updateGameState(GameState* g,unsigned long scancode,int counter, int mainScore);
 void drawGameState(GameState* g);
 void deleteGameState(GameState* g);
 void moveBackGround(GameState* g);

@@ -26,6 +26,10 @@ void updateScore(Score* s,int hitPoke){
 		s->score+=POKE_SCORE;
 }
 
+unsigned int returnScore(Score* s){
+	return s->score;
+}
+
 void drawScore(Score* s){
 
 	drawBitmap(s->scoreBoard,5,18,ALIGN_LEFT);
