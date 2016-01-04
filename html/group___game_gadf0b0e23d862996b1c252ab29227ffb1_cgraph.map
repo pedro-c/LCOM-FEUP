@@ -1,0 +1,9 @@
+<map id="startGame" name="startGame">
+<area shape="rect" id="node2" href="$group__timer.html#gada4efbb5c88275795526fc45f0814aa3" title="Configures a timer to generate a square wave. " alt="" coords="143,5,265,32"/>
+<area shape="rect" id="node4" href="$group___keyboard.html#ga1abac37891347d036914df13bb6b7e69" title="subscribes keyboard interruption " alt="" coords="151,56,257,83"/>
+<area shape="rect" id="node5" href="$group___mouse.html#ga45667d65540f45bba6cd5f805e21a273" title="subscribes mouse interruption " alt="" coords="142,107,266,133"/>
+<area shape="rect" id="node6" href="$group___main_menu_state.html#ga62653a9d5143e72c2d162829e1be5471" title="Creates a new main menu state. " alt="" coords="136,157,272,184"/>
+<area shape="rect" id="node3" href="$group__timer.html#ga8eb3357bc05265afc4bea5bbbb480a53" title="Reads the input timer configuration via read&#45;back command. " alt="" coords="320,5,427,32"/>
+<area shape="rect" id="node7" href="$group___bitmap.html#ga3506880ffd407c36eb8aaddd2c1606d2" title="Loads a bmp image. " alt="" coords="330,132,417,159"/>
+<area shape="rect" id="node8" href="$group___button.html#gaa0a02f9e7bfa8f11929d4d2f9afc95b0" title="creates a new button (boundaries) " alt="" coords="339,183,407,209"/>
+</map>

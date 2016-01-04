@@ -1,0 +1,9 @@
+<map id="drawFinalMenu" name="drawFinalMenu">
+<area shape="rect" id="node2" href="$group___bitmap.html#ga18d05a1c671f4638bc63d37874efb9d4" title="Draws an unscaled, unrotated bitmap at the given position. " alt="" coords="471,81,561,108"/>
+<area shape="rect" id="node7" href="$group___final_state.html#gaa6701fed2a2c7f0a2ddcdfd8e307d10d" title="prints the highest scores " alt="" coords="163,107,277,133"/>
+<area shape="rect" id="node3" href="$group___interface.html#ga7ee85b0f333d227380a2c43e5fb8507a" title="returns vertical resolution " alt="" coords="624,5,745,32"/>
+<area shape="rect" id="node4" href="$group___interface.html#gaf109727103cfb94a2b82ca03d08698be" title="gets temporary graphics buffer " alt="" coords="609,56,760,83"/>
+<area shape="rect" id="node5" href="$group___interface.html#gaed5b07d4a09b1fa1fd530659686e15d0" title="gets bytes per pixel " alt="" coords="623,107,746,133"/>
+<area shape="rect" id="node6" href="$group___interface.html#gae2b9b38f4f97e1c580123c8e9a993353" title="returns horizontal resolution " alt="" coords="624,157,745,184"/>
+<area shape="rect" id="node8" href="$group___fonts.html#ga0ca1ff9686c14904748b13ee16e44493" title="prints a string " alt="" coords="325,107,423,133"/>
+</map>

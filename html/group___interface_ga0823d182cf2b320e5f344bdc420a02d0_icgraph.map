@@ -1,0 +1,7 @@
+<map id="getGraphicsBuffer" name="getGraphicsBuffer">
+<area shape="rect" id="node2" href="$group___interface.html#ga5f2e190b8261a98c97c2ea4e86670d54" title="copies from the temporary buffer to buffer " alt="" coords="326,5,387,32"/>
+<area shape="rect" id="node5" href="$group___mouse.html#gaab7430a217db9969c46ead48adffbd05" title="draws mouse on screan " alt="" coords="179,56,267,83"/>
+<area shape="rect" id="node3" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="447,5,543,32"/>
+<area shape="rect" id="node4" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="591,31,641,57"/>
+<area shape="rect" id="node6" href="$group___game.html#ga097cd21d0d869a2e824901d45cb07b2c" title="draws the game " alt="" coords="315,56,399,83"/>
+</map>

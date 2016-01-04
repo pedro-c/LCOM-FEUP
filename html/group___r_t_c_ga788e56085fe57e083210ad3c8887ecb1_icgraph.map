@@ -1,0 +1,7 @@
+<map id="wait_valid_rtc" name="wait_valid_rtc">
+<area shape="rect" id="node2" href="$group___r_t_c.html#gaeba64915bd008b68943940bc3c0d8f87" title="reads rtc date and saves it no a string " alt="" coords="152,5,247,32"/>
+<area shape="rect" id="node3" href="$group___final_state.html#gaa92da85e54f36348f8bbac34f70d7685" title="defines a new high score and saves it to a text file " alt="" coords="295,5,400,32"/>
+<area shape="rect" id="node4" href="$group___final_state.html#ga0c55155d6d378225e7ed9196e3f75b83" title="updates the final state " alt="" coords="448,5,568,32"/>
+<area shape="rect" id="node5" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="616,5,712,32"/>
+<area shape="rect" id="node6" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="760,5,811,32"/>
+</map>
