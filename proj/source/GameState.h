@@ -26,7 +26,7 @@ typedef struct{
 } GameState;
 
 GameState* newGameState();
-int updateGameState(GameState* g,unsigned long scancode,int counter, int mainScore);
+int updateGameState(GameState* g,unsigned long scancode,int counter);
 void drawGameState(GameState* g);
 void deleteGameState(GameState* g);
 void moveBackGround(GameState* g);

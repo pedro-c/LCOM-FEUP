@@ -11,6 +11,8 @@
 #include "GameState.h"
 #include "FinalState.h"
 
+unsigned int scoreAux=0;
+
 Game* startGame(){
 
 	Game* game =(Game*)malloc(sizeof(Game));
@@ -32,7 +34,9 @@ int updateGame(Game* g) {
 	message msg;
 	int exit = 0;
 	int play = 0;
-	int exitGameState=0;
+	int exitGameState = 0;
+
+
 
 	if (driver_receive(ANY, &msg, &ipc_status) == 0) {
 		if (is_ipc_notify(ipc_status)) {
@@ -68,12 +72,12 @@ int updateGame(Game* g) {
 		refresh();
 		break;
 	case GAME_STATE:
-		exitGameState = updateGameState(g->state, g->scancode, g->counter, g->mainScore);
+		exitGameState = updateGameState(g->state, g->scancode, g->counter);
 		drawGame(g);
 		refresh();
 		break;
 	case FINAL_STATE:
-		exit = updateFinalState(g->state,g->scancode,g->mainScore, exitGameState);
+		exit = updateFinalState(g->state,g->scancode,g->mainScore, scoreAux);
 		play = verifyFinalStateChange(g->state);
 		drawGame(g);
 		refresh();
@@ -83,11 +87,13 @@ int updateGame(Game* g) {
 	}
 
 	if(exitGameState!=0){
+		scoreAux=exitGameState;
 		g->state = newFinalState();
 		g->currentState = FINAL_STATE;
 		exitGameState=0;
 	}
 	if (play) {
+		scoreAux=0;
 		g->mainScore=0;
 		g->counter=0;
 		g->state = newGameState();
