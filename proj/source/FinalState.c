@@ -14,8 +14,8 @@
 FinalState* newFinalState() {
     FinalState* state = (FinalState*) malloc(sizeof(FinalState));
 
-    state->background=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/finalbackground.bmp");
-	state->HighScoresBackground=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/highscoresbackground.bmp");
+    state->background=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/finalbackground3.bmp");
+	state->HighScoresBackground=loadBitmap("/home/lcom/lcom1516-t2g12/proj/res/images/highscoresbackground2.bmp");
 	state->f=loadFonts();
 	state->score=0;
 	readHighScores(state);
@@ -45,7 +45,7 @@ int updateFinalState(FinalState* state, unsigned long scancode, int score, int s
 	}
 
 
-	if(scancode==code1){
+	if(scancode==code2){
 		state->play=1;
 		state->score=0;
 		state->flag=1;
@@ -53,9 +53,9 @@ int updateFinalState(FinalState* state, unsigned long scancode, int score, int s
 	}
 
 
-	if(scancode==code2)
-		return 1;
 	if(scancode==code3)
+		return 1;
+	if(scancode==code1)
 		state->scoreTable=1;
 
 	if(state->scoreTable==1){
