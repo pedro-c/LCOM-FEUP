@@ -48,7 +48,7 @@ GameState* newGameState(){
 	return g;
 }
 
-int updateGameState(GameState* g, unsigned long scancode, int counter, int mainScore) {
+int updateGameState(GameState* g, unsigned long scancode, int counter) {
 	if (scancode == VAL_ESC) {
 		g->complete = 1;
 		return returnScore(g->s);
@@ -74,9 +74,8 @@ int updateGameState(GameState* g, unsigned long scancode, int counter, int mainS
 		updateScore(g->s, 0);
 
 	if (checkEndGame(g) == 1) {
-		mainScore=returnScore(g->s);
 		return returnScore(g->s);
-		}
+	}
 	return 0;
 
 }

@@ -32,7 +32,7 @@ typedef struct{
 }FinalState;
 
 FinalState* newFinalState();
-int updateFinalState(FinalState* state, unsigned long scancode, int score, int mainScore);
+int updateFinalState(FinalState* state, unsigned long scancode, int score, int scoreAux);
 void readHighScores(FinalState* state);
 void printHighScores(FinalState* state);
 void newHighScore(FinalState* state);

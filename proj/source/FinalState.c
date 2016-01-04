@@ -28,12 +28,12 @@ FinalState* newFinalState() {
 
 
 
-int updateFinalState(FinalState* state, unsigned long scancode, int score, int mainScore){
+int updateFinalState(FinalState* state, unsigned long scancode, int score, int scoreAux){
 	int exit=0;
 	int flag=0;
 
 	if(!flag){
-		state->score=mainScore;
+		state->score=scoreAux;
 		flag=1;
 	}
 	state->play=0;
