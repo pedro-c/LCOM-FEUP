@@ -6,7 +6,7 @@
 
 
 typedef enum{
-	MAIN_MENU_STATE, GAME_STATE
+	MAIN_MENU_STATE, GAME_STATE, FINAL_STATE
 }State;
 
 
@@ -19,6 +19,7 @@ typedef struct{
 	State currentState;
 	void* state;
 	unsigned long scancode;
+	int mainScore;
 
 
 }Game;

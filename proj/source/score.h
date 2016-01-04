@@ -4,7 +4,7 @@
 #include "Bitmap.h"
 
 typedef struct{
-	unsigned score;
+	unsigned int score;
 	Bitmap* score1;
 	Bitmap* score2;
 	Bitmap* score3;
@@ -21,6 +21,7 @@ typedef struct{
 Score* newScore();
 void updateScore(Score* s,int hitPoke);//hitPoke=0 se nao atingiu e hitPoke=1 atingiu pokeball
 void drawScore(Score* s);
+unsigned int returnScore(Score* s);
 void deleteScore(Score* s);
 
 #endif

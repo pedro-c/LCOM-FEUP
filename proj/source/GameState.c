@@ -17,7 +17,7 @@ GameState* newGameState(){
 	srand(time(NULL));
 	GameState* g = (GameState*) malloc(sizeof(GameState));
 
-	g->score=newScore();
+	g->s=newScore();
 	g->y=0;
 	g->complete=0;
 	g->counter=0;
@@ -48,10 +48,10 @@ GameState* newGameState(){
 	return g;
 }
 
-int updateGameState(GameState* g, unsigned long scancode, int counter) {
+int updateGameState(GameState* g, unsigned long scancode, int counter, int mainScore) {
 	if (scancode == VAL_ESC) {
 		g->complete = 1;
-		return 1;
+		return returnScore(g->s);
 	}
 	updateCounterGame(g);
 	moveBackGround(g);
@@ -69,12 +69,13 @@ int updateGameState(GameState* g, unsigned long scancode, int counter) {
 		updatePlayerSpeed(g->player,1);
 
 	if (checkPokeballsCollision(g) == 1)
-		updateScore(g->score, 1);
+		updateScore(g->s, 1);
 	else
-		updateScore(g->score, 0);
+		updateScore(g->s, 0);
 
 	if (checkEndGame(g) == 1) {
-		return 1;
+		mainScore=returnScore(g->s);
+		return returnScore(g->s);
 		}
 	return 0;
 
@@ -84,7 +85,7 @@ void drawGameState(GameState* g){
 	int score;
 	drawBitmap(g->background,0,g->y,ALIGN_LEFT);
 	drawPlayer(g->player);
-	drawScore(g->score);
+	drawScore(g->s);
 
 	unsigned i;
 	for(i=0;i<OBS_SIZE;i++)
@@ -126,7 +127,7 @@ void deleteGameState(GameState* g) {
 		deletePoke(g->poke_c[i]);
 		deletePoke(g->poke_r[i]);
 	}
-	deleteScore(g->score);
+	deleteScore(g->s);
 	free(g);
 }
 

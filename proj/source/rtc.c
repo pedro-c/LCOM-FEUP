@@ -36,7 +36,7 @@ void wait_valid_rtc(void) {
 }
 
 
-void display_date(){
+void display_date(char temp[]){
 	long unsigned int seconds=0, minutes=0, hours=0, day=0, day_of_the_week=0, month=0, year=0;
 
 	wait_valid_rtc();
@@ -104,8 +104,10 @@ void display_date(){
 	}
 
 	char str[50];
-	sprintf(str, "%x/%x/%x %s %x:%x:%x", day, month, year, weekday, hours, minutes, seconds);
-	printf("%s", str);
+	sprintf(str, "%x/%x/%x_%x:%x:%x", day, month, year, hours, minutes, seconds);
+	//printf("%s", str);
+
+	sprintf(temp,"%s",str);
 }
 
 

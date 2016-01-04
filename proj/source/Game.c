@@ -9,6 +9,7 @@
 #include "keyboard.h"
 #include "i8254.h"
 #include "GameState.h"
+#include "FinalState.h"
 
 Game* startGame(){
 
@@ -22,7 +23,7 @@ Game* startGame(){
 	game->currentState = MAIN_MENU_STATE;
 	game->state = newMainMenuState();
 	game->counter = 0;
-
+	game->mainScore = 0;
 	return game;
 }
 
@@ -31,6 +32,7 @@ int updateGame(Game* g) {
 	message msg;
 	int exit = 0;
 	int play = 0;
+	int exitGameState=0;
 
 	if (driver_receive(ANY, &msg, &ipc_status) == 0) {
 		if (is_ipc_notify(ipc_status)) {
@@ -66,7 +68,13 @@ int updateGame(Game* g) {
 		refresh();
 		break;
 	case GAME_STATE:
-		exit = updateGameState(g->state, g->scancode, g->counter);
+		exitGameState = updateGameState(g->state, g->scancode, g->counter, g->mainScore);
+		drawGame(g);
+		refresh();
+		break;
+	case FINAL_STATE:
+		exit = updateFinalState(g->state,g->scancode,g->mainScore, exitGameState);
+		play = verifyFinalStateChange(g->state);
 		drawGame(g);
 		refresh();
 		break;
@@ -74,14 +82,20 @@ int updateGame(Game* g) {
 		break;
 	}
 
+	if(exitGameState!=0){
+		g->state = newFinalState();
+		g->currentState = FINAL_STATE;
+		exitGameState=0;
+	}
 	if (play) {
+		g->mainScore=0;
+		g->counter=0;
 		g->state = newGameState();
 		g->currentState = GAME_STATE;
 		g->set_timer = timer_subscribe_int();
 		mouse_unsubscribe();
 		play = 0;
 	}
-
 	return exit;
 
 }
@@ -96,6 +110,9 @@ void drawGame(Game* g) {
 	case GAME_STATE:
 		drawGameState(g->state);
 		break;
+	case FINAL_STATE:
+		drawFinalMenu(g->state);
+		break;
 	default:
 		break;
 	}
@@ -109,6 +126,9 @@ void deleteState(Game* g){
 			break;
 	case GAME_STATE:
 			deleteGameState(g->state);
+			break;
+	case FINAL_STATE:
+			deleteFinalState(g->state);
 			break;
 	default:
 			break;
