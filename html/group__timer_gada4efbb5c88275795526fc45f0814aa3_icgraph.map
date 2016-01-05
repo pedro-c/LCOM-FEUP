@@ -1,6 +1,0 @@
-<map id="timer_set_square" name="timer_set_square">
-<area shape="rect" id="node2" href="$group___game.html#gadf0b0e23d862996b1c252ab29227ffb1" title="Creates a new game. " alt="" coords="198,5,281,32"/>
-<area shape="rect" id="node4" href="$group__timer.html#ga2e596aede5a7bfc4a6f4382779bf0d7d" title="Tests programming timer in square wave mode. " alt="" coords="176,56,303,83"/>
-<area shape="rect" id="node3" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="376,5,427,32"/>
-<area shape="rect" id="node5" href="$group__timer.html#ga459859709b7cc1ee37899fa48cce6a6e" title="Tests Timer 0 interrupt handling. " alt="" coords="351,56,452,83"/>
-</map>

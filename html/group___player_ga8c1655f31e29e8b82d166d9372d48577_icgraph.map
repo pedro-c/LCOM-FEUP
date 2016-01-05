@@ -1,6 +1,0 @@
-<map id="checkTrackCollision" name="checkTrackCollision">
-<area shape="rect" id="node2" href="$group___player.html#ga29c34923197982163d4c1651081e5aa9" title="move player according to input " alt="" coords="192,5,281,32"/>
-<area shape="rect" id="node3" href="$group___game_state.html#gafd2c39d42ad222b8120814c1f1af53fe" title="updates the game state " alt="" coords="329,5,456,32"/>
-<area shape="rect" id="node4" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="504,5,600,32"/>
-<area shape="rect" id="node5" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="648,5,699,32"/>
-</map>

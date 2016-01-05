@@ -1,5 +1,0 @@
-<map id="MainMenuState" name="MainMenuState">
-<area shape="rect" id="node2" href="$struct_box.html" title="{Box\n|+ x1\l+ y1\l+ x2\l+ y2\l|}" alt="" coords="5,292,53,413"/>
-<area shape="rect" id="node3" href="$struct_bitmap.html" title="Represents a Bitmap. " alt="" coords="82,314,182,391"/>
-<area shape="rect" id="node4" href="$struct_bitmap_info_header.html" title="{BitmapInfoHeader\n|+ size\l+ width\l+ height\l+ planes\l+ bits\l+ compression\l+ imageSize\l+ xResolution\l+ yResolution\l+ nColors\l+ importantColors\l|}" alt="" coords="69,5,195,229"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="drawPoke" name="drawPoke">
-<area shape="rect" id="node2" href="$group___game_state.html#ga87ae11c641156ce8d3e2bae50ea0c2c3" title="draws the game state " alt="" coords="132,31,247,57"/>
-<area shape="rect" id="node3" href="$group___game.html#ga097cd21d0d869a2e824901d45cb07b2c" title="draws the game " alt="" coords="295,31,379,57"/>
-<area shape="rect" id="node4" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="427,5,523,32"/>
-<area shape="rect" id="node5" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="571,31,621,57"/>
-</map>

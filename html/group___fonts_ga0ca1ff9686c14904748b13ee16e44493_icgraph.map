@@ -1,7 +1,0 @@
-<map id="stringDisplay" name="stringDisplay">
-<area shape="rect" id="node2" href="$group___final_state.html#gaa6701fed2a2c7f0a2ddcdfd8e307d10d" title="prints the highest scores " alt="" coords="151,31,265,57"/>
-<area shape="rect" id="node3" href="$group___final_state.html#ga6f912727d4f7b009c81bec6495922a55" title="draws the state " alt="" coords="313,31,423,57"/>
-<area shape="rect" id="node4" href="$group___game.html#ga097cd21d0d869a2e824901d45cb07b2c" title="draws the game " alt="" coords="471,31,555,57"/>
-<area shape="rect" id="node5" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="603,5,699,32"/>
-<area shape="rect" id="node6" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="747,31,797,57"/>
-</map>

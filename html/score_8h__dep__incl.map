@@ -1,7 +1,0 @@
-<map id="score.h" name="score.h">
-<area shape="rect" id="node2" href="$_game_state_8h.html" title="GameState.h" alt="" coords="112,80,211,107"/>
-<area shape="rect" id="node4" href="$_game_state_8c.html" title="GameState.c" alt="" coords="5,155,104,181"/>
-<area shape="rect" id="node5" href="$proj_8c.html" title="proj.c" alt="" coords="221,155,275,181"/>
-<area shape="rect" id="node6" href="$score_8c.html" title="score.c" alt="" coords="286,80,351,107"/>
-<area shape="rect" id="node3" href="$_game_8c.html" title="Game.c" alt="" coords="129,155,197,181"/>
-</map>

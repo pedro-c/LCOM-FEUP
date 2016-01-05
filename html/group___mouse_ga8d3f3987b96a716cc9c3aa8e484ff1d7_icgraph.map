@@ -1,8 +1,0 @@
-<map id="getMouse" name="getMouse">
-<area shape="rect" id="node2" href="$group___main_menu_state.html#ga09372f78f7edf6c5597f5ef15cb90860" title="updates the main menu " alt="" coords="280,56,432,83"/>
-<area shape="rect" id="node5" href="$group___mouse.html#gaab7430a217db9969c46ead48adffbd05" title="draws mouse on screan " alt="" coords="138,5,226,32"/>
-<area shape="rect" id="node7" href="$group___mouse.html#ga6498182307b6c3f4a9c9c03a9d5116dc" title="updates mouse definitions " alt="" coords="132,107,232,133"/>
-<area shape="rect" id="node3" href="$group___game.html#gaa084be0a7a59a117e203a6ae74f04fa2" title="updates the game " alt="" coords="480,56,576,83"/>
-<area shape="rect" id="node4" href="$proj_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="624,31,675,57"/>
-<area shape="rect" id="node6" href="$group___game.html#ga097cd21d0d869a2e824901d45cb07b2c" title="draws the game " alt="" coords="314,5,398,32"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="checkPokeballsCollision" name="checkPokeballsCollision">
-<area shape="rect" id="node2" href="$group___button.html#gac0e23143f2807d4305c0234b56183c2f" title="creates a collision object " alt="" coords="222,5,317,32"/>
-<area shape="rect" id="node3" href="$group___button.html#gade66e3efb10115401df79f3c9697ecd5" title="verifies collision between player and obstacle " alt="" coords="216,56,323,83"/>
-<area shape="rect" id="node4" href="$group___button.html#gac15846b78856766ac9bf2eb1b413e78e" title="deletes collision object " alt="" coords="216,107,323,133"/>
-</map>

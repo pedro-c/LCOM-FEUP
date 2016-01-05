@@ -1,8 +1,0 @@
-<map id="updateFinalState" name="updateFinalState">
-<area shape="rect" id="node2" href="$group___mouse.html#gabb62339e13d96f9050f69a71428f8eb9" title="unsubscribes mouse interruption " alt="" coords="173,5,312,32"/>
-<area shape="rect" id="node3" href="$group___final_state.html#gaa92da85e54f36348f8bbac34f70d7685" title="defines a new high score and saves it to a text file " alt="" coords="190,56,295,83"/>
-<area shape="rect" id="node7" href="$group___final_state.html#gaaf50b1193f56573a9651da889fcb1b17" title="reads from a file the highest scores achivied before " alt="" coords="185,107,300,133"/>
-<area shape="rect" id="node4" href="$group___r_t_c.html#gad541628ec8bd836bbd3b2eefd316069b" title="subscribes rtc interruptions " alt="" coords="360,31,460,57"/>
-<area shape="rect" id="node5" href="$group___r_t_c.html#gaeba64915bd008b68943940bc3c0d8f87" title="reads rtc date and saves it no a string " alt="" coords="363,81,457,108"/>
-<area shape="rect" id="node6" href="$group___r_t_c.html#ga788e56085fe57e083210ad3c8887ecb1" title="waits until it receives a valid rtc " alt="" coords="508,81,607,108"/>
-</map>
