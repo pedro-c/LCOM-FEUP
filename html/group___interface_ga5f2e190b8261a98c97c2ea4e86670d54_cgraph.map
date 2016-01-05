@@ -1,5 +1,0 @@
-<map id="refresh" name="refresh">
-<area shape="rect" id="node2" href="$group___interface.html#ga0823d182cf2b320e5f344bdc420a02d0" title="gets graphics buffer " alt="" coords="127,5,253,32"/>
-<area shape="rect" id="node3" href="$group___interface.html#gaf109727103cfb94a2b82ca03d08698be" title="gets temporary graphics buffer " alt="" coords="115,56,265,83"/>
-<area shape="rect" id="node4" href="$group___interface.html#gade1e438322fa1adfb5b8f37b99ccda57" title="gets size of the vram " alt="" coords="138,107,242,133"/>
-</map>

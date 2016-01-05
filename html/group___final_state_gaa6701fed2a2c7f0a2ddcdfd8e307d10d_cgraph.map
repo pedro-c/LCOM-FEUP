@@ -1,8 +1,0 @@
-<map id="printHighScores" name="printHighScores">
-<area shape="rect" id="node2" href="$group___fonts.html#ga0ca1ff9686c14904748b13ee16e44493" title="prints a string " alt="" coords="168,81,265,108"/>
-<area shape="rect" id="node3" href="$group___bitmap.html#ga18d05a1c671f4638bc63d37874efb9d4" title="Draws an unscaled, unrotated bitmap at the given position. " alt="" coords="313,81,404,108"/>
-<area shape="rect" id="node4" href="$group___interface.html#ga7ee85b0f333d227380a2c43e5fb8507a" title="returns vertical resolution " alt="" coords="467,5,588,32"/>
-<area shape="rect" id="node5" href="$group___interface.html#gaf109727103cfb94a2b82ca03d08698be" title="gets temporary graphics buffer " alt="" coords="452,56,603,83"/>
-<area shape="rect" id="node6" href="$group___interface.html#gaed5b07d4a09b1fa1fd530659686e15d0" title="gets bytes per pixel " alt="" coords="466,107,589,133"/>
-<area shape="rect" id="node7" href="$group___interface.html#gae2b9b38f4f97e1c580123c8e9a993353" title="returns horizontal resolution " alt="" coords="467,157,588,184"/>
-</map>

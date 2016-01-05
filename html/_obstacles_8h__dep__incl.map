@@ -1,9 +1,0 @@
-<map id="Obstacles.h" name="Obstacles.h">
-<area shape="rect" id="node2" href="$_player_8h.html" title="Player.h" alt="" coords="209,80,280,107"/>
-<area shape="rect" id="node8" href="$_obstacles_8c.html" title="Obstacles.c" alt="" coords="304,80,396,107"/>
-<area shape="rect" id="node3" href="$_game_state_8h.html" title="GameState.h" alt="" coords="102,155,201,181"/>
-<area shape="rect" id="node6" href="$proj_8c.html" title="proj.c" alt="" coords="221,229,276,256"/>
-<area shape="rect" id="node7" href="$_player_8c.html" title="Player.c" alt="" coords="283,155,353,181"/>
-<area shape="rect" id="node4" href="$_game_8c.html" title="Game.c" alt="" coords="5,229,73,256"/>
-<area shape="rect" id="node5" href="$_game_state_8c.html" title="GameState.c" alt="" coords="98,229,197,256"/>
-</map>

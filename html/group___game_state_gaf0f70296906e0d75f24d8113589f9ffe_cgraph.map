@@ -1,6 +1,0 @@
-<map id="updateAllObstacles" name="updateAllObstacles">
-<area shape="rect" id="node2" href="$group___obstacles.html#ga4a41c5e0b0a88095091408d624cf53d8" title="updates the obstacle " alt="" coords="195,5,331,32"/>
-<area shape="rect" id="node3" href="$group___obstacles.html#gac6e330c100fd301153d370b40ca940bb" title="updates the obstacle spped " alt="" coords="188,56,339,83"/>
-<area shape="rect" id="node4" href="$group___obstacles.html#gacc0834c55f33ead72fe88ca73f31a471" title="moves the obstacle " alt="" coords="207,107,320,133"/>
-<area shape="rect" id="node5" href="$group___interface.html#ga7ee85b0f333d227380a2c43e5fb8507a" title="returns vertical resolution " alt="" coords="387,107,508,133"/>
-</map>

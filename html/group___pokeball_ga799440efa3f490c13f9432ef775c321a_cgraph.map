@@ -1,7 +1,0 @@
-<map id="drawPoke" name="drawPoke">
-<area shape="rect" id="node2" href="$group___bitmap.html#ga18d05a1c671f4638bc63d37874efb9d4" title="Draws an unscaled, unrotated bitmap at the given position. " alt="" coords="132,81,223,108"/>
-<area shape="rect" id="node3" href="$group___interface.html#ga7ee85b0f333d227380a2c43e5fb8507a" title="returns vertical resolution " alt="" coords="285,5,407,32"/>
-<area shape="rect" id="node4" href="$group___interface.html#gaf109727103cfb94a2b82ca03d08698be" title="gets temporary graphics buffer " alt="" coords="271,56,421,83"/>
-<area shape="rect" id="node5" href="$group___interface.html#gaed5b07d4a09b1fa1fd530659686e15d0" title="gets bytes per pixel " alt="" coords="285,107,407,133"/>
-<area shape="rect" id="node6" href="$group___interface.html#gae2b9b38f4f97e1c580123c8e9a993353" title="returns horizontal resolution " alt="" coords="285,157,407,184"/>
-</map>
